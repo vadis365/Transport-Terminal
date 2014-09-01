@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StringUtils;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -50,7 +51,6 @@ public class GuiNaming extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		textFieldName.drawTextBox();
-
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class GuiNaming extends GuiContainer {
 	protected void actionPerformed(GuiButton guibutton) {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
-				if (textFieldName.getText() == "")
+				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
 					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, "Un-named Location"));
 				else
 					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, textFieldName.getText()));
