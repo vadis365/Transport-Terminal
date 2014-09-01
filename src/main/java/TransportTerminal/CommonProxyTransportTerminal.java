@@ -3,6 +3,7 @@ package TransportTerminal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -31,6 +32,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler{
 		}
 		
 		if (ID == GUI_ID_REMOTE) {
+			world = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportTerminal) {
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 1);
@@ -49,6 +51,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler{
 		}
 	
 		if (ID == GUI_ID_REMOTE) {
+			world = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportTerminal) {
 				return new GuiNaming(player.inventory, (TileEntityTransportTerminal) tileentity);

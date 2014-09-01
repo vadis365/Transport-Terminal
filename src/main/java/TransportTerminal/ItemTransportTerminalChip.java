@@ -23,7 +23,7 @@ public class ItemTransportTerminalChip extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		if (hasTag(stack)) {
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("description")) {
-				list.add("Here: " + stack.getTagCompound().getString("description"));
+				list.add(stack.getTagCompound().getString("description"));
 				list.add("Dimension: " + stack.getTagCompound().getInteger("chipDim")  + " " + stack.getTagCompound().getString("dimName"));
 				list.add("Target X: " + stack.getTagCompound().getInteger("chipX"));
 				list.add("Target Y: " + stack.getTagCompound().getInteger("chipY"));
