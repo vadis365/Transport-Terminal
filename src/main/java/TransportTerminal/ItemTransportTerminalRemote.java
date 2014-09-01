@@ -54,12 +54,14 @@ public class ItemTransportTerminalRemote extends Item {
 					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
-							tile.setTempSlot(slot);
-							chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
-							chipStack.getTagCompound().setInteger("chipDim", player.dimension);
-							chipStack.getTagCompound().setInteger("chipX", x);
-							chipStack.getTagCompound().setInteger("chipY", y);
-							chipStack.getTagCompound().setInteger("chipZ", z);
+							if (!world.isRemote) {
+								tile.setTempSlot(slot);
+								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
+								chipStack.getTagCompound().setInteger("chipDim", player.dimension);
+								chipStack.getTagCompound().setInteger("chipX", x);
+								chipStack.getTagCompound().setInteger("chipY", y);
+								chipStack.getTagCompound().setInteger("chipZ", z);
+							}
 							return tile;
 						}
 					}
