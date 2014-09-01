@@ -51,7 +51,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 			ItemStack stack = player.getCurrentEquippedItem();
 			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			if (tile != null)
-				return new GuiTerminal(player.inventory, tile, 1);
+				return new GuiNaming(player.inventory, tile);
 		}
 
 		return null;
