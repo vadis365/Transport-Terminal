@@ -2,31 +2,29 @@ package TransportTerminal;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemTransportTerminalRemote extends Item {
+
 	public ItemTransportTerminalRemote() {
 		super();
 		setMaxStackSize(1);
 		setCreativeTab(CreativeTabs.tabTools);
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
-		if (hasTag(stack)) {
+		if (hasTag(stack))
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim")) {
 				list.add("Terminal Dimension: " + stack.getTagCompound().getInteger("dim") + " " + stack.getTagCompound().getString("dimName"));
 				list.add("Target X: " + stack.getTagCompound().getInteger("homeX"));
@@ -38,45 +36,44 @@ public class ItemTransportTerminalRemote extends Item {
 				list.add("Sneak + Right click");
 				list.add("to save Location.");
 			}
-		}
+	}
+
+	public static TileEntityTransportTerminal getTile(EntityPlayer player, ItemStack stack, int x, int y, int z) {
+		if (hasTag(stack) && player.isSneaking())
+			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim")) {
+				World world = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+				if (world == null)
+					return null;
+
+				int homeX = stack.getTagCompound().getInteger("homeX");
+				int homeY = stack.getTagCompound().getInteger("homeY");
+				int homeZ = stack.getTagCompound().getInteger("homeZ");
+
+				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world.getTileEntity(homeX, homeY, homeZ);
+				if (tile != null)
+					for (int slot = 2; slot < 16; slot++)
+						if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
+							ItemStack chipStack = tile.getStackInSlot(slot);
+							if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
+								tile.setTempSlot(slot);
+								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
+								chipStack.getTagCompound().setInteger("chipDim", player.dimension);
+								chipStack.getTagCompound().setInteger("chipX", x);
+								chipStack.getTagCompound().setInteger("chipY", y);
+								chipStack.getTagCompound().setInteger("chipZ", z);
+								return tile;
+							}
+						}
+			}
+
+		return null;
 	}
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && hasTag(stack)) {
-			Block block = world.getBlock(x, y, z);
-			if (!world.isRemote && block != null && player.isSneaking()) {
-				if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim")) {
-					world = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
-					int homeX = stack.getTagCompound().getInteger("homeX");
-					int homeY = stack.getTagCompound().getInteger("homeY");
-					int homeZ = stack.getTagCompound().getInteger("homeZ");
-					TileEntity console = world.getTileEntity(homeX, homeY, homeZ);
-					if (console != null && console instanceof TileEntityTransportTerminal) {
-						for (int slot = 2; slot < 16; slot++)
-							if (((IInventory) console).getStackInSlot(slot) != null && ((IInventory) console).getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
-								ItemStack chipStack = ((IInventory) console).getStackInSlot(slot);
-								if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
-									((TileEntityTransportTerminal) console).setTempSlot(slot);
-									chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
-									chipStack.getTagCompound().setInteger("chipDim", player.dimension);
-									chipStack.getTagCompound().setInteger("chipX", x);
-									chipStack.getTagCompound().setInteger("chipY", y);
-									chipStack.getTagCompound().setInteger("chipZ", z);
-									System.out.println("Before Gui");
-									player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, homeX, homeY, homeZ);
-									System.out.println("After Gui");
-									player.swingItem();
-									//play sound good beep
-									return true;
-								}
-								else {
-									//play sound bad beep
-								}
-							}
-					}
-				}
-			}
+		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
+			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
+			return true;
 		}
 		return false;
 	}
@@ -95,14 +92,13 @@ public class ItemTransportTerminalRemote extends Item {
 		return stack;
 	}
 
-	private boolean hasTag(ItemStack stack) {
+	private static boolean hasTag(ItemStack stack) {
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 			return false;
 		}
 		return true;
 	}
-
 
 	@Override
 	@SideOnly(Side.CLIENT)

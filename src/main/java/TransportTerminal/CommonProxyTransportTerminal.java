@@ -1,18 +1,19 @@
 package TransportTerminal;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class CommonProxyTransportTerminal implements IGuiHandler{
-	
-	public static final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1;
-	
+public class CommonProxyTransportTerminal implements IGuiHandler {
+
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1;
+
 	public void registerRenderInformation() {
 	}
-	
+
 	public void registerTileEntities() {
 		registerTileEntity(TileEntityTransportTerminal.class, "transportTerminal");
 	}
@@ -25,16 +26,15 @@ public class CommonProxyTransportTerminal implements IGuiHandler{
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityTransportTerminal) {
+			if (tileentity instanceof TileEntityTransportTerminal)
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
-			}
 		}
-		
+
 		if (ID == GUI_ID_REMOTE) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityTransportTerminal) {
-				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 1);
-			}
+			ItemStack stack = player.getCurrentEquippedItem();
+			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
+			if (tile != null)
+				return new ContainerTerminal(player.inventory, tile, 1);
 		}
 		return null;
 	}
@@ -43,17 +43,17 @@ public class CommonProxyTransportTerminal implements IGuiHandler{
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityTransportTerminal) {
+			if (tileentity instanceof TileEntityTransportTerminal)
 				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity);
-			}
 		}
-	
+
 		if (ID == GUI_ID_REMOTE) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityTransportTerminal) {
-				return new GuiNaming(player.inventory, (TileEntityTransportTerminal) tileentity);
-			}
+			ItemStack stack = player.getCurrentEquippedItem();
+			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
+			if (tile != null)
+				return new ContainerTerminal(player.inventory, tile, 1);
 		}
+
 		return null;
 	}
 }
