@@ -53,7 +53,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler{
 			if (tileentity instanceof TileEntityTransportTerminal) {
 				return new GuiNaming(player.inventory, (TileEntityTransportTerminal) tileentity);
 			}
+		}
+		return null;
 	}
-	return null;
-}
 }
