@@ -44,14 +44,14 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_TERMINAL) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportTerminal)
-				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity);
+				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
 
 		if (ID == GUI_ID_REMOTE) {
 			ItemStack stack = player.getCurrentEquippedItem();
 			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			if (tile != null)
-				return new ContainerTerminal(player.inventory, tile, 1);
+				return new GuiTerminal(player.inventory, tile, 1);
 		}
 
 		return null;
