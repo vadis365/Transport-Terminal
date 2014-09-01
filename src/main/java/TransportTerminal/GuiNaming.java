@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class GuiNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
-	GuiTextField textFieldName;
+	private GuiTextField textFieldName;
 	private final TileEntityTransportTerminal transportInventory;
 
 	public GuiNaming(InventoryPlayer playerInventory, TileEntityTransportTerminal tile) {
@@ -26,10 +26,11 @@ public class GuiNaming extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 		GL11.glColor4f(1, 1, 1, 1);
 		super.mc.renderEngine.bindTexture(GUI_REMOTE);
-		drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, xSize, ySize);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void initGui() {
 		super.initGui();
 		textFieldName = new GuiTextField(fontRendererObj, 20, 15, 136, 20);
@@ -67,15 +68,13 @@ public class GuiNaming extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		if (guibutton instanceof GuiButton) {
+		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
-				if(textFieldName.getText() == "")
+				if (textFieldName.getText() == "")
 					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, "Un-named Location"));
 				else
 					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, textFieldName.getText()));
 				mc.thePlayer.closeScreen();
 			}
-		}
 	}
 }
-

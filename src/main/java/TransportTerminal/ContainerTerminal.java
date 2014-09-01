@@ -10,30 +10,23 @@ public class ContainerTerminal extends Container {
 
 	public int numRows = 2;
 	public String name;
-	private TileEntityTransportTerminal tileTerminal;
+
 	public ContainerTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
-		tileTerminal = tile;
 		int i = (numRows - 4) * 18;
-		int j;
-		int k;
+
 		if (id == 0) {
-		addSlotToContainer(new SlotRemote(tile, 0, 15, 18));
-		addSlotToContainer(new SlotRemote(tile, 1, 15, 54));
+			addSlotToContainer(new SlotRemote(tile, 0, 15, 18));
+			addSlotToContainer(new SlotRemote(tile, 1, 15, 54));
 
-		for (j = 0; j < numRows; ++j) {
-			for (k = 2; k < 9; ++k) {
-				addSlotToContainer(new SlotChip(tile, k + j * 7, 8 + k * 18, 27 + j * 18));
-			}
-		}
+			for (int j = 0; j < numRows; j++)
+				for (int k = 2; k < 9; k++)
+					addSlotToContainer(new SlotChip(tile, k + j * 7, 8 + k * 18, 27 + j * 18));
 
-		for (j = 0; j < 3; ++j) {
-			for (k = 0; k < 9; ++k) {
-				addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 122 + j * 18 + i));
-			}
-		}
-		for (j = 0; j < 9; ++j) {
-			addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
-		}
+			for (int j = 0; j < 3; j++)
+				for (int k = 0; k < 9; k++)
+					addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 122 + j * 18 + i));
+			for (int j = 0; j < 9; j++)
+				addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
 		}
 	}
 
