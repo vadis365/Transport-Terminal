@@ -39,32 +39,31 @@ public class ItemTransportTerminalRemote extends Item {
 	}
 
 	public static TileEntityTransportTerminal getTile(EntityPlayer player, ItemStack stack, int x, int y, int z) {
-		if (hasTag(stack) && player.isSneaking())
-			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim")) {
-				World world = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
-				if (world == null)
-					return null;
+		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
+			World world = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+			if (world == null)
+				return null;
 
-				int homeX = stack.getTagCompound().getInteger("homeX");
-				int homeY = stack.getTagCompound().getInteger("homeY");
-				int homeZ = stack.getTagCompound().getInteger("homeZ");
+			int homeX = stack.getTagCompound().getInteger("homeX");
+			int homeY = stack.getTagCompound().getInteger("homeY");
+			int homeZ = stack.getTagCompound().getInteger("homeZ");
 
-				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world.getTileEntity(homeX, homeY, homeZ);
-				if (tile != null)
-					for (int slot = 2; slot < 16; slot++)
-						if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
-							ItemStack chipStack = tile.getStackInSlot(slot);
-							if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
-								tile.setTempSlot(slot);
-								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
-								chipStack.getTagCompound().setInteger("chipDim", player.dimension);
-								chipStack.getTagCompound().setInteger("chipX", x);
-								chipStack.getTagCompound().setInteger("chipY", y);
-								chipStack.getTagCompound().setInteger("chipZ", z);
-								return tile;
-							}
+			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world.getTileEntity(homeX, homeY, homeZ);
+			if (tile != null)
+				for (int slot = 2; slot < 16; slot++)
+					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
+						ItemStack chipStack = tile.getStackInSlot(slot);
+						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
+							tile.setTempSlot(slot);
+							chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
+							chipStack.getTagCompound().setInteger("chipDim", player.dimension);
+							chipStack.getTagCompound().setInteger("chipX", x);
+							chipStack.getTagCompound().setInteger("chipY", y);
+							chipStack.getTagCompound().setInteger("chipZ", z);
+							return tile;
 						}
-			}
+					}
+		}
 
 		return null;
 	}
