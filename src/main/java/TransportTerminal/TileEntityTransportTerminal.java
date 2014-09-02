@@ -95,8 +95,8 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 				inventory[j] = ItemStack.loadItemStackFromNBT(data);
 			}
 		}
-	//	tempSlot = nbt.getInteger("tempSlot");
-	//	chipName = nbt.getString("chipName");
+		tempSlot = nbt.getInteger("tempSlot");
+		chipName = nbt.getString("chipName");
 	}
 
 	@Override
@@ -117,8 +117,8 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 		}
 		
 		nbt.setTag("Items", tags);
-	//	nbt.setInteger("tempSlot", tempSlot);
-	//	nbt.setString("chipName", chipName);
+		nbt.setInteger("tempSlot", tempSlot);
+		nbt.setString("chipName", chipName);
 	}
 
 	@Override
