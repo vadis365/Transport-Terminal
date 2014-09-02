@@ -13,7 +13,7 @@ public class NamingMessage implements IMessage {
 	public NamingMessage() {}
 
 	public NamingMessage(EntityPlayer player, int x, int y, int z, String string) {
-		this.dimension = player.dimension;
+		this.dimension = player.getCurrentEquippedItem().getTagCompound().getInteger("dim");
 		this.entityID = player.getEntityId();
 		this.name = string;
 		this.tileX = x;

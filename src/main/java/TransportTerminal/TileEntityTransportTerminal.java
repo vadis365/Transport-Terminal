@@ -161,6 +161,8 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 		ItemStack is = getStackInSlot(getTempSlot());
 		if (is != null && is.getItem() == TransportTerminal.transportTerminalChip)
 				is.getTagCompound().setString("description", chipName);
+		if(!worldObj.isRemote)
+			System.out.println("Should be naming : "+ is + " In slot: "+getTempSlot()+ " " + chipName );
 	}
 
 	public int getTempSlot() {
