@@ -12,7 +12,7 @@ public class NamingMessage implements IMessage {
 
 	public NamingMessage() {}
 
-	public NamingMessage(EntityPlayer player, int x, int y, int z, String string) { 
+	public NamingMessage(EntityPlayer player, int x, int y, int z, String string) {
 		this.dimension = player.dimension;
 		this.entityID = player.getEntityId();
 		this.name = string;
