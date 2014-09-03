@@ -1,17 +1,16 @@
 package TransportTerminal;
 
-import java.util.List;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -19,6 +18,7 @@ public class BlockTransportTerminal extends BlockContainer {
 
 	protected BlockTransportTerminal() {
 		super(Material.iron);
+		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		setCreativeTab(CreativeTabs.tabTools);
 	}
 	
@@ -46,7 +46,6 @@ public class BlockTransportTerminal extends BlockContainer {
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack is) {
 		int rot = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 		world.setBlockMetadataWithNotify(x, y, z, rot == 0 ? 2 : rot == 1 ? 5 : rot == 2 ? 3 : 4, 3);
-		System.out.println("Metadata is: "+ world.getBlockMetadata(x, y, z));
 	}
 	
 	@Override
@@ -66,38 +65,25 @@ public class BlockTransportTerminal extends BlockContainer {
 	}
 	
 	@Override
-	@SuppressWarnings("rawtypes")
-	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB box, List list, Entity entity) {
-		float pixel = 0.0625F; // 1 pixel
-		int meta = world.getBlockMetadata(x, y, z);
-
-		if (meta == 2) {
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, pixel * 2, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
-			setBlockBounds(0.0F, 0.0F, pixel * 13, 1.0F, 1.0F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if (tile != null && tile instanceof TileEntityTransportTerminal) {
+			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++) {
+				ItemStack is = ((IInventory) tile).getStackInSlot(i);
+				if (is != null) {
+					if (!world.isRemote && world.getGameRules().getGameRuleBooleanValue("doTileDrops")) {
+						float f = 0.7F;
+						double d0 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+						double d1 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+						double d2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
+						EntityItem entityitem = new EntityItem(world, x + d0, y + d1, z + d2, is);
+						entityitem.delayBeforeCanPickup = 10;
+						world.spawnEntityInWorld(entityitem);
+					}
+				}
+			}
 		}
-		
-		if (meta == 3) {
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, pixel * 2, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, pixel * 3);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
-		}
-		
-		if (meta == 4) {
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, pixel * 2, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
-			setBlockBounds(pixel * 13, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);	
-		}
-		
-		if (meta == 5) {
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, pixel * 2, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
-			setBlockBounds(0.0F, 0.0F, 0.0F, pixel * 3, 1.0F, 1.0F);
-			super.addCollisionBoxesToList(world, x, y, z, box, list, entity);
-		}
-		//setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		world.setBlockToAir(x, y, z);
+		super.breakBlock(world, x, y, z, block, meta);
 	}
 }
