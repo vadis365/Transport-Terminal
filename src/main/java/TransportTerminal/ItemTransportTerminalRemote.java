@@ -100,7 +100,7 @@ public class ItemTransportTerminalRemote extends Item {
 			player.swingItem();
 			int newDim = stack.getTagCompound().getInteger("dim");
 			TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
-			//player.worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+			player.worldObj.playSoundEffect(x, y, z, "transportterminal:terminalteleportsound", 1.0F, 1.0F);
 		}
 		return stack;
 	}
