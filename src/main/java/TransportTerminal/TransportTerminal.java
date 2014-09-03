@@ -2,6 +2,7 @@ package TransportTerminal;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.ForgeChunkManager;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -51,5 +52,6 @@ public class TransportTerminal {
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
 		networkWrapper.registerMessage(TeleportPacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
 		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
+		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 }

@@ -7,12 +7,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemTransportTerminalRemote extends Item {
+
+	private Ticket ticket;
 
 	public ItemTransportTerminalRemote() {
 		super();
@@ -66,13 +72,19 @@ public class ItemTransportTerminalRemote extends Item {
 						}
 					}
 		}
-
 		return null;
 	}
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
+			WorldServer world2 = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
+		    if (ticket == null)
+		        ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
+
+		    if (this.ticket != null)
+		    	ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));
+
 			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 			return true;
 		}

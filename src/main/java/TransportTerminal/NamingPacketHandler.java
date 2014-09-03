@@ -22,13 +22,8 @@ public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMess
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				world = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
 				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
-				System.out.println("Sending Name: "+ message.name +" To Dimension: "+player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
-				if(console !=null) {
-					System.out.println("Found "+ console +" At X: "+message.tileX+" Y: "+message.tileY+" Z: "+message.tileZ);
+				if(console !=null)
 					console.setName(message.name);
-					}
-				else
-					System.out.println("Decided not to send Name: "+ message.name);
 			}
 		}
 		return null;
