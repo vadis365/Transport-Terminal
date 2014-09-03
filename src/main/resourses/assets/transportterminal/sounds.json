@@ -1,6 +1,5 @@
 {
-"transportteleportsound": {"category": "block","sounds":["transportteleportsound"]},
-"transportoksound": {"category": "player","sounds":
-["transportoksound"]},
-"transporterrorsound": {"category": "player","sounds": ["transporterrorsound"]}
+"teleportsound": {"category": "block","sounds":["teleportsound"]},
+"oksound": {"category": "player","sounds":["oksound"]},
+"errorsound": {"category": "player","sounds":["errorsound"]}
 }
