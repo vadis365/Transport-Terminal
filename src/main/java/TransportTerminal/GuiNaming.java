@@ -37,6 +37,7 @@ public class GuiNaming extends GuiContainer {
 		textFieldName = new GuiTextField(fontRendererObj, 20, 15, 136, 20);
 		textFieldName.setMaxStringLength(20);
 		textFieldName.setFocused(false);
+		textFieldName.setTextColor(5635925);
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;

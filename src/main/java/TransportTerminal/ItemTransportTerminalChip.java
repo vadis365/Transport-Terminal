@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -23,7 +24,7 @@ public class ItemTransportTerminalChip extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		if (hasTag(stack)) {
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("chipDim")) {
-				list.add(stack.getTagCompound().getString("description"));
+				list.add(EnumChatFormatting.GREEN + stack.getTagCompound().getString("description"));
 				list.add("Dimension: " + stack.getTagCompound().getInteger("chipDim")  + " " + stack.getTagCompound().getString("dimName"));
 				list.add("Target X: " + stack.getTagCompound().getInteger("chipX"));
 				list.add("Target Y: " + stack.getTagCompound().getInteger("chipY"));
