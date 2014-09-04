@@ -60,6 +60,7 @@ public class ItemTransportTerminalRemote extends Item {
 					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
+							player.worldObj.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 							if (!world.isRemote) {
 								tile.setTempSlot(slot);
 								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
@@ -70,6 +71,8 @@ public class ItemTransportTerminalRemote extends Item {
 							}
 							return tile;
 						}
+						else
+							player.worldObj.playSoundEffect(x, y, z, "transportterminal:errorsound", 1.0F, 1.0F);	
 					}
 		}
 		return null;
@@ -84,7 +87,6 @@ public class ItemTransportTerminalRemote extends Item {
 
 		    if (this.ticket != null)
 		    	ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));
-
 			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 			return true;
 		}
@@ -100,7 +102,6 @@ public class ItemTransportTerminalRemote extends Item {
 			player.swingItem();
 			int newDim = stack.getTagCompound().getInteger("dim");
 			TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
-			player.worldObj.playSoundEffect(x, y, z, "transportterminal:teleportsound", 1.0F, 1.0F);
 		}
 		return stack;
 	}
