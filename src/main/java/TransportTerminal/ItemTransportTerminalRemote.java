@@ -45,22 +45,23 @@ public class ItemTransportTerminalRemote extends Item {
 
 	public static TileEntityTransportTerminal getTile(EntityPlayer player, ItemStack stack, int x, int y, int z) {
 		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
-			World world = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
-			if (world == null)
+			World world = DimensionManager.getWorld(player.dimension);
+			World world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+			if (world2 == null)
 				return null;
 
 			int homeX = stack.getTagCompound().getInteger("homeX");
 			int homeY = stack.getTagCompound().getInteger("homeY");
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
 
-			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world.getTileEntity(homeX, homeY, homeZ);
+			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
 					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
-							player.worldObj.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
-							if (!world.isRemote) {
+							world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
+							if (!world2.isRemote) {
 								tile.setTempSlot(slot);
 								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
 								chipStack.getTagCompound().setInteger("chipDim", player.dimension);
@@ -70,8 +71,8 @@ public class ItemTransportTerminalRemote extends Item {
 							}
 							return tile;
 						}
-						else
-							player.worldObj.playSoundEffect(x, y, z, "transportterminal:errorsound", 1.0F, 1.0F);	
+						else if (!world2.isRemote && chipStack.stackTagCompound != null && chipStack.stackTagCompound.hasKey("chipX"))
+							world.playSoundEffect(x, y, z, "transportterminal:errorsound", 1.0F, 1.0F);	
 					}
 		}
 		return null;
