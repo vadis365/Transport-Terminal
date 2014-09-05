@@ -1,6 +1,7 @@
 package TransportTerminal;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeChunkManager;
 import cpw.mods.fml.common.Mod;
@@ -28,7 +29,7 @@ public class TransportTerminal {
 	public static Item transportTerminalChip;
 	public static Block transportTerminal;
 	public static SimpleNetworkWrapper networkWrapper;
-
+	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
 		proxy.registerRenderInformation();

@@ -2,7 +2,6 @@ package TransportTerminal;
 
 import java.util.List;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,7 +22,7 @@ public class ItemTransportTerminalRemote extends Item {
 	public ItemTransportTerminalRemote() {
 		super();
 		setMaxStackSize(1);
-		setCreativeTab(CreativeTabs.tabTools);
+		setCreativeTab(TransportTerminal.creativeTabsTT);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

@@ -3,7 +3,6 @@ package TransportTerminal;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +18,7 @@ public class BlockTransportTerminal extends BlockContainer {
 	protected BlockTransportTerminal() {
 		super(Material.iron);
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-		setCreativeTab(CreativeTabs.tabTools);
+		setCreativeTab(TransportTerminal.creativeTabsTT);
 	}
 	
 	@Override

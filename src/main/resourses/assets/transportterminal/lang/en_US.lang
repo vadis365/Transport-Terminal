@@ -1,3 +1,5 @@
 item.transportTerminalRemote.name=Transport Terminal Remote
 item.transportTerminalChip.name=Transport Chip
 tile.transportTerminal.name=Transport Terminal Console
+
+itemGroup.TransportTerminals=Transport Terminals
