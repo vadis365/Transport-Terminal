@@ -43,6 +43,28 @@ public class ItemTransportTerminalRemote extends Item {
 			}
 	}
 
+	public static boolean foundFreeChip(EntityPlayer player, ItemStack stack, int x, int y, int z) {
+		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
+			World world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+			if (world2 == null)
+				return false;
+
+			int homeX = stack.getTagCompound().getInteger("homeX");
+			int homeY = stack.getTagCompound().getInteger("homeY");
+			int homeZ = stack.getTagCompound().getInteger("homeZ");
+
+			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
+			if (tile != null)
+				for (int slot = 2; slot < 16; slot++)
+					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
+						ItemStack chipStack = tile.getStackInSlot(slot);
+						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX"))
+							return true;
+					}
+		}
+		return false;
+	}
+
 	public static TileEntityTransportTerminal getTile(EntityPlayer player, ItemStack stack, int x, int y, int z) {
 		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
 			World world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
@@ -69,7 +91,7 @@ public class ItemTransportTerminalRemote extends Item {
 							}
 							return tile;
 						}
-				}
+					}
 		}
 		return null;
 	}
@@ -78,11 +100,11 @@ public class ItemTransportTerminalRemote extends Item {
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
 			WorldServer world2 = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
-		    if (ticket == null)
-		        ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
+			if (ticket == null)
+				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
-		    if (this.ticket != null)
-		    	ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));
+			if (ticket != null)
+				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));
 			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 			return true;
 		}
