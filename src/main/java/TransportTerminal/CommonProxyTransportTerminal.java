@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -46,10 +47,14 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_REMOTE) {
 			ItemStack stack = player.getCurrentEquippedItem();
 			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
-			if (tile != null)
+			world = DimensionManager.getWorld(player.dimension);
+			if (tile != null) {
+				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 				return new GuiNaming(player.inventory, tile);
+				}
+			else
+				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
 		}
-
 		return null;
 	}
 }
