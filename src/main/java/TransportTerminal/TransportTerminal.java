@@ -47,7 +47,6 @@ public class TransportTerminal {
 	}
 
 	@EventHandler
-	@SideOnly(Side.CLIENT)
 	public void preInit(FMLPreInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
