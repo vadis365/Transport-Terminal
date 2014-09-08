@@ -59,6 +59,8 @@ public class GuiNaming extends GuiContainer {
 		textFieldName.textboxKeyTyped(key, par2);
 		if (!(par2 == Keyboard.KEY_E && textFieldName.isFocused()))
 			super.keyTyped(key, par2);
+		if ((par2 == Keyboard.KEY_ESCAPE))
+			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, "Un-named Location"));
 	}
 
 	@Override
