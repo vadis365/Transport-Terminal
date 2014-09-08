@@ -28,30 +28,31 @@ public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, I
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, message.chipDim, new TransportTerminalTeleporter(worldserver));
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, message.chipDim, new TransportTerminalTeleporter(worldserver));
 				}
-				Block blockType = world.getBlock(message.chipX, message.chipY, message.chipZ);
-				int blockMeta = world.getBlockMetadata(message.chipX, message.chipY, message.chipZ);
+				World world2 = DimensionManager.getWorld(message.chipDim);
+				Block blockType = world2.getBlock(message.chipX, message.chipY, message.chipZ);
+				int blockMeta = world2.getBlockMetadata(message.chipX, message.chipY, message.chipZ);
 				if(blockType instanceof BlockTransportTerminal) {
 					switch (blockMeta) {
 					case 2:
-						if(world.isAirBlock(message.chipX, message.chipY, message.chipZ -1) && world.isAirBlock(message.chipX, message.chipY + 1, message.chipZ - 1)) {
+						if(world2.isAirBlock(message.chipX, message.chipY, message.chipZ -1) && world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ - 1)) {
 							player.playerNetServerHandler.setPlayerLocation(message.chipX + 0.5D, message.chipY, message.chipZ - 0.5D, 0, player.rotationPitch);
 							player.worldObj.playSoundEffect(message.chipX, message.chipY, message.chipZ, "transportterminal:teleportsound", 1.0F, 1.0F);
 						}
 						break;
 					case 3:
-						if(world.isAirBlock(message.chipX, message.chipY, message.chipZ +1) && world.isAirBlock(message.chipX, message.chipY + 1, message.chipZ + 1)) {
+						if(world2.isAirBlock(message.chipX, message.chipY, message.chipZ +1) && world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ + 1)) {
 							player.playerNetServerHandler.setPlayerLocation(message.chipX + 0.5D, message.chipY, message.chipZ + 1.5D, 180, player.rotationPitch);
 							player.worldObj.playSoundEffect(message.chipX, message.chipY, message.chipZ, "transportterminal:teleportsound", 1.0F, 1.0F);
 						}
 						break;
 					case 4:
-						if(world.isAirBlock(message.chipX - 1, message.chipY, message.chipZ) && world.isAirBlock(message.chipX - 1, message.chipY + 1, message.chipZ)) {
+						if(world2.isAirBlock(message.chipX - 1, message.chipY, message.chipZ) && world2.isAirBlock(message.chipX - 1, message.chipY + 1, message.chipZ)) {
 							player.playerNetServerHandler.setPlayerLocation(message.chipX - 0.5D, message.chipY, message.chipZ + 0.5D, 270, player.rotationPitch);
 							player.worldObj.playSoundEffect(message.chipX, message.chipY, message.chipZ, "transportterminal:teleportsound", 1.0F, 1.0F);
 						}
 						break;
 					case 5:
-						if(world.isAirBlock(message.chipX + 1, message.chipY, message.chipZ) && world.isAirBlock(message.chipX + 1, message.chipY + 1, message.chipZ)) {
+						if(world2.isAirBlock(message.chipX + 1, message.chipY, message.chipZ) && world2.isAirBlock(message.chipX + 1, message.chipY + 1, message.chipZ)) {
 							player.playerNetServerHandler.setPlayerLocation(message.chipX + 1.5D, message.chipY, message.chipZ + 0.5D, 90, player.rotationPitch);
 							player.worldObj.playSoundEffect(message.chipX, message.chipY, message.chipZ, "transportterminal:teleportsound", 1.0F, 1.0F);
 						}
@@ -59,7 +60,7 @@ public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, I
 					}
 				}
 				else {
-					if(world.isAirBlock(message.chipX, message.chipY + 1, message.chipZ) && world.isAirBlock(message.chipX, message.chipY + 2, message.chipZ)) {
+					if(world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ) && world2.isAirBlock(message.chipX, message.chipY + 2, message.chipZ)) {
 						player.playerNetServerHandler.setPlayerLocation(message.chipX + 0.5D, message.chipY + 1.0D, message.chipZ + 0.5D, player.rotationYaw, player.rotationPitch);
 						player.worldObj.playSoundEffect(message.chipX, message.chipY, message.chipZ, "transportterminal:teleportsound", 1.0F, 1.0F);
 					}
