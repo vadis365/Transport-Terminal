@@ -14,7 +14,6 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = "transportterminal", name = "Transport Terminal", version = "0.99a")
 public class TransportTerminal {
@@ -30,6 +29,7 @@ public class TransportTerminal {
 	public static Block transportTerminal;
 	public static SimpleNetworkWrapper networkWrapper;
 	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
+
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
 		proxy.registerRenderInformation();
