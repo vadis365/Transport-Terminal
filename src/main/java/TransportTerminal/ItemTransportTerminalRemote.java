@@ -113,11 +113,10 @@ public class ItemTransportTerminalRemote extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!world.isRemote && !player.isSneaking() && stack.stackTagCompound.hasKey("homeX")) {
+		if (world.isRemote && !player.isSneaking() && stack.stackTagCompound.hasKey("homeX")) {
 			int x = stack.getTagCompound().getInteger("homeX");
 			int y = stack.getTagCompound().getInteger("homeY");
 			int z = stack.getTagCompound().getInteger("homeZ");
-			player.swingItem();
 			int newDim = stack.getTagCompound().getInteger("dim");
 			TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
 		}
