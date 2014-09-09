@@ -14,15 +14,13 @@ public class GuiNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
 	private GuiTextField textFieldName;
-	private final int x, y, z;
+	private final TileEntityTransportTerminal transportInventory;
 
-	public GuiNaming(InventoryPlayer playerInventory, int x, int y, int z) {
-		super(new ContainerTerminal(playerInventory, null, 1));
+	public GuiNaming(InventoryPlayer playerInventory, TileEntityTransportTerminal tile) {
+		super(new ContainerTerminal(playerInventory, tile, 1));
 		xSize = 176;
 		ySize = 51;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		transportInventory = tile;
 	}
 
 	@Override
@@ -61,8 +59,8 @@ public class GuiNaming extends GuiContainer {
 		textFieldName.textboxKeyTyped(key, par2);
 		if (!(par2 == Keyboard.KEY_E && textFieldName.isFocused()))
 			super.keyTyped(key, par2);
-		if (par2 == Keyboard.KEY_ESCAPE)
-			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, "Un-named Location"));
+		if ((par2 == Keyboard.KEY_ESCAPE))
+			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, "Un-named Location"));
 	}
 
 	@Override
@@ -76,9 +74,9 @@ public class GuiNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, "Un-named Location"));
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, "Un-named Location"));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, textFieldName.getText()));
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, textFieldName.getText()));
 				mc.thePlayer.closeScreen();
 			}
 	}
