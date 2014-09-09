@@ -64,6 +64,7 @@ public class ItemTransportTerminalRemote extends Item {
 		}
 		return false;
 	}
+	
 
 	public static TileEntityTransportTerminal getTile(EntityPlayer player, ItemStack stack, int x, int y, int z) {
 		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
