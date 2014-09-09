@@ -40,9 +40,4 @@ public class NamingMessage implements IMessage {
 		tileY = buf.readInt();
 		tileZ = buf.readInt();
 	}
-
-	@Override
-	public String toString() {
-		return "Message: " + dimension + " - " + tileX + ", " + tileY + ", " + tileZ + " - " + name;
-	}
 }
