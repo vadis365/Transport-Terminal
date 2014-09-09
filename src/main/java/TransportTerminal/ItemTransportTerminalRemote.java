@@ -98,15 +98,14 @@ public class ItemTransportTerminalRemote extends Item {
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (hasTag(stack) && player.isSneaking()) {
+		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
 			WorldServer world2 = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
 			if (ticket == null)
 				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));
-			if (!world.isRemote)
-				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
+			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 			return true;
 		}
 		return false;
