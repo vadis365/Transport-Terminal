@@ -62,7 +62,7 @@ public class GuiNaming extends GuiContainer {
 		if (!(par2 == Keyboard.KEY_E && textFieldName.isFocused()))
 			super.keyTyped(key, par2);
 		if (par2 == Keyboard.KEY_ESCAPE)
-			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, "Un-named Location"));
+			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, x + ", " + y + ", " + z));
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class GuiNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, "Un-named Location"));
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, x + ", " + y + ", " + z));
 				else
 					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, textFieldName.getText()));
 				mc.thePlayer.closeScreen();
