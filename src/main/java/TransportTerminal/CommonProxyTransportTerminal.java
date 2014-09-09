@@ -34,11 +34,12 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_REMOTE) {
 			ItemStack stack = player.getCurrentEquippedItem();
 			world = DimensionManager.getWorld(player.dimension);
-			if (ItemTransportTerminalRemote.foundFreeChip(player, stack)) {
+			if (ItemTransportTerminalRemote.foundFreeChip(player, stack))
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
-				return new ContainerTerminal(player.inventory, null, 1);
-			} else
+			else
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
+
+			return new ContainerTerminal(player.inventory, null, 1);
 		}
 
 		return null;
@@ -52,11 +53,8 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
 
-		if (ID == GUI_ID_REMOTE) {
-			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, player.getCurrentEquippedItem(), x, y, z);
-			if (tile != null)
-				return new GuiNaming(player.inventory);
-		}
+		if (ID == GUI_ID_REMOTE)
+			return new GuiNaming(player.inventory);
 
 		return null;
 	}
