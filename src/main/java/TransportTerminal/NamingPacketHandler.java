@@ -10,14 +10,16 @@ public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMess
 
 	@Override
 	public IMessage onMessage(NamingMessage message, MessageContext ctx) {
+		System.out.println(message);
 
 		World world = DimensionManager.getWorld(message.dimension);
-
+		System.out.println(world);
 		if (world == null)
 			return null;
 
 		else if (!world.isRemote) {
 			TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
+			System.out.println(console);
 			if (console != null)
 				console.setName(message.name);
 		}
