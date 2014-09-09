@@ -34,7 +34,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_REMOTE) {
 			ItemStack stack = player.getCurrentEquippedItem();
 			world = DimensionManager.getWorld(player.dimension);
-			if (ItemTransportTerminalRemote.foundFreeChip(player, stack))
+			if (ItemTransportTerminalRemote.foundFreeChip(player, stack, x, y, z))
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 			else
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
@@ -54,7 +54,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		}
 
 		if (ID == GUI_ID_REMOTE)
-			return new GuiNaming(player.inventory);
+			return new GuiNaming(player.inventory, x, y, z);
 
 		return null;
 	}

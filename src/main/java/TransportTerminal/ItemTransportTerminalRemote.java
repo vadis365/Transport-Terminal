@@ -43,7 +43,7 @@ public class ItemTransportTerminalRemote extends Item {
 			}
 	}
 
-	public static boolean foundFreeChip(EntityPlayer player, ItemStack stack) {
+	public static boolean foundFreeChip(EntityPlayer player, ItemStack stack, int x, int y, int z) {
 		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			if (world2 == null)

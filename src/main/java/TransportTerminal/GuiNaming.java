@@ -3,7 +3,6 @@ package TransportTerminal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -15,13 +14,15 @@ public class GuiNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
 	private GuiTextField textFieldName;
-	private final EntityPlayer player;
+	private final int x, y, z;
 
-	public GuiNaming(InventoryPlayer playerInventory) {
+	public GuiNaming(InventoryPlayer playerInventory, int x, int y, int z) {
 		super(new ContainerTerminal(playerInventory, null, 1));
 		xSize = 176;
 		ySize = 51;
-		player = playerInventory.player;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class GuiNaming extends GuiContainer {
 		if (!(par2 == Keyboard.KEY_E && textFieldName.isFocused()))
 			super.keyTyped(key, par2);
 		if (par2 == Keyboard.KEY_ESCAPE)
-			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, "Un-named Location"));
+			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, "Un-named Location"));
 	}
 
 	@Override
@@ -75,9 +76,9 @@ public class GuiNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, "Un-named Location"));
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, "Un-named Location"));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, textFieldName.getText()));
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, x, y, z, textFieldName.getText()));
 				mc.thePlayer.closeScreen();
 			}
 	}
