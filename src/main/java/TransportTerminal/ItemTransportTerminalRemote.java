@@ -43,7 +43,7 @@ public class ItemTransportTerminalRemote extends Item {
 			}
 	}
 
-	public static boolean foundFreeChip(EntityPlayer player, ItemStack stack, int x, int y, int z) {
+	public static boolean foundFreeChip(EntityPlayer player, ItemStack stack) {
 		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			if (world2 == null)
@@ -70,7 +70,7 @@ public class ItemTransportTerminalRemote extends Item {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			if (world2 == null)
 				return null;
-
+			System.out.println("Chip NBT setting method");
 			int homeX = stack.getTagCompound().getInteger("homeX");
 			int homeY = stack.getTagCompound().getInteger("homeY");
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
@@ -100,14 +100,23 @@ public class ItemTransportTerminalRemote extends Item {
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
 			WorldServer world2 = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
+			//if (player.dimension !=player.getCurrentEquippedItem().getTagCompound().getInteger("dim")) {
 			if (ticket == null)
 				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
 			if (ticket != null)
-				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));
-			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
-			return true;
-		}
+				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(player.getCurrentEquippedItem().getTagCompound().getInteger("homeX"), player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ")));
+			}
+			if (foundFreeChip(player, stack)) {
+				if(stack.getTagCompound().getByte("recordState") != 1) {
+					stack.getTagCompound().setByte("recordState", (byte) 1);
+					System.out.println("Record State is: "+ player.getCurrentEquippedItem().getTagCompound().getByte("recordState"));
+				}
+				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
+				System.out.println("found free chip gui should open");
+				return true;
+			}
+		//}
 		return false;
 	}
 
@@ -138,5 +147,9 @@ public class ItemTransportTerminalRemote extends Item {
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim"))
 				return true;
 		return false;
+	}
+	
+	public void releaseChunkLoad() {
+		
 	}
 }

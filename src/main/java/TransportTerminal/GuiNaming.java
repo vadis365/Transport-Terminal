@@ -3,6 +3,7 @@ package TransportTerminal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -14,13 +15,13 @@ public class GuiNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
 	private GuiTextField textFieldName;
-	private final TileEntityTransportTerminal transportInventory;
 
-	public GuiNaming(InventoryPlayer playerInventory, TileEntityTransportTerminal tile) {
-		super(new ContainerTerminal(playerInventory, tile, 1));
+	private final EntityPlayer player;
+	public GuiNaming(InventoryPlayer playerInventory) {
+		super(new ContainerTerminal(playerInventory, null, 1));
 		xSize = 176;
 		ySize = 51;
-		transportInventory = tile;
+		player = playerInventory.player;
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class GuiNaming extends GuiContainer {
 		if (!(par2 == Keyboard.KEY_E && textFieldName.isFocused()))
 			super.keyTyped(key, par2);
 		if ((par2 == Keyboard.KEY_ESCAPE))
-			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, "Un-named Location"));
+			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, "Un-named Location"));
 	}
 
 	@Override
@@ -74,10 +75,10 @@ public class GuiNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, "Un-named Location"));
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, "Un-named Location"));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(mc.thePlayer, transportInventory.xCoord, transportInventory.yCoord, transportInventory.zCoord, textFieldName.getText()));
-				mc.thePlayer.closeScreen();
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, textFieldName.getText()));
+				player.closeScreen();
 			}
 	}
 }

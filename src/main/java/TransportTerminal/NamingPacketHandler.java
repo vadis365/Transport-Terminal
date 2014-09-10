@@ -24,6 +24,8 @@ public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMess
 				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 				if(console !=null)
 					console.setName(message.name);
+				player.getCurrentEquippedItem().getTagCompound().setByte("recordState", (byte) 0);
+				System.out.println("Record State is: "+ player.getCurrentEquippedItem().getTagCompound().getByte("recordState"));
 			}
 		}
 		return null;

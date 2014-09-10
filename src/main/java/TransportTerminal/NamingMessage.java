@@ -12,13 +12,13 @@ public class NamingMessage implements IMessage {
 
 	public NamingMessage() {}
 
-	public NamingMessage(EntityPlayer player, int x, int y, int z, String string) {
-		this.dimension = player.getCurrentEquippedItem().getTagCompound().getInteger("dim");
-		this.entityID = player.getEntityId();
-		this.name = string;
-		this.tileX = x;
-		this.tileY = y;
-		this.tileZ = z;
+	public NamingMessage(EntityPlayer player, String string) {
+		dimension = player.getCurrentEquippedItem().getTagCompound().getInteger("dim");
+		entityID = player.getEntityId();
+		name = string;
+		tileX = player.getCurrentEquippedItem().getTagCompound().getInteger("homeX");
+		tileY = player.getCurrentEquippedItem().getTagCompound().getInteger("homeY");
+		tileZ = player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ");;
 	 }
 	 
 	 /** enconding */
@@ -35,12 +35,12 @@ public class NamingMessage implements IMessage {
 	/** decoding */
 	@Override
 	public void fromBytes(ByteBuf buf) { 
-		this.dimension = buf.readInt();
-		this.entityID = buf.readInt();
-		this.name = ByteBufUtils.readUTF8String(buf); ;
-		this.tileX = buf.readInt();
-		this.tileY = buf.readInt();
-		this.tileZ = buf.readInt();
+		dimension = buf.readInt();
+		entityID = buf.readInt();
+		name = ByteBufUtils.readUTF8String(buf); ;
+		tileX = buf.readInt();
+		tileY = buf.readInt();
+		tileZ = buf.readInt();
 	 }
 
 	}
