@@ -15,13 +15,13 @@ public class GuiNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
 	private GuiTextField textFieldName;
+	private EntityPlayer playerSent;
 
-	private final EntityPlayer player;
-	public GuiNaming(InventoryPlayer playerInventory) {
-		super(new ContainerTerminal(playerInventory, null, 1));
+	public GuiNaming(EntityPlayer player) {
+		super(new ContainerTerminal(player.inventory, null, 1));
 		xSize = 176;
 		ySize = 51;
-		player = playerInventory.player;
+		playerSent = player;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class GuiNaming extends GuiContainer {
 		if (!(par2 == Keyboard.KEY_E && textFieldName.isFocused()))
 			super.keyTyped(key, par2);
 		if ((par2 == Keyboard.KEY_ESCAPE))
-			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, "Un-named Location"));
+			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, "Un-named Location"));
 	}
 
 	@Override
@@ -75,10 +75,10 @@ public class GuiNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, "Un-named Location"));
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, "Un-named Location"));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(player, textFieldName.getText()));
-				player.closeScreen();
+					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, textFieldName.getText()));
+				playerSent.closeScreen();
 			}
 	}
 }

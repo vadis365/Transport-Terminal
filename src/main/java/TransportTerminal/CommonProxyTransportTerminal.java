@@ -57,9 +57,9 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 
 		if (ID == GUI_ID_REMOTE) {
 			ItemStack stack = player.getCurrentEquippedItem();
-			System.out.println("Record State Client: "+ stack.getTagCompound().getByte("recordState"));
 			if (stack.getTagCompound().getByte("recordState") != 0)
-				return new GuiNaming(player.inventory);
+				System.out.println("Just Before the gui is opened");
+				return new GuiNaming(player);
 		}
 		return null;
 	}
