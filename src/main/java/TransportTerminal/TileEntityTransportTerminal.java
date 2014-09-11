@@ -69,7 +69,6 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 			setInventorySlotContents(1, stack);
 			if (!stack.hasTagCompound()) {
 				stack.setTagCompound(new NBTTagCompound());
-				stack.getTagCompound().setByte("recordState", (byte) 0);
 				stack.getTagCompound().setInteger("homeX", xCoord);
 				stack.getTagCompound().setInteger("homeY", yCoord);
 				stack.getTagCompound().setInteger("homeZ", zCoord);
