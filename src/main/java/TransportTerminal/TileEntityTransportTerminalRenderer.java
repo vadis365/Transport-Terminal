@@ -14,8 +14,7 @@ public class TileEntityTransportTerminalRenderer extends TileEntitySpecialRender
 	public ResourceLocation texture = new ResourceLocation("transportterminal:textures/special/tiles/transportTerminal.png");
 	public ModelTransportTerminal model = new ModelTransportTerminal();
 
-	public TileEntityTransportTerminalRenderer() {
-	}
+	public TileEntityTransportTerminalRenderer() {}
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTickTime) {
@@ -25,8 +24,7 @@ public class TileEntityTransportTerminalRenderer extends TileEntitySpecialRender
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x + 0.5F, (float) y +1.5F, (float) z + 0.5F);
 		GL11.glScalef(1F, -1F, -1F);
-		switch (meta)
-		{
+		switch (meta) {
 			case 2:
 				GL11.glRotatef(180F, 0.0F, 1F, 0F);
 				break;

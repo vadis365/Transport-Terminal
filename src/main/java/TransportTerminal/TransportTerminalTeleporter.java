@@ -11,6 +11,5 @@ public class TransportTerminalTeleporter extends Teleporter {
 	}
 
 	@Override
-	public void placeInPortal(Entity pEntity, double posX, double posY, double posZ, float rotationYaw) {
-	}
+	public void placeInPortal(Entity pEntity, double posX, double posY, double posZ, float rotationYaw) {}
 }

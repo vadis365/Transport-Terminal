@@ -99,19 +99,23 @@ public class ItemTransportTerminalRemote extends Item {
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
-			WorldServer world2 = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
-			//if (player.dimension !=player.getCurrentEquippedItem().getTagCompound().getInteger("dim")) {
+			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+
 			if (ticket == null)
 				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
 			}
+		
 			if (foundFreeChip(player, stack)) {
+				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 				return true;
 			}
-		//}
+			else
+				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
+
 		return false;
 	}
 

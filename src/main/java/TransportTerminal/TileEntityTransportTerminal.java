@@ -82,19 +82,16 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-	{
+	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		NBTTagList tags = nbt.getTagList("Items", 10);
 		inventory = new ItemStack[getSizeInventory()];
 
-		for (int i = 0; i < tags.tagCount(); i++)
-		{
+		for (int i = 0; i < tags.tagCount(); i++) {
 			NBTTagCompound data = tags.getCompoundTagAt(i);
 			int j = data.getByte("Slot") & 255;
 
-			if (j >= 0 && j < inventory.length)
-			{
+			if (j >= 0 && j < inventory.length) {
 				inventory[j] = ItemStack.loadItemStackFromNBT(data);
 			}
 		}
@@ -103,15 +100,12 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt)
-	{
+	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		NBTTagList tags = new NBTTagList();
 
-		for (int i = 0; i < inventory.length; i++)
-		{
-			if (inventory[i] != null)
-			{
+		for (int i = 0; i < inventory.length; i++) {
+			if (inventory[i] != null) {
 				NBTTagCompound data = new NBTTagCompound();
 				data.setByte("Slot", (byte) i);
 				inventory[i].writeToNBT(data);
@@ -143,27 +137,20 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void openInventory() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void openInventory() {}
 
 	@Override
-	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void closeInventory() {}
 
 	public void setName(String text) {
 		chipName = text;
 		ItemStack is = getStackInSlot(getTempSlot());
 		if (is != null && is.getItem() == TransportTerminal.transportTerminalChip)
-				is.getTagCompound().setString("description", chipName);
+			is.getTagCompound().setString("description", chipName);
 	}
 
 	public int getTempSlot() {
@@ -176,13 +163,13 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 	
 	@Override
 	public Packet getDescriptionPacket() {
-	NBTTagCompound tag = new NBTTagCompound();
-	writeToNBT(tag);
-	return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+		NBTTagCompound tag = new NBTTagCompound();
+		writeToNBT(tag);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
 	}
 		
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
-	readFromNBT(packet.func_148857_g());
+		readFromNBT(packet.func_148857_g());
 	}
 }

@@ -17,8 +17,7 @@ public class SlotRemote extends Slot {
 	}
 
 	@Override	
-    public void onPickupFromSlot(EntityPlayer player, ItemStack stack)
-    {
+    public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
         if(stack !=null && slotNumber == 0)
         	inventory.setInventorySlotContents(1, null);
         

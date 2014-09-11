@@ -7,7 +7,8 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMessage> {
+public class NamingPacketHandler implements
+		IMessageHandler<NamingMessage, IMessage> {
 
 	@Override
 	public IMessage onMessage(NamingMessage message, MessageContext ctx) {
@@ -22,7 +23,7 @@ public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMess
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				world = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
 				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
-				if(console !=null)
+				if (console != null)
 					console.setName(message.name);
 			}
 		}

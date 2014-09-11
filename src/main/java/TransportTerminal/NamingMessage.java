@@ -7,7 +7,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 public class NamingMessage implements IMessage {
 
-	 public int dimension, entityID, tileX, tileY, tileZ;
+	public int dimension, entityID, tileX, tileY, tileZ;
 	String name;
 
 	public NamingMessage() {}
@@ -18,29 +18,27 @@ public class NamingMessage implements IMessage {
 		name = string;
 		tileX = player.getCurrentEquippedItem().getTagCompound().getInteger("homeX");
 		tileY = player.getCurrentEquippedItem().getTagCompound().getInteger("homeY");
-		tileZ = player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ");;
-	 }
-	 
-	 /** enconding */
+		tileZ = player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ");
+	}
+
 	@Override
-	public void toBytes(ByteBuf buf) { 
+	public void toBytes(ByteBuf buf) {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
 		ByteBufUtils.writeUTF8String(buf, name);
 		buf.writeInt(tileX);
 		buf.writeInt(tileY);
 		buf.writeInt(tileZ);
-	 }
+	}
 
-	/** decoding */
 	@Override
-	public void fromBytes(ByteBuf buf) { 
+	public void fromBytes(ByteBuf buf) {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
-		name = ByteBufUtils.readUTF8String(buf); ;
+		name = ByteBufUtils.readUTF8String(buf);
 		tileX = buf.readInt();
 		tileY = buf.readInt();
 		tileZ = buf.readInt();
-	 }
-
 	}
+
+}
