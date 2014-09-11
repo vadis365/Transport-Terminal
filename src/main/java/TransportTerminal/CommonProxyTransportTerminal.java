@@ -35,7 +35,6 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 			ItemStack stack = player.getCurrentEquippedItem();
 			world = DimensionManager.getWorld(player.dimension);
 			if (ItemTransportTerminalRemote.foundFreeChip(player, stack)) {
-				System.out.println("Double check for noise");
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 				TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			} else
@@ -56,9 +55,6 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		}
 
 		if (ID == GUI_ID_REMOTE) {
-			ItemStack stack = player.getCurrentEquippedItem();
-			if (stack.getTagCompound().getByte("recordState") != 0)
-				System.out.println("Just Before the gui is opened");
 				return new GuiNaming(player);
 		}
 		return null;

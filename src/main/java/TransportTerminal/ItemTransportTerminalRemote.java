@@ -70,7 +70,7 @@ public class ItemTransportTerminalRemote extends Item {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			if (world2 == null)
 				return null;
-			System.out.println("Chip NBT setting method");
+
 			int homeX = stack.getTagCompound().getInteger("homeX");
 			int homeY = stack.getTagCompound().getInteger("homeY");
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
@@ -105,15 +105,10 @@ public class ItemTransportTerminalRemote extends Item {
 				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
 			if (ticket != null)
-				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(player.getCurrentEquippedItem().getTagCompound().getInteger("homeX"), player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ")));
+				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
 			}
 			if (foundFreeChip(player, stack)) {
-				if(stack.getTagCompound().getByte("recordState") != 1) {
-					stack.getTagCompound().setByte("recordState", (byte) 1);
-					System.out.println("Record State is: "+ player.getCurrentEquippedItem().getTagCompound().getByte("recordState"));
-				}
 				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
-				System.out.println("found free chip gui should open");
 				return true;
 			}
 		//}
