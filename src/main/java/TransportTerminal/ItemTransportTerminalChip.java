@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -33,6 +34,11 @@ public class ItemTransportTerminalChip extends Item {
 			}
 		}
 	}
+	
+	@Override
+	public void onCreated(ItemStack stack, World world, EntityPlayer player) {
+	    stack.stackTagCompound = new NBTTagCompound();
+	}
 
 	private boolean hasTag(ItemStack stack) {
 		if (!stack.hasTagCompound()) {
@@ -41,6 +47,7 @@ public class ItemTransportTerminalChip extends Item {
 		}
 		return true;
 	}
+
 
 	@Override
 	@SideOnly(Side.CLIENT)
