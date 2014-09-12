@@ -113,7 +113,7 @@ public class ItemTransportTerminalRemote extends Item {
 				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 				return true;
 			}
-			else
+			else if (!foundFreeChip(player, stack))
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
 
 		return false;
