@@ -106,16 +106,16 @@ public class ItemTransportTerminalRemote extends Item {
 
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-			}
 		
 			if (foundFreeChip(player, stack)) {
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 				return true;
 			}
-			else if (!foundFreeChip(player, stack))
+			
+			if (!foundFreeChip(player, stack))
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
-
+		}
 		return false;
 	}
 
