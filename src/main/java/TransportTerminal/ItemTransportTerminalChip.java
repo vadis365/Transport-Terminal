@@ -37,7 +37,7 @@ public class ItemTransportTerminalChip extends Item {
 	
 	@Override
 	public void onCreated(ItemStack stack, World world, EntityPlayer player) {
-	    stack.stackTagCompound = new NBTTagCompound();
+		stack.setTagCompound(new NBTTagCompound());
 	}
 
 	private boolean hasTag(ItemStack stack) {
