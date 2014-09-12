@@ -42,7 +42,6 @@ public class ItemTransportTerminalChip extends Item {
 		return true;
 	}
 
-
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack, int pass) {
