@@ -1,5 +1,14 @@
 package TransportTerminal;
 
+import TransportTerminal.blocks.BlockTransportTerminal;
+import TransportTerminal.items.ItemTransportTerminalChip;
+import TransportTerminal.items.ItemTransportTerminalRemote;
+import TransportTerminal.network.NamingMessage;
+import TransportTerminal.network.NamingPacketHandler;
+import TransportTerminal.network.TeleportMessage;
+import TransportTerminal.network.TeleportPacketHandler;
+import TransportTerminal.recipescreativetabs.CreativeTabsTransportTerminal;
+import TransportTerminal.recipescreativetabs.TransportTerminalCrafting;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

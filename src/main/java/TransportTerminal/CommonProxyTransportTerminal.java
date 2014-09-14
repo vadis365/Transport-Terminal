@@ -1,5 +1,10 @@
 package TransportTerminal;
 
+import TransportTerminal.inventory.ContainerTerminal;
+import TransportTerminal.inventory.GuiNaming;
+import TransportTerminal.inventory.GuiTerminal;
+import TransportTerminal.items.ItemTransportTerminalRemote;
+import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

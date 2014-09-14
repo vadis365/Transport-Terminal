@@ -1,5 +1,6 @@
-package TransportTerminal;
+package TransportTerminal.recipescreativetabs;
 
+import TransportTerminal.TransportTerminal;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import cpw.mods.fml.relauncher.Side;

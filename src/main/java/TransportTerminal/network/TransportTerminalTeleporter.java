@@ -1,4 +1,4 @@
-package TransportTerminal;
+package TransportTerminal.network;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;

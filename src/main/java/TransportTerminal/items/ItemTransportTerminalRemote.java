@@ -1,6 +1,10 @@
-package TransportTerminal;
+package TransportTerminal.items;
 
 import java.util.List;
+
+import TransportTerminal.TransportTerminal;
+import TransportTerminal.network.TeleportMessage;
+import TransportTerminal.tileentites.TileEntityTransportTerminal;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

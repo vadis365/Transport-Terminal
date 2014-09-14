@@ -1,5 +1,6 @@
-package TransportTerminal;
+package TransportTerminal.recipescreativetabs;
 
+import TransportTerminal.TransportTerminal;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

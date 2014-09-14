@@ -1,5 +1,6 @@
-package TransportTerminal;
+package TransportTerminal.network;
 
+import TransportTerminal.blocks.BlockTransportTerminal;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;

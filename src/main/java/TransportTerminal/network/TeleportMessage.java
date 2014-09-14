@@ -1,4 +1,4 @@
-package TransportTerminal;
+package TransportTerminal.network;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,5 +1,6 @@
-package TransportTerminal;
+package TransportTerminal.inventory;
 
+import TransportTerminal.items.ItemTransportTerminalChip;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

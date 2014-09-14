@@ -1,5 +1,7 @@
 package TransportTerminal;
 
+import TransportTerminal.models.TileEntityTransportTerminalRenderer;
+import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 

@@ -1,6 +1,9 @@
-package TransportTerminal;
+package TransportTerminal.blocks;
 
 import java.util.Random;
+
+import TransportTerminal.TransportTerminal;
+import TransportTerminal.tileentites.TileEntityTransportTerminal;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -17,7 +20,7 @@ import net.minecraft.world.World;
 
 public class BlockTransportTerminal extends BlockContainer {
 
-	protected BlockTransportTerminal() {
+	public BlockTransportTerminal() {
 		super(Material.iron);
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		setCreativeTab(TransportTerminal.creativeTabsTT);

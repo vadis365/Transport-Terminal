@@ -1,4 +1,4 @@
-package TransportTerminal;
+package TransportTerminal.inventory;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -9,6 +9,9 @@ import net.minecraft.util.StringUtils;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+
+import TransportTerminal.TransportTerminal;
+import TransportTerminal.network.NamingMessage;
 
 public class GuiNaming extends GuiContainer {
 

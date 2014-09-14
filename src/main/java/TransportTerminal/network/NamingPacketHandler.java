@@ -1,5 +1,6 @@
-package TransportTerminal;
+package TransportTerminal.network;
 
+import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
