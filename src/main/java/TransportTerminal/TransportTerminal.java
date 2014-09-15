@@ -1,5 +1,6 @@
 package TransportTerminal;
 
+import TransportTerminal.blocks.BlockTransportItems;
 import TransportTerminal.blocks.BlockTransportTerminal;
 import TransportTerminal.items.ItemTransportTerminalChip;
 import TransportTerminal.items.ItemTransportTerminalRemote;
@@ -36,6 +37,7 @@ public class TransportTerminal {
 	public static Item transportTerminalRemote;
 	public static Item transportTerminalChip;
 	public static Block transportTerminal;
+	public static Block transportItems;
 	public static SimpleNetworkWrapper networkWrapper;
 	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
 	@EventHandler
@@ -46,10 +48,12 @@ public class TransportTerminal {
 		transportTerminalRemote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
 		transportTerminalChip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
 		transportTerminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
-
+		transportItems = new BlockTransportItems().setHardness(3.0F).setBlockName("transportItems").setBlockTextureName("transportterminal:transportItemsFront");
+		
 		GameRegistry.registerItem(transportTerminalRemote, "Transport Terminal Remote");
 		GameRegistry.registerItem(transportTerminalChip, "Transport Terminal Chip");
 		GameRegistry.registerBlock(transportTerminal, "Transport Terminal");
+		GameRegistry.registerBlock(transportItems, "Transport Items");
 
 		TransportTerminalCrafting.addRecipes();
 	}
