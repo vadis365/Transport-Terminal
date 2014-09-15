@@ -9,7 +9,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import TransportTerminal.TransportTerminal;
-import TransportTerminal.network.TeleportMessage;
+import TransportTerminal.network.TeleportMessageItems;
 import TransportTerminal.tileentites.TileEntityTransportItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -55,14 +55,15 @@ public class GuiItemSender extends GuiContainer {
 	protected void actionPerformed(GuiButton guibutton) {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0)
-				if (transportInventory.getStackInSlot(0) != null && transportInventory.getStackInSlot(0).stackTagCompound.hasKey("chipX")) {
+				if (transportInventory.getStackInSlot(0) != null && transportInventory.getStackInSlot(1) != null && transportInventory.getStackInSlot(0).stackTagCompound.hasKey("chipX")) {
 					int newDim = transportInventory.getStackInSlot(0).getTagCompound().getInteger("chipDim");
 					int x = transportInventory.getStackInSlot(0).getTagCompound().getInteger("chipX");
 					int y = transportInventory.getStackInSlot(0).getTagCompound().getInteger("chipY");
 					int z = transportInventory.getStackInSlot(0).getTagCompound().getInteger("chipZ");
-					//maybe add a new teleport class and packet here...
-					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
-					mc.thePlayer.closeScreen();
+					int tileX = transportInventory.xCoord;
+					int tileY = transportInventory.yCoord;
+					int tileZ = transportInventory.zCoord;
+					TransportTerminal.networkWrapper.sendToServer(new TeleportMessageItems(mc.thePlayer, x, y, z, newDim, tileX, tileY, tileZ));
 				}
-	}
+		}
 }
