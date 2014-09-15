@@ -34,8 +34,7 @@ public class GuiItemSender extends GuiContainer {
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
-		buttonList.add(new GuiButton(0, xOffSet + 80, yOffSet + 70, 16, 7, ""));
-		
+		buttonList.add(new GuiButton(0, xOffSet + 80, yOffSet + 63, 16, 7, ""));
 	}
 
 	@Override
@@ -61,6 +60,7 @@ public class GuiItemSender extends GuiContainer {
 					int x = transportInventory.getStackInSlot(0).getTagCompound().getInteger("chipX");
 					int y = transportInventory.getStackInSlot(0).getTagCompound().getInteger("chipY");
 					int z = transportInventory.getStackInSlot(0).getTagCompound().getInteger("chipZ");
+					//maybe add a new teleport class and packet here...
 					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
 					mc.thePlayer.closeScreen();
 				}
