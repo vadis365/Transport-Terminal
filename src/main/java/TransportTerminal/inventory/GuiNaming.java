@@ -60,10 +60,8 @@ public class GuiNaming extends GuiContainer {
 	@Override
 	protected void keyTyped(char key, int keycode) {
 		textFieldName.textboxKeyTyped(key, keycode);
-		if (!(keycode == Keyboard.KEY_E && textFieldName.isFocused()))
+		if (!(keycode != Keyboard.KEY_NONE && textFieldName.isFocused()))
 			super.keyTyped(key, keycode);
-		if ((keycode == Keyboard.KEY_ESCAPE))
-			TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, "Un-named Location"));
 	}
 
 	@Override
