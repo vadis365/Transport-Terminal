@@ -11,7 +11,6 @@ import org.lwjgl.opengl.GL11;
 import TransportTerminal.TransportTerminal;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

@@ -2,10 +2,6 @@ package TransportTerminal.items;
 
 import java.util.List;
 
-import TransportTerminal.TransportTerminal;
-import TransportTerminal.network.TeleportMessage;
-import TransportTerminal.tileentites.TileEntityTransportTerminal;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +12,9 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import TransportTerminal.TransportTerminal;
+import TransportTerminal.network.TeleportMessage;
+import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

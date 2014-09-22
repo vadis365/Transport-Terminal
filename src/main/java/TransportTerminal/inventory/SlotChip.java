@@ -1,9 +1,9 @@
 package TransportTerminal.inventory;
 
-import TransportTerminal.items.ItemTransportTerminalChip;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import TransportTerminal.items.ItemTransportTerminalChip;
 
 public class SlotChip extends Slot {
 	public SlotChip(IInventory inventory, int slotIndex, int x, int y) {
