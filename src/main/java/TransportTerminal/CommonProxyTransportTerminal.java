@@ -1,13 +1,16 @@
 package TransportTerminal;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import TransportTerminal.inventory.ContainerItemSender;
 import TransportTerminal.inventory.ContainerTerminal;
 import TransportTerminal.inventory.GuiItemSender;
 import TransportTerminal.inventory.GuiNaming;
 import TransportTerminal.inventory.GuiTerminal;
+import TransportTerminal.items.ItemTransportTerminalRemote;
 import TransportTerminal.tileentites.TileEntityTransportItems;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -37,9 +40,13 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
 
-		if (ID == GUI_ID_REMOTE)
+		if (ID == GUI_ID_REMOTE) {
+			ItemStack stack = player.getCurrentEquippedItem();
+			world = DimensionManager.getWorld(player.dimension);
+			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			return new ContainerTerminal(player.inventory, null, 1);
-
+		}
+		
 		if (ID == GUI_ID_ITEMS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportItems)
@@ -57,9 +64,10 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
 
-		if (ID == GUI_ID_REMOTE)
+		if (ID == GUI_ID_REMOTE) {
 			return new GuiNaming(player);
-
+		}
+		
 		if (ID == GUI_ID_ITEMS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportItems)
