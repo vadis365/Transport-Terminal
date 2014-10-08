@@ -5,27 +5,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import TransportTerminal.inventory.ContainerItemSender;
 import TransportTerminal.inventory.ContainerTerminal;
-import TransportTerminal.inventory.GuiItemSender;
 import TransportTerminal.inventory.GuiNaming;
 import TransportTerminal.inventory.GuiTerminal;
 import TransportTerminal.items.ItemTransportTerminalRemote;
-import TransportTerminal.tileentites.TileEntityTransportItems;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxyTransportTerminal implements IGuiHandler {
 
-	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_ITEMS = 2;
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1;
 
 	public void registerRenderInformation() {
 	}
 
 	public void registerTileEntities() {
 		registerTileEntity(TileEntityTransportTerminal.class, "transportTerminal");
-		registerTileEntity(TileEntityTransportItems.class, "transportItems");
 	}
 
 	private void registerTileEntity(Class<? extends TileEntity> cls, String baseName) {
@@ -46,12 +42,6 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			return new ContainerTerminal(player.inventory, null, 1);
 		}
-		
-		if (ID == GUI_ID_ITEMS) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityTransportItems)
-				return new ContainerItemSender(player.inventory, (TileEntityTransportItems) tileentity);
-		}
 
 		return null;
 	}
@@ -68,11 +58,6 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 			return new GuiNaming(player);
 		}
 		
-		if (ID == GUI_ID_ITEMS) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityTransportItems)
-				return new GuiItemSender(player.inventory, (TileEntityTransportItems) tileentity);
-		}
 		return null;
 	}
 }

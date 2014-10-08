@@ -39,8 +39,8 @@ public class ItemTransportTerminalRemote extends Item {
 				list.add("Target Y: " + stack.getTagCompound().getInteger("homeY"));
 				list.add("Target Z: " + stack.getTagCompound().getInteger("homeZ"));
 			} else {
-				list.add("Right click on a Block");
-				list.add("to set as target.");
+				list.add("Right click to Teleport");
+				list.add("to your linked Terminal.");
 				list.add("Sneak + Right click");
 				list.add("to save Location.");
 			}
