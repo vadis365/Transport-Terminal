@@ -24,7 +24,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "transportterminal", name = "Transport Terminal", version = "0.99a")
+@Mod(modid = "transportterminal", name = "Transport Terminal", version = "1.0a")
 public class TransportTerminal {
 
 	@Instance("transportterminal")
