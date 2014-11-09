@@ -17,13 +17,4 @@ libs/
 *.ipr
 *.iws
 gradlew
-src/api/cofh/api/CoFHAPIProps.java
-src/api/cofh/api/energy/EnergyStorage.java
-src/api/cofh/api/energy/IEnergyConnection.java
-src/api/cofh/api/energy/IEnergyContainerItem.java
-src/api/cofh/api/energy/IEnergyHandler.java
-src/api/cofh/api/energy/IEnergyStorage.java
-src/api/cofh/api/energy/ItemEnergyContainer.java
-src/api/cofh/api/energy/package-info.java
-src/api/cofh/api/energy/TileEnergyHandler.java
-src/api/cofh/api/package-info.java
+src/api
