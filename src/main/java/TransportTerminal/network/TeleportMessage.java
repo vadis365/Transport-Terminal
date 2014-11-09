@@ -8,7 +8,8 @@ public class TeleportMessage implements IMessage {
 
 	public int dimension, entityID, chipDim, chipX, chipY, chipZ;
 
-	public TeleportMessage() {}
+	public TeleportMessage() {
+	}
 
 	public TeleportMessage(EntityPlayer player, int x, int y, int z, int newDim) {
 		dimension = player.dimension;
@@ -38,5 +39,4 @@ public class TeleportMessage implements IMessage {
 		chipY = buf.readInt();
 		chipZ = buf.readInt();
 	}
-
 }

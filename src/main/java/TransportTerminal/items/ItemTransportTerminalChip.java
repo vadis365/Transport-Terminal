@@ -13,6 +13,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemTransportTerminalChip extends Item {
+
 	public ItemTransportTerminalChip() {
 		super();
 		setMaxStackSize(1);
@@ -23,19 +24,17 @@ public class ItemTransportTerminalChip extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
-		if (hasTag(stack)) {
+		if (hasTag(stack))
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("chipDim")) {
 				list.add(EnumChatFormatting.GREEN + stack.getTagCompound().getString("description"));
-				list.add("Dimension: " + stack.getTagCompound().getInteger("chipDim")  + " " + stack.getTagCompound().getString("dimName"));
+				list.add("Dimension: " + stack.getTagCompound().getInteger("chipDim") + " " + stack.getTagCompound().getString("dimName"));
 				list.add("Target X: " + stack.getTagCompound().getInteger("chipX"));
 				list.add("Target Y: " + stack.getTagCompound().getInteger("chipY"));
 				list.add("Target Z: " + stack.getTagCompound().getInteger("chipZ"));
-			} else {
+			} else
 				list.add("Empty Transport Chip");
-			}
-		}
 	}
-	
+
 	@Override
 	public void onCreated(ItemStack stack, World world, EntityPlayer player) {
 		stack.setTagCompound(new NBTTagCompound());
@@ -48,7 +47,6 @@ public class ItemTransportTerminalChip extends Item {
 		}
 		return true;
 	}
-
 
 	@Override
 	@SideOnly(Side.CLIENT)

@@ -7,9 +7,10 @@ import net.minecraft.item.ItemStack;
 import TransportTerminal.items.ItemTransportTerminalRemote;
 
 public class SlotRemote extends Slot {
+
 	public SlotRemote(IInventory inventory, int slotIndex, int x, int y) {
 		super(inventory, slotIndex, x, y);
-		this.slotNumber = slotIndex;
+		slotNumber = slotIndex;
 	}
 
 	@Override
@@ -17,16 +18,16 @@ public class SlotRemote extends Slot {
 		return stack.getItem() instanceof ItemTransportTerminalRemote;
 	}
 
-	@Override	
-    public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
-        if(stack !=null && slotNumber == 0)
-        	inventory.setInventorySlotContents(1, null);
-        
-        if(stack !=null && slotNumber == 1) {
-        	inventory.setInventorySlotContents(0, null);
+	@Override
+	public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
+		if (stack != null && slotNumber == 0)
+			inventory.setInventorySlotContents(1, null);
+
+		if (stack != null && slotNumber == 1) {
+			inventory.setInventorySlotContents(0, null);
 			stack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
 			stack.getTagCompound().setInteger("dim", player.dimension);
-        }
-        super.onPickupFromSlot(player, stack);
-    }
+		}
+		super.onPickupFromSlot(player, stack);
+	}
 }

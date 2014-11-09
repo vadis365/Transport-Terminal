@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import TransportTerminal.items.ItemTransportTerminalChip;
 
 public class SlotChip extends Slot {
+
 	public SlotChip(IInventory inventory, int slotIndex, int x, int y) {
 		super(inventory, slotIndex, x, y);
 	}
@@ -15,4 +16,3 @@ public class SlotChip extends Slot {
 		return stack.getItem() instanceof ItemTransportTerminalChip;
 	}
 }
-

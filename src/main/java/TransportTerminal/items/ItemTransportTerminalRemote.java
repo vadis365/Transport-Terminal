@@ -23,7 +23,6 @@ public class ItemTransportTerminalRemote extends Item {
 	private Ticket ticket;
 
 	public ItemTransportTerminalRemote() {
-		super();
 		setMaxStackSize(1);
 		setCreativeTab(TransportTerminal.creativeTabsTT);
 	}
@@ -109,13 +108,13 @@ public class ItemTransportTerminalRemote extends Item {
 
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-		
+
 			if (foundFreeChip(player, stack)) {
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 				return true;
 			}
-			
+
 			if (!foundFreeChip(player, stack))
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
 		}
@@ -149,9 +148,5 @@ public class ItemTransportTerminalRemote extends Item {
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim"))
 				return true;
 		return false;
-	}
-	
-	public void releaseChunkLoad() {
-		
 	}
 }

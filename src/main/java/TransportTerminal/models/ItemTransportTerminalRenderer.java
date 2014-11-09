@@ -14,7 +14,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ItemTransportTerminalRenderer implements IItemRenderer {
 
-	private final ModelTransportTerminal model = new ModelTransportTerminal();
+	private static final ModelTransportTerminal model = new ModelTransportTerminal();
+	private static final ResourceLocation texture = new ResourceLocation("transportterminal:textures/special/tiles/transportTerminal.png");
 
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -22,29 +23,28 @@ public class ItemTransportTerminalRenderer implements IItemRenderer {
 	}
 
 	@Override
-	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-			ItemRendererHelper helper) {
+	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
 		return helper != ItemRendererHelper.BLOCK_3D;
 	}
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-		FMLClientHandler.instance().getClient().getTextureManager().bindTexture(new ResourceLocation("transportterminal:textures/special/tiles/transportTerminal.png"));
+		FMLClientHandler.instance().getClient().getTextureManager().bindTexture(texture);
 		switch (type) {
-		case ENTITY:
-			renderBlock(0.0F, 0.5F, 0.0F, 0.5D);
-			break;
-		case EQUIPPED:
-			renderHeld(0.5F, 2.0F, 1.0F, 1.0D);
-			break;
-		case EQUIPPED_FIRST_PERSON:
-			renderHeld(0.5F, 1.5F, 0.5F, 1.0D);
-			break;
-		case INVENTORY:
-			renderBlock(0.0F, 1.0F, 0.0F, 1.0D);
-			break;
-		default:
-			break;
+			case ENTITY:
+				renderBlock(0.0F, 0.5F, 0.0F, 0.5D);
+				break;
+			case EQUIPPED:
+				renderHeld(0.5F, 2.0F, 1.0F, 1.0D);
+				break;
+			case EQUIPPED_FIRST_PERSON:
+				renderHeld(0.5F, 1.5F, 0.5F, 1.0D);
+				break;
+			case INVENTORY:
+				renderBlock(0.0F, 1.0F, 0.0F, 1.0D);
+				break;
+			default:
+				break;
 		}
 	}
 

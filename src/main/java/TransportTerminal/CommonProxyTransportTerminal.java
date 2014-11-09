@@ -39,7 +39,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_REMOTE) {
 			ItemStack stack = player.getCurrentEquippedItem();
 			world = DimensionManager.getWorld(player.dimension);
-			TileEntityTransportTerminal tile = ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
+			ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			return new ContainerTerminal(player.inventory, null, 1);
 		}
 
@@ -54,10 +54,9 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
 
-		if (ID == GUI_ID_REMOTE) {
+		if (ID == GUI_ID_REMOTE)
 			return new GuiNaming(player);
-		}
-		
+
 		return null;
 	}
 }

@@ -8,13 +8,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import TransportTerminal.TransportTerminal;
+import cofh.api.energy.TileEnergyHandler;
 
-public class TileEntityTransportTerminal extends TileEntity implements IInventory {
-	
+public class TileEntityTransportTerminal extends TileEnergyHandler implements IInventory {
+
 	private ItemStack[] inventory = new ItemStack[16];
-	private String chipName ="Blank";
+	private String chipName = "Blank";
 	private int tempSlot = 0;
 
 	@Override
@@ -92,9 +92,8 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 			NBTTagCompound data = tags.getCompoundTagAt(i);
 			int j = data.getByte("Slot") & 255;
 
-			if (j >= 0 && j < inventory.length) {
+			if (j >= 0 && j < inventory.length)
 				inventory[j] = ItemStack.loadItemStackFromNBT(data);
-			}
 		}
 		tempSlot = nbt.getInteger("tempSlot");
 		chipName = nbt.getString("chipName");
@@ -105,15 +104,14 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 		super.writeToNBT(nbt);
 		NBTTagList tags = new NBTTagList();
 
-		for (int i = 0; i < inventory.length; i++) {
+		for (int i = 0; i < inventory.length; i++)
 			if (inventory[i] != null) {
 				NBTTagCompound data = new NBTTagCompound();
 				data.setByte("Slot", (byte) i);
 				inventory[i].writeToNBT(data);
 				tags.appendTag(data);
 			}
-		}
-		
+
 		nbt.setTag("Items", tags);
 		nbt.setInteger("tempSlot", tempSlot);
 		nbt.setString("chipName", chipName);
@@ -121,19 +119,19 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : player.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if(slot == 0 && is.getItem() == TransportTerminal.transportTerminalRemote)
+		if (slot == 0 && is.getItem() == TransportTerminal.transportTerminalRemote)
 			return true;
 		return false;
 	}
 
 	@Override
 	public String getInventoryName() {
-		return "Location X: " + xCoord +" Y: " + yCoord + " Z: " + zCoord;
+		return "Location X: " + xCoord + " Y: " + yCoord + " Z: " + zCoord;
 	}
 
 	@Override
@@ -142,10 +140,12 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory() {
+	}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory() {
+	}
 
 	public void setName(String text) {
 		chipName = text;
@@ -161,14 +161,14 @@ public class TileEntityTransportTerminal extends TileEntity implements IInventor
 	public void setTempSlot(int slot) {
 		tempSlot = slot;
 	}
-	
+
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
 	}
-		
+
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
 		readFromNBT(packet.func_148857_g());

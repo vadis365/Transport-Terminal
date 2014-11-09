@@ -5,8 +5,9 @@ import net.minecraft.item.Item;
 import TransportTerminal.TransportTerminal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-public class CreativeTabsTransportTerminal extends CreativeTabs  {
-	
+
+public class CreativeTabsTransportTerminal extends CreativeTabs {
+
 	public CreativeTabsTransportTerminal(String name) {
 		super(name);
 	}
@@ -16,5 +17,4 @@ public class CreativeTabsTransportTerminal extends CreativeTabs  {
 	public Item getTabIconItem() {
 		return TransportTerminal.transportTerminalRemote;
 	}
-
 }
