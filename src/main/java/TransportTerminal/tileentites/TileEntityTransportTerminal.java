@@ -72,14 +72,13 @@ public class TileEntityTransportTerminal extends TileEnergyHandler implements II
 		if (is != null && is.stackSize > getInventoryStackLimit())
 			is.stackSize = getInventoryStackLimit();
 		if (is != null && slot == 0 && is.getItem() == TransportTerminal.transportTerminalRemote) {
-			ItemStack stack = new ItemStack(TransportTerminal.transportTerminalRemote, 1, 0);
-			setInventorySlotContents(1, stack);
-			if (!stack.hasTagCompound()) {
+			ItemStack stack = is.copy();
+			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
-				stack.getTagCompound().setInteger("homeX", xCoord);
-				stack.getTagCompound().setInteger("homeY", yCoord);
-				stack.getTagCompound().setInteger("homeZ", zCoord);
-			}
+			stack.getTagCompound().setInteger("homeX", xCoord);
+			stack.getTagCompound().setInteger("homeY", yCoord);
+			stack.getTagCompound().setInteger("homeZ", zCoord);
+			setInventorySlotContents(1, stack);
 		}
 	}
 
