@@ -7,8 +7,10 @@ import net.minecraftforge.common.ForgeChunkManager;
 import TransportTerminal.blocks.BlockTransportTerminal;
 import TransportTerminal.items.ItemTransportTerminalChip;
 import TransportTerminal.items.ItemTransportTerminalRemote;
+import TransportTerminal.network.EnergyMessage;
 import TransportTerminal.network.NamingMessage;
 import TransportTerminal.network.NamingPacketHandler;
+import TransportTerminal.network.TeleportEnergyPacketHandler;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.network.TeleportPacketHandler;
 import TransportTerminal.recipescreativetabs.CreativeTabsTransportTerminal;
@@ -41,7 +43,7 @@ public class TransportTerminal {
 	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
 
 	// add configs for these
-	public static int ENERGY_PER_TELEPORT = 100;
+	public static int ENERGY_PER_TELEPORT = 10000;
 	public static int REMOTE_MAX_ENERGY = 50000;
 	public static int TERMINAL_MAX_ENERGY = 320000;
 
@@ -67,6 +69,7 @@ public class TransportTerminal {
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
 		networkWrapper.registerMessage(TeleportPacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
 		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
+		networkWrapper.registerMessage(TeleportEnergyPacketHandler.class, EnergyMessage.class, 2, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 }

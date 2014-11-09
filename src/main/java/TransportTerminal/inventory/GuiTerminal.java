@@ -10,6 +10,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import TransportTerminal.TransportTerminal;
+import TransportTerminal.network.EnergyMessage;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.relauncher.Side;
@@ -45,6 +46,7 @@ public class GuiTerminal extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		fontRendererObj.drawString(StatCollector.translateToLocal(transportInventory.getInventoryName()), 8, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + transportInventory.getEnergyStored(ForgeDirection.UNKNOWN)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override
@@ -65,8 +67,12 @@ public class GuiTerminal extends GuiContainer {
 					int x = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipX");
 					int y = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipY");
 					int z = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipZ");
+					int xx = transportInventory.xCoord;
+					int yy = transportInventory.yCoord;
+					int zz = transportInventory.zCoord;
+					
 					if (transportInventory.canTeleport()) {
-						transportInventory.extractEnergy(ForgeDirection.UNKNOWN, TransportTerminal.ENERGY_PER_TELEPORT, false);
+						TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
 						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
 					}
 					mc.thePlayer.closeScreen();

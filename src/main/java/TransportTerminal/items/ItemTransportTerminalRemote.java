@@ -14,6 +14,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import TransportTerminal.TransportTerminal;
+import TransportTerminal.network.EnergyMessage;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cofh.api.energy.ItemEnergyContainer;
@@ -155,6 +156,7 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 			int newDim = stack.getTagCompound().getInteger("dim");
 			if (getEnergyStored(stack) >= TransportTerminal.ENERGY_PER_TELEPORT) {
 				extractEnergy(stack, TransportTerminal.ENERGY_PER_TELEPORT, false);
+				TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(player, x, y, z));
 				TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
 			}
 		}
