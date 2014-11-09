@@ -5,6 +5,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
@@ -64,8 +65,10 @@ public class GuiTerminal extends GuiContainer {
 					int x = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipX");
 					int y = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipY");
 					int z = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipZ");
-					if (transportInventory.canTeleport())
+					if (transportInventory.canTeleport()) {
+						transportInventory.extractEnergy(ForgeDirection.UNKNOWN, TransportTerminal.ENERGY_PER_TELEPORT, false);
 						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
+					}
 					mc.thePlayer.closeScreen();
 				}
 	}
