@@ -2,6 +2,7 @@ package TransportTerminal.items;
 
 import java.util.List;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,22 +16,46 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import TransportTerminal.TransportTerminal;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
+import cofh.api.energy.ItemEnergyContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemTransportTerminalRemote extends Item {
+public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 
 	private Ticket ticket;
 
 	public ItemTransportTerminalRemote() {
+		super(TransportTerminal.REMOTE_MAX_ENERGY);
 		setMaxStackSize(1);
+		setMaxDamage(Short.MAX_VALUE);
 		setCreativeTab(TransportTerminal.creativeTabsTT);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public double getDurabilityForDisplay(ItemStack stack) {
+		return 1 - (double) getEnergyStored(stack) / (double) getMaxEnergyStored(stack);
+	}
+
+	@Override
+	public boolean showDurabilityBar(ItemStack stack) {
+		return true;
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void getSubItems(Item item, CreativeTabs tab, List list) {
+		super.getSubItems(item, tab, list);
+		ItemStack charged = new ItemStack(item);
+		receiveEnergy(charged, TransportTerminal.REMOTE_MAX_ENERGY, false);
+		list.add(charged);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+		list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
 		if (hasTag(stack))
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim")) {
 				list.add("Terminal Dimension: " + stack.getTagCompound().getInteger("dim") + " " + stack.getTagCompound().getString("dimName"));
@@ -128,7 +153,10 @@ public class ItemTransportTerminalRemote extends Item {
 			int y = stack.getTagCompound().getInteger("homeY");
 			int z = stack.getTagCompound().getInteger("homeZ");
 			int newDim = stack.getTagCompound().getInteger("dim");
-			TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
+			if (getEnergyStored(stack) >= TransportTerminal.ENERGY_PER_TELEPORT) {
+				extractEnergy(stack, TransportTerminal.ENERGY_PER_TELEPORT, false);
+				TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
+			}
 		}
 		return stack;
 	}

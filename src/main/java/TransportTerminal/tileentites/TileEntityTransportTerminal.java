@@ -8,7 +8,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 import TransportTerminal.TransportTerminal;
+import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.TileEnergyHandler;
 
 public class TileEntityTransportTerminal extends TileEnergyHandler implements IInventory {
@@ -16,6 +18,10 @@ public class TileEntityTransportTerminal extends TileEnergyHandler implements II
 	private ItemStack[] inventory = new ItemStack[16];
 	private String chipName = "Blank";
 	private int tempSlot = 0;
+
+	public TileEntityTransportTerminal() {
+		storage = new EnergyStorage(TransportTerminal.TERMINAL_MAX_ENERGY);
+	}
 
 	@Override
 	public boolean canUpdate() {
@@ -172,5 +178,19 @@ public class TileEntityTransportTerminal extends TileEnergyHandler implements II
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
 		readFromNBT(packet.func_148857_g());
+	}
+
+	/**
+	 * Returns whether or not this terminal has enough energy to teleport a
+	 * player. Should return true always if RF mode is not enabled.
+	 *
+	 */
+	public boolean canTeleport() {
+		return getEnergyStored(ForgeDirection.UNKNOWN) >= TransportTerminal.ENERGY_PER_TELEPORT;
+	}
+
+	@Override
+	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+		return 0;
 	}
 }

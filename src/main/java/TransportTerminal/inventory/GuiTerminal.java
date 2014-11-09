@@ -64,7 +64,8 @@ public class GuiTerminal extends GuiContainer {
 					int x = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipX");
 					int y = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipY");
 					int z = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipZ");
-					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
+					if (transportInventory.canTeleport())
+						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
 					mc.thePlayer.closeScreen();
 				}
 	}

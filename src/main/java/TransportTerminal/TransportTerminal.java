@@ -39,6 +39,12 @@ public class TransportTerminal {
 
 	public static SimpleNetworkWrapper networkWrapper;
 	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
+
+	// add configs for these
+	public static int ENERGY_PER_TELEPORT = 100;
+	public static int REMOTE_MAX_ENERGY = 50000;
+	public static int TERMINAL_MAX_ENERGY = 320000;
+
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
 		proxy.registerTileEntities();
@@ -50,13 +56,13 @@ public class TransportTerminal {
 		transportTerminalRemote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
 		transportTerminalChip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
 		transportTerminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
-		
+
 		GameRegistry.registerItem(transportTerminalRemote, "Transport Terminal Remote");
 		GameRegistry.registerItem(transportTerminalChip, "Transport Terminal Chip");
 		GameRegistry.registerBlock(transportTerminal, "Transport Terminal");
 
 		TransportTerminalCrafting.addRecipes();
-		
+
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
 		networkWrapper.registerMessage(TeleportPacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
