@@ -57,7 +57,7 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
 		if (hasTag(stack))
-			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim")) {
+			if (stack.stackTagCompound.hasKey("dim")) {
 				list.add("Terminal Dimension: " + stack.getTagCompound().getInteger("dim") + " " + stack.getTagCompound().getString("dimName"));
 				list.add("Target X: " + stack.getTagCompound().getInteger("homeX"));
 				list.add("Target Y: " + stack.getTagCompound().getInteger("homeY"));

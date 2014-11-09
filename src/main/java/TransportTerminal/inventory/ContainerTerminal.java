@@ -3,17 +3,20 @@ package TransportTerminal.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.ForgeDirection;
 import TransportTerminal.TransportTerminal;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
 
 public class ContainerTerminal extends Container {
 
-	public int numRows = 2;
-	public String name;
+	private final int numRows = 2;
+	private TileEntityTransportTerminal tile;
 
 	public ContainerTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
+		this.tile = tile;
 		int i = (numRows - 4) * 18;
 
 		if (id == 0) {
@@ -30,6 +33,19 @@ public class ContainerTerminal extends Container {
 			for (int j = 0; j < 9; j++)
 				addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
 		}
+	}
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		for (int i = 0; i < crafters.size(); i++)
+			((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+	}
+
+	@Override
+	public void updateProgressBar(int id, int value) {
+		if (id == 0)
+			tile.setEnergy(value);
 	}
 
 	@Override

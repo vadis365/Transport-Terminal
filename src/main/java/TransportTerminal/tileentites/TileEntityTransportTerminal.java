@@ -192,4 +192,8 @@ public class TileEntityTransportTerminal extends TileEnergyHandler implements II
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
 		return 0;
 	}
+
+	public void setEnergy(int energy) {
+		storage.setEnergyStored(energy);
+	}
 }
