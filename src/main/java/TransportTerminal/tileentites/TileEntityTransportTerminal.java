@@ -2,6 +2,7 @@ package TransportTerminal.tileentites;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -11,6 +12,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import TransportTerminal.TransportTerminal;
 import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.ItemEnergyContainer;
 import cofh.api.energy.TileEnergyHandler;
 
 public class TileEntityTransportTerminal extends TileEnergyHandler implements IInventory {
@@ -73,11 +75,17 @@ public class TileEntityTransportTerminal extends TileEnergyHandler implements II
 			is.stackSize = getInventoryStackLimit();
 		if (is != null && slot == 0 && is.getItem() == TransportTerminal.transportTerminalRemote) {
 			ItemStack stack = is.copy();
+			Item remote = stack.getItem();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
 			stack.getTagCompound().setInteger("homeX", xCoord);
 			stack.getTagCompound().setInteger("homeY", yCoord);
 			stack.getTagCompound().setInteger("homeZ", zCoord);
+			if (canTeleport()) {
+				int energyStored = ((ItemEnergyContainer) remote).getEnergyStored(stack);
+				((ItemEnergyContainer) remote).receiveEnergy(stack, TransportTerminal.REMOTE_MAX_ENERGY - energyStored, false);
+				extractEnergy(ForgeDirection.UNKNOWN, TransportTerminal.REMOTE_MAX_ENERGY - energyStored, false);
+			}
 			setInventorySlotContents(1, stack);
 		}
 	}
