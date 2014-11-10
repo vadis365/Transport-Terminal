@@ -61,7 +61,7 @@ public class ContainerTerminal extends Container {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 15) {
-				if (stack1.getItem() == TransportTerminal.transportTerminalChip) {
+				if (stack1.getItem() == TransportTerminal.transportTerminalChip ||stack1.getItem() == TransportTerminal.transportTerminalPlayerChip) {
 					if (!mergeItemStack(stack1, 2, 16, false))
 						return null;
 				} else if (stack1.getItem() == TransportTerminal.transportTerminalRemote)

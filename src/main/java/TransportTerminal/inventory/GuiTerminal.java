@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import TransportTerminal.TransportTerminal;
 import TransportTerminal.network.EnergyMessage;
+import TransportTerminal.network.PlayerChipMessage;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.relauncher.Side;
@@ -61,7 +62,7 @@ public class GuiTerminal extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
 		if (guibutton instanceof GuiButton)
-			if (guibutton.id >= 2 && guibutton.id <= 15)
+			if (guibutton.id >= 2 && guibutton.id <= 15) {
 				if (transportInventory.getStackInSlot(guibutton.id) != null && transportInventory.getStackInSlot(guibutton.id).stackTagCompound.hasKey("chipX")) {
 					int newDim = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipDim");
 					int x = transportInventory.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipX");
@@ -74,6 +75,17 @@ public class GuiTerminal extends GuiContainer {
 					if (transportInventory.canTeleport()) {
 						TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
 						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
+					}
+				}
+					if (transportInventory.getStackInSlot(guibutton.id) != null && transportInventory.getStackInSlot(guibutton.id).hasDisplayName()) {
+						int xx = transportInventory.xCoord;
+						int yy = transportInventory.yCoord;
+						int zz = transportInventory.zCoord;
+
+						if (transportInventory.canTeleport()) {
+							TransportTerminal.networkWrapper.sendToServer(new PlayerChipMessage(mc.thePlayer, transportInventory.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));
+							TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
+						}
 					}
 					mc.thePlayer.closeScreen();
 				}

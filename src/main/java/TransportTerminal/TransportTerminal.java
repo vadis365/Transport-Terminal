@@ -6,10 +6,13 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeChunkManager;
 import TransportTerminal.blocks.BlockTransportTerminal;
 import TransportTerminal.items.ItemTransportTerminalChip;
+import TransportTerminal.items.ItemTransportTerminalPlayerChip;
 import TransportTerminal.items.ItemTransportTerminalRemote;
 import TransportTerminal.network.EnergyMessage;
 import TransportTerminal.network.NamingMessage;
 import TransportTerminal.network.NamingPacketHandler;
+import TransportTerminal.network.PlayerChipMessage;
+import TransportTerminal.network.PlayerChipPacketHandler;
 import TransportTerminal.network.TeleportEnergyPacketHandler;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.network.TeleportPacketHandler;
@@ -39,6 +42,7 @@ public class TransportTerminal {
 	public static Item transportTerminalRemote;
 	public static Item transportTerminalChip;
 	public static Block transportTerminal;
+	public static Item transportTerminalPlayerChip;
 
 	public static SimpleNetworkWrapper networkWrapper;
 	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
@@ -56,11 +60,13 @@ public class TransportTerminal {
 		transportTerminalRemote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
 		transportTerminalChip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
 		transportTerminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
-
+		transportTerminalPlayerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
+		
 		GameRegistry.registerItem(transportTerminalRemote, "Transport Terminal Remote");
 		GameRegistry.registerItem(transportTerminalChip, "Transport Terminal Chip");
 		GameRegistry.registerBlock(transportTerminal, "Transport Terminal");
-
+		GameRegistry.registerItem(transportTerminalPlayerChip, "Player Location Chip");
+		
 		TransportTerminalCrafting.addRecipes();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
@@ -68,6 +74,7 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(TeleportPacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
 		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
 		networkWrapper.registerMessage(TeleportEnergyPacketHandler.class, EnergyMessage.class, 2, Side.SERVER);
+		networkWrapper.registerMessage(PlayerChipPacketHandler.class, PlayerChipMessage.class, 3, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 
