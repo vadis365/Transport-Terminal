@@ -102,8 +102,6 @@ public class TileEntityTransportTerminal extends TileEnergyHandler implements II
 		}
 		tempSlot = nbt.getInteger("tempSlot");
 		chipName = nbt.getString("chipName");
-		storage.readFromNBT(nbt);
-		setEnergy(getEnergyStored(ForgeDirection.UNKNOWN));
 	}
 
 	@Override
@@ -122,7 +120,6 @@ public class TileEntityTransportTerminal extends TileEnergyHandler implements II
 		nbt.setTag("Items", tags);
 		nbt.setInteger("tempSlot", tempSlot);
 		nbt.setString("chipName", chipName);
-		storage.writeToNBT(nbt);
 	}
 
 	@Override
