@@ -15,6 +15,7 @@ import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.network.TeleportPacketHandler;
 import TransportTerminal.recipescreativetabs.CreativeTabsTransportTerminal;
 import TransportTerminal.recipescreativetabs.TransportTerminalCrafting;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -42,17 +43,13 @@ public class TransportTerminal {
 	public static SimpleNetworkWrapper networkWrapper;
 	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
 
+	public static boolean IS_RF_PRESENT;
+
 	// add configs for these
 	public static int ENERGY_PER_TELEPORT = 10000;
 	public static int REMOTE_MAX_ENERGY = 50000;
 	public static int TERMINAL_MAX_ENERGY = 320000;
 	public static int CHARGER_MAX_ENERGY = 320000;
-
-	@EventHandler
-	public void Init(FMLInitializationEvent event) {
-		proxy.registerTileEntities();
-		proxy.registerRenderInformation();
-	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -72,5 +69,13 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
 		networkWrapper.registerMessage(TeleportEnergyPacketHandler.class, EnergyMessage.class, 2, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
+	}
+
+	@EventHandler
+	public void Init(FMLInitializationEvent event) {
+		proxy.registerTileEntities();
+		proxy.registerRenderInformation();
+
+		IS_RF_PRESENT = Loader.isModLoaded("CoFHLib");
 	}
 }

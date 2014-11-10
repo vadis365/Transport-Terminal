@@ -17,16 +17,19 @@ import TransportTerminal.TransportTerminal;
 import TransportTerminal.network.EnergyMessage;
 import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
-import cofh.api.energy.ItemEnergyContainer;
+import cofh.api.energy.IEnergyContainerItem;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemTransportTerminalRemote extends ItemEnergyContainer {
+@Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHLib")
+public class ItemTransportTerminalRemote extends Item implements IEnergyContainerItem {
 
 	private Ticket ticket;
+	private final int capacity;
 
 	public ItemTransportTerminalRemote() {
-		super(TransportTerminal.REMOTE_MAX_ENERGY);
+		capacity = TransportTerminal.REMOTE_MAX_ENERGY;
 		setMaxStackSize(1);
 		setCreativeTab(TransportTerminal.creativeTabsTT);
 	}
@@ -38,7 +41,7 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
-		return true;
+		return TransportTerminal.IS_RF_PRESENT;
 	}
 
 	@Override
@@ -46,16 +49,19 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		super.getSubItems(item, tab, list);
-		ItemStack charged = new ItemStack(item);
-		receiveEnergy(charged, TransportTerminal.REMOTE_MAX_ENERGY, false);
-		list.add(charged);
+		if (TransportTerminal.IS_RF_PRESENT) {
+			ItemStack charged = new ItemStack(item);
+			receiveEnergy(charged, TransportTerminal.REMOTE_MAX_ENERGY, false);
+			list.add(charged);
+		}
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
-		list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
+		if (TransportTerminal.IS_RF_PRESENT)
+			list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
 		if (hasTag(stack))
 			if (stack.stackTagCompound.hasKey("dim")) {
 				list.add("Terminal Dimension: " + stack.getTagCompound().getInteger("dim") + " " + stack.getTagCompound().getString("dimName"));
@@ -154,7 +160,7 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 			int z = stack.getTagCompound().getInteger("homeZ");
 			int newDim = stack.getTagCompound().getInteger("dim");
 			if (!world.isRemote)
-				if (getEnergyStored(stack) >= TransportTerminal.ENERGY_PER_TELEPORT) {
+				if (canTeleport(stack)) {
 					extractEnergy(stack, TransportTerminal.ENERGY_PER_TELEPORT, false);
 					TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(player, x, y, z));
 					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
@@ -171,6 +177,10 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 		return true;
 	}
 
+	private boolean canTeleport(ItemStack stack) {
+		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(stack) >= TransportTerminal.ENERGY_PER_TELEPORT;
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack, int pass) {
@@ -178,5 +188,47 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim"))
 				return true;
 		return false;
+	}
+
+	/* ENERGY */
+
+	@Override
+	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
+		if (container.stackTagCompound == null)
+			container.stackTagCompound = new NBTTagCompound();
+		int energy = container.stackTagCompound.getInteger("Energy");
+		int energyReceived = Math.min(capacity - energy, maxReceive);
+
+		if (!simulate) {
+			energy += energyReceived;
+			container.stackTagCompound.setInteger("Energy", energy);
+		}
+		return energyReceived;
+	}
+
+	@Override
+	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
+		if (container.stackTagCompound == null || !container.stackTagCompound.hasKey("Energy"))
+			return 0;
+		int energy = container.stackTagCompound.getInteger("Energy");
+		int energyExtracted = Math.min(energy, maxExtract);
+
+		if (!simulate) {
+			energy -= energyExtracted;
+			container.stackTagCompound.setInteger("Energy", energy);
+		}
+		return energyExtracted;
+	}
+
+	@Override
+	public int getEnergyStored(ItemStack container) {
+		if (container.stackTagCompound == null || !container.stackTagCompound.hasKey("Energy"))
+			return 0;
+		return container.stackTagCompound.getInteger("Energy");
+	}
+
+	@Override
+	public int getMaxEnergyStored(ItemStack container) {
+		return capacity;
 	}
 }

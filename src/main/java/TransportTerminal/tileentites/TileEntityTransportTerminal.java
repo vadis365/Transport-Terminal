@@ -91,13 +91,8 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		readFromNBT(packet.func_148857_g());
 	}
 
-	/**
-	 * Returns whether or not this terminal has enough energy to teleport a
-	 * player. Should return true always if RF mode is not enabled.
-	 *
-	 */
 	public boolean canTeleport() {
-		return getEnergyStored(ForgeDirection.UNKNOWN) >= TransportTerminal.ENERGY_PER_TELEPORT;
+		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(ForgeDirection.UNKNOWN) >= TransportTerminal.ENERGY_PER_TELEPORT;
 	}
 
 	/**
