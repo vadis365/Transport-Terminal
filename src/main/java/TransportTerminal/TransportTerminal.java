@@ -76,6 +76,6 @@ public class TransportTerminal {
 		proxy.registerTileEntities();
 		proxy.registerRenderInformation();
 
-		IS_RF_PRESENT = Loader.isModLoaded("CoFHLib");
+		IS_RF_PRESENT = Loader.isModLoaded("CoFHLib") || Loader.isModLoaded("EnderIO");
 	}
 }
