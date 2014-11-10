@@ -5,17 +5,61 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.TileEnergyHandler;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import cofh.api.energy.IEnergyHandler;
+import cpw.mods.fml.common.Optional;
 
-public abstract class TileEntityInventoryEnergy extends TileEnergyHandler implements IInventory {
+@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHLib")
+public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyHandler {
 
+	private final int capacity;
+	private int energy;
 	protected ItemStack[] inventory;
 
 	public TileEntityInventoryEnergy(int maxStorage, int invtSize) {
-		storage = new EnergyStorage(maxStorage);
+		capacity = maxStorage;
 		inventory = new ItemStack[invtSize];
 	}
+
+	/* ENERGY */
+
+	@Override
+	public boolean canConnectEnergy(ForgeDirection from) {
+		return true;
+	}
+
+	@Override
+	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+		int energyReceived = Math.min(capacity - energy, maxReceive);
+		if (!simulate)
+			energy += energyReceived;
+		return energyReceived;
+	}
+
+	@Override
+	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+		int energyExtracted = Math.min(energy, maxExtract);
+		if (!simulate)
+			energy -= energyExtracted;
+		return energyExtracted;
+	}
+
+	@Override
+	public int getEnergyStored(ForgeDirection from) {
+		return energy;
+	}
+
+	@Override
+	public int getMaxEnergyStored(ForgeDirection from) {
+		return capacity;
+	}
+
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
+
+	/* INVENTORY */
 
 	@Override
 	public int getSizeInventory() {
@@ -104,6 +148,7 @@ public abstract class TileEntityInventoryEnergy extends TileEnergyHandler implem
 			if (j >= 0 && j < inventory.length)
 				inventory[j] = ItemStack.loadItemStackFromNBT(data);
 		}
+		energy = nbt.getInteger("energy");
 	}
 
 	@Override
@@ -120,5 +165,6 @@ public abstract class TileEntityInventoryEnergy extends TileEnergyHandler implem
 			}
 
 		nbt.setTag("Items", tags);
+		nbt.setInteger("energy", energy);
 	}
 }

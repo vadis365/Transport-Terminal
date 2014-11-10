@@ -7,7 +7,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import TransportTerminal.TransportTerminal;
-import cofh.api.energy.IEnergyContainerItem;
 
 public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
@@ -35,12 +34,6 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 			stack.getTagCompound().setInteger("homeX", xCoord);
 			stack.getTagCompound().setInteger("homeY", yCoord);
 			stack.getTagCompound().setInteger("homeZ", zCoord);
-			if (stack.getItem() instanceof IEnergyContainerItem) {
-				IEnergyContainerItem item = (IEnergyContainerItem) stack.getItem();
-				int received = item.receiveEnergy(stack, getEnergyStored(ForgeDirection.UNKNOWN), false);
-				((IEnergyContainerItem) is.getItem()).receiveEnergy(is, received, false);
-				extractEnergy(ForgeDirection.UNKNOWN, received, false);
-			}
 			setInventorySlotContents(1, stack);
 		}
 	}
@@ -113,9 +106,5 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	@Override
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
 		return 0;
-	}
-
-	public void setEnergy(int energy) {
-		storage.setEnergyStored(energy);
 	}
 }
