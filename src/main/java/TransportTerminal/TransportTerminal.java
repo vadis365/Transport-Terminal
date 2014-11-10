@@ -46,6 +46,7 @@ public class TransportTerminal {
 	public static int ENERGY_PER_TELEPORT = 10000;
 	public static int REMOTE_MAX_ENERGY = 50000;
 	public static int TERMINAL_MAX_ENERGY = 320000;
+	public static int CHARGER_MAX_ENERGY = 320000;
 
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
