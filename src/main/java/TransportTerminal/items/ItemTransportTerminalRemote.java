@@ -28,7 +28,6 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 	public ItemTransportTerminalRemote() {
 		super(TransportTerminal.REMOTE_MAX_ENERGY);
 		setMaxStackSize(1);
-		setMaxDamage(Short.MAX_VALUE);
 		setCreativeTab(TransportTerminal.creativeTabsTT);
 	}
 
@@ -149,16 +148,17 @@ public class ItemTransportTerminalRemote extends ItemEnergyContainer {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (world.isRemote && !player.isSneaking() && stack.stackTagCompound.hasKey("homeX")) {
+		if (!player.isSneaking() && stack.stackTagCompound.hasKey("homeX")) {
 			int x = stack.getTagCompound().getInteger("homeX");
 			int y = stack.getTagCompound().getInteger("homeY");
 			int z = stack.getTagCompound().getInteger("homeZ");
 			int newDim = stack.getTagCompound().getInteger("dim");
-			if (getEnergyStored(stack) >= TransportTerminal.ENERGY_PER_TELEPORT) {
-				extractEnergy(stack, TransportTerminal.ENERGY_PER_TELEPORT, false);
-				TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(player, x, y, z));
-				TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
-			}
+			if (!world.isRemote)
+				if (getEnergyStored(stack) >= TransportTerminal.ENERGY_PER_TELEPORT) {
+					extractEnergy(stack, TransportTerminal.ENERGY_PER_TELEPORT, false);
+					TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(player, x, y, z));
+					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
+				}
 		}
 		return stack;
 	}
