@@ -30,10 +30,10 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "transportterminal", name = "Transport Terminal", version = "1.0a")
+@Mod(modid = "transportterminals", name = "Transport Terminals", version = "1.0b")
 public class TransportTerminal {
 
-	@Instance("transportterminal")
+	@Instance("transportterminals")
 	public static TransportTerminal instance;
 
 	@SidedProxy(clientSide = "TransportTerminal.ClientProxyTransportTerminal", serverSide = "TransportTerminal.CommonProxyTransportTerminal")
