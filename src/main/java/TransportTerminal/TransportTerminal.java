@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeChunkManager;
+import TransportTerminal.blocks.BlockChipUtilities;
 import TransportTerminal.blocks.BlockTransportTerminal;
 import TransportTerminal.items.ItemTransportTerminalChip;
 import TransportTerminal.items.ItemTransportTerminalPlayerChip;
@@ -30,10 +31,10 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "transportterminals", name = "Transport Terminals", version = "1.0b")
+@Mod(modid = "transportterminal", name = "Transport Terminals", version = "1.0b")
 public class TransportTerminal {
 
-	@Instance("transportterminals")
+	@Instance("transportterminal")
 	public static TransportTerminal instance;
 
 	@SidedProxy(clientSide = "TransportTerminal.ClientProxyTransportTerminal", serverSide = "TransportTerminal.CommonProxyTransportTerminal")
@@ -41,7 +42,7 @@ public class TransportTerminal {
 
 	public static Item transportTerminalRemote;
 	public static Item transportTerminalChip;
-	public static Block transportTerminal;
+	public static Block transportTerminal, transportUtils;
 	public static Item transportTerminalPlayerChip;
 
 	public static SimpleNetworkWrapper networkWrapper;
@@ -61,11 +62,13 @@ public class TransportTerminal {
 		transportTerminalChip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
 		transportTerminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
 		transportTerminalPlayerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
+		transportUtils = new BlockChipUtilities().setHardness(3.0F).setBlockName("transportUtils").setBlockTextureName("transportterminal:transportUtils");
 		
 		GameRegistry.registerItem(transportTerminalRemote, "Transport Terminal Remote");
 		GameRegistry.registerItem(transportTerminalChip, "Transport Terminal Chip");
 		GameRegistry.registerBlock(transportTerminal, "Transport Terminal");
 		GameRegistry.registerItem(transportTerminalPlayerChip, "Player Location Chip");
+		GameRegistry.registerBlock(transportUtils, "Transport Chip Utilities");
 		
 		TransportTerminalCrafting.addRecipes();
 

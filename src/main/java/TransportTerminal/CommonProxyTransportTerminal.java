@@ -5,23 +5,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import TransportTerminal.inventory.ContainerChipUtils;
 import TransportTerminal.inventory.ContainerTerminal;
+import TransportTerminal.inventory.GuiChipUtils;
 import TransportTerminal.inventory.GuiNaming;
 import TransportTerminal.inventory.GuiTerminal;
 import TransportTerminal.items.ItemTransportTerminalRemote;
+import TransportTerminal.tileentites.TileEntityChipUtilities;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxyTransportTerminal implements IGuiHandler {
 
-	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1;
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2;
 
 	public void registerRenderInformation() {
 	}
 
 	public void registerTileEntities() {
 		registerTileEntity(TileEntityTransportTerminal.class, "transportTerminal");
+		registerTileEntity(TileEntityChipUtilities.class, "transportUtils");
 	}
 
 	private void registerTileEntity(Class<? extends TileEntity> cls, String baseName) {
@@ -42,6 +46,12 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 			ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			return new ContainerTerminal(player.inventory, null, 1);
 		}
+		
+		if (ID == GUI_ID_CHIP_UTILS) {
+			TileEntity tileentity = world.getTileEntity(x, y, z);
+			if (tileentity instanceof TileEntityChipUtilities)
+				return new ContainerChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
+		}
 
 		return null;
 	}
@@ -56,6 +66,12 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 
 		if (ID == GUI_ID_REMOTE)
 			return new GuiNaming(player);
+		
+		if (ID == GUI_ID_CHIP_UTILS) {
+			TileEntity tileentity = world.getTileEntity(x, y, z);
+			if (tileentity instanceof TileEntityChipUtilities)
+				return new GuiChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
+		}
 
 		return null;
 	}
