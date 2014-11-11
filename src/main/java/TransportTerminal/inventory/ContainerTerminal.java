@@ -34,7 +34,7 @@ public class ContainerTerminal extends Container {
 				addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
 		}
 	}
-
+/*  TODO FIX THIS (it causes a crash when using the remote with Sneak + R Click)
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
@@ -47,7 +47,7 @@ public class ContainerTerminal extends Container {
 		if (id == 0)
 			tile.setEnergy(value);
 	}
-
+*/
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 		return true;
