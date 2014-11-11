@@ -65,19 +65,22 @@ public class GuiChipUtils extends GuiContainer {
 
 		if (guibutton instanceof GuiButton) {
 			if (guibutton.id == 0) {
-				if (tile.getStackInSlot(1) != null && tile.getStackInSlot(2) != null && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBasicChipItem(tile.getStackInSlot(2).getItem()) && isBlankChip(tile.getStackInSlot(2)))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
+				if (tile.getStackInSlot(0) == null) {
+					if (tile.getStackInSlot(1) != null && tile.getStackInSlot(2) != null && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBasicChipItem(tile.getStackInSlot(2).getItem()) && isBlankChip(tile.getStackInSlot(2)))
+						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
 
-				if (tile.getStackInSlot(1) != null && tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isPlayerChipItem(tile.getStackInSlot(2).getItem()) && isBlankPlayerChip(tile.getStackInSlot(2)))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
+					if (tile.getStackInSlot(1) != null && tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isPlayerChipItem(tile.getStackInSlot(2).getItem()) && isBlankPlayerChip(tile.getStackInSlot(2)))
+						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
+				}
 			}
-
 			if (guibutton.id == 1) {
-				if (tile.getStackInSlot(2) != null && isBasicChipItem(tile.getStackInSlot(2).getItem()))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_CHIP));
+				if (tile.getStackInSlot(0) == null) {
+					if (tile.getStackInSlot(0) == null && tile.getStackInSlot(2) != null && isBasicChipItem(tile.getStackInSlot(2).getItem()))
+						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_CHIP));
 
-				if (tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(2).getItem()))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_PLAYER_CHIP));
+					if (tile.getStackInSlot(0) == null && tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(2).getItem()))
+						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_PLAYER_CHIP));
+				}
 			}
 		}
 	}
