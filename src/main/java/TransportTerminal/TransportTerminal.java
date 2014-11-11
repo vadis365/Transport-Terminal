@@ -9,6 +9,8 @@ import TransportTerminal.blocks.BlockTransportTerminal;
 import TransportTerminal.items.ItemTransportTerminalChip;
 import TransportTerminal.items.ItemTransportTerminalPlayerChip;
 import TransportTerminal.items.ItemTransportTerminalRemote;
+import TransportTerminal.network.ChipUtilsMessage;
+import TransportTerminal.network.ChipUtilsPacketHandler;
 import TransportTerminal.network.EnergyMessage;
 import TransportTerminal.network.NamingMessage;
 import TransportTerminal.network.NamingPacketHandler;
@@ -78,6 +80,7 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
 		networkWrapper.registerMessage(TeleportEnergyPacketHandler.class, EnergyMessage.class, 2, Side.SERVER);
 		networkWrapper.registerMessage(PlayerChipPacketHandler.class, PlayerChipMessage.class, 3, Side.SERVER);
+		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 4, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 

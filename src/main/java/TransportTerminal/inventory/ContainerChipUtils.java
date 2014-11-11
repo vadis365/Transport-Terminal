@@ -8,16 +8,16 @@ import net.minecraft.item.ItemStack;
 import TransportTerminal.TransportTerminal;
 import TransportTerminal.tileentites.TileEntityChipUtilities;
 
-public class ContainerChipUtils  extends Container {
+public class ContainerChipUtils extends Container {
 	
 	public int numRows = 2;
 
 	public ContainerChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile) {
 		int i = (numRows - 4) * 18;
 
-		addSlotToContainer(new SlotChip(tile, 0, 62, 45)); // Slot for Result Chip
-		addSlotToContainer(new SlotChip(tile, 1, 98, 9)); // Slot for Blank Chip
-		addSlotToContainer(new SlotChip(tile, 2, 62, 9)); // Slot for Origin Chip
+		addSlotToContainer(new SlotChip(tile, 0, 62, 45)); // Bottom
+		addSlotToContainer(new SlotChip(tile, 1, 98, 9)); // Right
+		addSlotToContainer(new SlotChip(tile, 2, 62, 9)); // Left
 		
 		for (int j = 0; j < 3; j++)
 			for (int k = 0; k < 9; k++)

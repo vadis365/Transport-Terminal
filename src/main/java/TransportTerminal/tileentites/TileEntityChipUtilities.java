@@ -9,6 +9,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import TransportTerminal.TransportTerminal;
 
 public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	
@@ -138,5 +139,20 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
 		readFromNBT(packet.func_148857_g());
+	}
+
+	public void copyChip() {
+		setInventorySlotContents(2, null);
+		setInventorySlotContents(0, getStackInSlot(1).copy());
+	}
+
+	public void eraseChip() {
+		setInventorySlotContents(2, null);
+		setInventorySlotContents(0, new ItemStack(TransportTerminal.transportTerminalChip));	
+	}
+
+	public void erasePlayerChip() {
+		setInventorySlotContents(2, null);
+		setInventorySlotContents(0, new ItemStack(TransportTerminal.transportTerminalPlayerChip));	
 	}
 }
