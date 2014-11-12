@@ -1,6 +1,5 @@
 package TransportTerminal.network;
 
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import TransportTerminal.tileentites.TileEntityChipUtilities;
@@ -22,7 +21,6 @@ public class ChipUtilsPacketHandler implements IMessageHandler<ChipUtilsMessage,
 
 		else if (!world.isRemote) {
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				TileEntityChipUtilities utilsTile = (TileEntityChipUtilities) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 				if (utilsTile != null) {
 					if (message.funcID == COPY_CHIP)
