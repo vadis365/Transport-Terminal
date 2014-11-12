@@ -12,12 +12,11 @@ public class ContainerChipUtils extends Container {
 	
 	public int numRows = 2;
 
-	public ContainerChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile, int id) {
+	public ContainerChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile) {
 		int i = (numRows - 4) * 18;
-
-		addSlotToContainer(new SlotChip(tile, 0, 62, 45)); // Bottom
-		addSlotToContainer(new SlotChip(tile, 1, 98, 9)); // Right
-		addSlotToContainer(new SlotChip(tile, 2, 62, 9)); // Left
+		
+		addSlotToContainer(new SlotChip(tile, 0, 62, 9)); // Origin
+		addSlotToContainer(new SlotChip(tile, 1, 98, 9)); // Result
 		
 		for (int j = 0; j < 3; j++)
 			for (int k = 0; k < 9; k++)
@@ -38,14 +37,14 @@ public class ContainerChipUtils extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
-			if (slotIndex > 2) {
+			if (slotIndex > 1) {
 				if (stack1.getItem() == TransportTerminal.transportTerminalChip || stack1.getItem() == TransportTerminal.transportTerminalPlayerChip) {
-					if (!mergeItemStack(stack1, 1, inventorySlots.size(), false))
+					if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
 						return null;
 				} else if (stack1.getItem() != TransportTerminal.transportTerminalChip || stack1.getItem() != TransportTerminal.transportTerminalPlayerChip)
-					if (!mergeItemStack(stack1, 1, 2, true))
+					if (!mergeItemStack(stack1, 0, 1, true))
 						return null;
-			} else if (!mergeItemStack(stack1, 3, inventorySlots.size(), false))
+			} else if (!mergeItemStack(stack1, 2, inventorySlots.size(), false))
 				return null;
 			if (stack1.stackSize == 0)
 				slot.putStack(null);

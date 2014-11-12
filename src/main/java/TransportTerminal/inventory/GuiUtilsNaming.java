@@ -83,9 +83,9 @@ public class GuiUtilsNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "Arch Stanton", x, y, z, NAME_PLAYER_CHIP));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, "Arch Stanton", x, y, z, NAME_PLAYER_CHIP));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, textFieldName.getText(), x, y, z, NAME_PLAYER_CHIP));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, textFieldName.getText(), x, y, z, NAME_PLAYER_CHIP));
 				playerSent.closeScreen();
 			}
 	}

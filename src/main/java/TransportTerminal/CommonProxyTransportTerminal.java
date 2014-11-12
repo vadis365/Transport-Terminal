@@ -51,11 +51,11 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_CHIP_UTILS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityChipUtilities)
-				return new ContainerChipUtils(player.inventory, (TileEntityChipUtilities) tileentity, 0);
+				return new ContainerChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
 		}
 		
 		if (ID == GUI_ID_CHIP_UTILS_NAMING) {
-			return new ContainerChipUtils(player.inventory, null, 1);
+			return new ContainerChipUtils(player.inventory, null);
 		}
 
 		return null;
@@ -75,7 +75,7 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_CHIP_UTILS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityChipUtilities)
-				return new GuiChipUtils(player.inventory, (TileEntityChipUtilities) tileentity, 0);
+				return new GuiChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
 		}
 		
 		if (ID == GUI_ID_CHIP_UTILS_NAMING){

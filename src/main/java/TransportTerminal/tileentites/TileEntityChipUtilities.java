@@ -145,23 +145,22 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	public void copyChip() {
-		setInventorySlotContents(2, null);
-		setInventorySlotContents(0, getStackInSlot(1).copy());
+		setInventorySlotContents(1, getStackInSlot(0).copy());	
 	}
 
 	public void eraseChip() {
-		setInventorySlotContents(2, null);
-		setInventorySlotContents(0, new ItemStack(TransportTerminal.transportTerminalChip));	
+		setInventorySlotContents(1, new ItemStack(TransportTerminal.transportTerminalChip));
+		setInventorySlotContents(0, null);
 	}
 
 	public void erasePlayerChip() {
-		setInventorySlotContents(2, null);
-		setInventorySlotContents(0, new ItemStack(TransportTerminal.transportTerminalPlayerChip));	
+		setInventorySlotContents(1, new ItemStack(TransportTerminal.transportTerminalPlayerChip));
+		setInventorySlotContents(0, null);
 	}
 	
 	public void setName(String text) {
 		playerChipName = text;
-		ItemStack stack = getStackInSlot(0);
+		ItemStack stack = getStackInSlot(1);
 		if (stack != null && stack.getItem() == TransportTerminal.transportTerminalPlayerChip)
 			stack.setStackDisplayName(playerChipName);
 	}
