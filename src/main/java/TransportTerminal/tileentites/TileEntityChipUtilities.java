@@ -14,7 +14,8 @@ import TransportTerminal.TransportTerminal;
 public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	
 	private ItemStack[] inventory = new ItemStack[3];
-
+	private String playerChipName = "Blank";
+	
 	@Override
 	public boolean canUpdate() {
 		return false;
@@ -84,6 +85,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 				inventory[j] = ItemStack.loadItemStackFromNBT(data);
 			}
 		}
+		playerChipName = nbt.getString("playerChipName");
 	}
 
 	@Override
@@ -101,6 +103,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 		}
 		
 		nbt.setTag("Items", tags);
+		nbt.setString("playerChipName", playerChipName);
 	}
 
 	@Override
@@ -154,5 +157,12 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	public void erasePlayerChip() {
 		setInventorySlotContents(2, null);
 		setInventorySlotContents(0, new ItemStack(TransportTerminal.transportTerminalPlayerChip));	
+	}
+	
+	public void setName(String text) {
+		playerChipName = text;
+		ItemStack stack = getStackInSlot(0);
+		if (stack != null && stack.getItem() == TransportTerminal.transportTerminalPlayerChip)
+			stack.setStackDisplayName(playerChipName);
 	}
 }

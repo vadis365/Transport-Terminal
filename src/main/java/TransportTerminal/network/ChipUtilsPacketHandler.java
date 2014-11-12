@@ -9,7 +9,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class ChipUtilsPacketHandler implements IMessageHandler<ChipUtilsMessage, IMessage> {
 	
-	public final int COPY_CHIP = 0, ERASE_CHIP = 1, ERASE_PLAYER_CHIP = 2;
+	public final int COPY_CHIP = 0, ERASE_CHIP = 1, ERASE_PLAYER_CHIP = 2, NAME_PLAYER_CHIP = 3;
 	
 	@Override
 	public IMessage onMessage(ChipUtilsMessage message, MessageContext ctx) {
@@ -31,6 +31,11 @@ public class ChipUtilsPacketHandler implements IMessageHandler<ChipUtilsMessage,
 					
 					if (message.funcID == ERASE_PLAYER_CHIP)
 						utilsTile.erasePlayerChip();
+					
+					if (message.funcID == NAME_PLAYER_CHIP) {
+						utilsTile.erasePlayerChip();
+						utilsTile.setName(message.name);
+					}		
 				}
 			}
 		}

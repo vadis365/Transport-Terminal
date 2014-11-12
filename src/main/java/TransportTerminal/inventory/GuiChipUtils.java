@@ -21,7 +21,7 @@ public class GuiChipUtils extends GuiContainer {
 
 	private static final ResourceLocation GUI_CHIP_UTILS = new ResourceLocation("transportterminal:textures/gui/transportChipUtils.png");
 	private final TileEntityChipUtilities tile;
-	public final int COPY_CHIP = 0, ERASE_CHIP = 1, ERASE_PLAYER_CHIP = 2;
+	public final int COPY_CHIP = 0, ERASE_CHIP = 1, ERASE_PLAYER_CHIP = 2, NAME_PLAYER_CHIP = 3;
 
 	public GuiChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile) {
 		super(new ContainerChipUtils(playerInventory, tile));
@@ -75,11 +75,18 @@ public class GuiChipUtils extends GuiContainer {
 			}
 			if (guibutton.id == 1) {
 				if (tile.getStackInSlot(0) == null) {
-					if (tile.getStackInSlot(0) == null && tile.getStackInSlot(2) != null && isBasicChipItem(tile.getStackInSlot(2).getItem()))
+					if (tile.getStackInSlot(2) != null && isBasicChipItem(tile.getStackInSlot(2).getItem()))
 						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_CHIP));
 
-					if (tile.getStackInSlot(0) == null && tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(2).getItem()))
+					if (tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(2).getItem()))
 						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_PLAYER_CHIP));
+				}
+			}
+			
+			if (guibutton.id == 2) {
+				if (tile.getStackInSlot(0) == null) {
+					if (tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(2).getItem()))
+						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "Test Name", x, y, z, NAME_PLAYER_CHIP));
 				}
 			}
 		}
