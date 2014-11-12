@@ -149,7 +149,9 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	public void eraseChip() {
-		setInventorySlotContents(1, new ItemStack(TransportTerminal.transportTerminalChip));
+		ItemStack nbtChip = new ItemStack(TransportTerminal.transportTerminalChip);
+		nbtChip.setTagCompound(new NBTTagCompound());
+		setInventorySlotContents(1, nbtChip);
 		setInventorySlotContents(0, null);
 	}
 
