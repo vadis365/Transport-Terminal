@@ -23,8 +23,8 @@ public class GuiChipUtils extends GuiContainer {
 	private final TileEntityChipUtilities tile;
 	public final int COPY_CHIP = 0, ERASE_CHIP = 1, ERASE_PLAYER_CHIP = 2, NAME_PLAYER_CHIP = 3;
 
-	public GuiChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile) {
-		super(new ContainerChipUtils(playerInventory, tile));
+	public GuiChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile, int id) {
+		super(new ContainerChipUtils(playerInventory, tile, id));
 		this.tile = tile;
 		allowUserInput = false;
 		ySize = 168;
@@ -86,7 +86,7 @@ public class GuiChipUtils extends GuiContainer {
 			if (guibutton.id == 2) {
 				if (tile.getStackInSlot(0) == null) {
 					if (tile.getStackInSlot(2) != null && isPlayerChipItem(tile.getStackInSlot(2).getItem()))
-						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "Test Name", x, y, z, NAME_PLAYER_CHIP));
+						mc.thePlayer.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, x, y, z);
 				}
 			}
 		}

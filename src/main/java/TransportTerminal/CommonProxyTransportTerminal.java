@@ -10,6 +10,7 @@ import TransportTerminal.inventory.ContainerTerminal;
 import TransportTerminal.inventory.GuiChipUtils;
 import TransportTerminal.inventory.GuiNaming;
 import TransportTerminal.inventory.GuiTerminal;
+import TransportTerminal.inventory.GuiUtilsNaming;
 import TransportTerminal.items.ItemTransportTerminalRemote;
 import TransportTerminal.tileentites.TileEntityChipUtilities;
 import TransportTerminal.tileentites.TileEntityTransportTerminal;
@@ -18,7 +19,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxyTransportTerminal implements IGuiHandler {
 
-	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2;
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3;
 
 	public void registerRenderInformation() {
 	}
@@ -50,7 +51,11 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_CHIP_UTILS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityChipUtilities)
-				return new ContainerChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
+				return new ContainerChipUtils(player.inventory, (TileEntityChipUtilities) tileentity, 0);
+		}
+		
+		if (ID == GUI_ID_CHIP_UTILS_NAMING) {
+			return new ContainerChipUtils(player.inventory, null, 1);
 		}
 
 		return null;
@@ -70,7 +75,13 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 		if (ID == GUI_ID_CHIP_UTILS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityChipUtilities)
-				return new GuiChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
+				return new GuiChipUtils(player.inventory, (TileEntityChipUtilities) tileentity, 0);
+		}
+		
+		if (ID == GUI_ID_CHIP_UTILS_NAMING){
+			TileEntity tileentity = world.getTileEntity(x, y, z);
+			if (tileentity instanceof TileEntityChipUtilities)
+			return new GuiUtilsNaming(player, (TileEntityChipUtilities) tileentity);
 		}
 
 		return null;

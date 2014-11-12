@@ -12,7 +12,7 @@ public class ContainerChipUtils extends Container {
 	
 	public int numRows = 2;
 
-	public ContainerChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile) {
+	public ContainerChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile, int id) {
 		int i = (numRows - 4) * 18;
 
 		addSlotToContainer(new SlotChip(tile, 0, 62, 45)); // Bottom
