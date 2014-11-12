@@ -145,7 +145,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	public void copyChip() {
-		setInventorySlotContents(1, getStackInSlot(0).copy());	
+		setInventorySlotContents(1, getStackInSlot(0).copy());
 	}
 
 	public void eraseChip() {
