@@ -34,20 +34,24 @@ public class ContainerTerminal extends Container {
 				addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
 		}
 	}
-/*  TODO FIX THIS (it causes a crash when using the remote with Sneak + R Click)
+
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
+		if (!TransportTerminal.IS_RF_PRESENT)
+			return;
 		for (int i = 0; i < crafters.size(); i++)
 			((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
 	}
 
 	@Override
 	public void updateProgressBar(int id, int value) {
+		if (!TransportTerminal.IS_RF_PRESENT)
+			return;
 		if (id == 0)
 			tile.setEnergy(value);
 	}
-*/
+
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 		return true;
@@ -61,7 +65,7 @@ public class ContainerTerminal extends Container {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 15) {
-				if (stack1.getItem() == TransportTerminal.transportTerminalChip ||stack1.getItem() == TransportTerminal.transportTerminalPlayerChip) {
+				if (stack1.getItem() == TransportTerminal.transportTerminalChip || stack1.getItem() == TransportTerminal.transportTerminalPlayerChip) {
 					if (!mergeItemStack(stack1, 2, 16, false))
 						return null;
 				} else if (stack1.getItem() == TransportTerminal.transportTerminalRemote)

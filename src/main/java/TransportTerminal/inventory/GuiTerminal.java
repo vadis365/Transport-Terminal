@@ -47,7 +47,8 @@ public class GuiTerminal extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getInventoryName()), 8, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + tile.getEnergyStored(ForgeDirection.UNKNOWN)), 100, ySize - 96 + 2, 4210752);
+		if (TransportTerminal.IS_RF_PRESENT)
+			fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + tile.getEnergyStored(ForgeDirection.UNKNOWN)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class GuiTerminal extends GuiContainer {
 		int xx = tile.xCoord;
 		int yy = tile.yCoord;
 		int zz = tile.zCoord;
-		
+
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
 				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).stackTagCompound.hasKey("chipX")) {
@@ -72,19 +73,17 @@ public class GuiTerminal extends GuiContainer {
 					int x = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipX");
 					int y = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipY");
 					int z = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipZ");
-					
-					
+
 					if (tile.canTeleport()) {
 						TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
 						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
 					}
 				}
-				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName()) {
+				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName())
 					if (tile.canTeleport()) {
 						TransportTerminal.networkWrapper.sendToServer(new PlayerChipMessage(mc.thePlayer, tile.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));
 						TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
 					}
-				}
 				mc.thePlayer.closeScreen();
 			}
 	}
