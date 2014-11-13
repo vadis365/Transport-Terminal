@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiChipUtils extends GuiContainer {
 
-	private static final ResourceLocation GUI_CHIP_UTILS = new ResourceLocation("transportterminal:textures/gui/transportChipUtils.png");
+	private static final ResourceLocation GUI_CHIP_UTILS = new ResourceLocation("transportterminal:textures/gui/transportChipUtilsGui.png");
 	private final TileEntityChipUtilities tile;
 	public final int COPY_CHIP = 0, ERASE_CHIP = 1, ERASE_PLAYER_CHIP = 2, NAME_PLAYER_CHIP = 3;
 

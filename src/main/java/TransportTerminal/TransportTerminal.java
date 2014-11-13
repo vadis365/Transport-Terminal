@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeChunkManager;
+import TransportTerminal.blocks.BlockCharger;
 import TransportTerminal.blocks.BlockChipUtilities;
 import TransportTerminal.blocks.BlockTransportTerminal;
 import TransportTerminal.items.ItemTransportTerminalChip;
@@ -44,7 +45,7 @@ public class TransportTerminal {
 
 	public static Item transportTerminalRemote;
 	public static Item transportTerminalChip;
-	public static Block transportTerminal, transportUtils;
+	public static Block transportTerminal, transportUtils, transportCharger;
 	public static Item transportTerminalPlayerChip;
 
 	public static SimpleNetworkWrapper networkWrapper;
@@ -65,12 +66,14 @@ public class TransportTerminal {
 		transportTerminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
 		transportTerminalPlayerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
 		transportUtils = new BlockChipUtilities().setHardness(3.0F).setBlockName("transportUtils").setBlockTextureName("transportterminal:transportUtils");
+		transportCharger = new BlockCharger().setHardness(3.0F).setBlockName("transportCharger").setBlockTextureName("transportterminal:transportCharger");
 		
 		GameRegistry.registerItem(transportTerminalRemote, "Transport Terminal Remote");
 		GameRegistry.registerItem(transportTerminalChip, "Transport Terminal Chip");
 		GameRegistry.registerBlock(transportTerminal, "Transport Terminal");
 		GameRegistry.registerItem(transportTerminalPlayerChip, "Player Location Chip");
 		GameRegistry.registerBlock(transportUtils, "Transport Chip Utilities");
+		GameRegistry.registerBlock(transportCharger, "Transport Charger");
 		
 		TransportTerminalCrafting.addRecipes();
 
