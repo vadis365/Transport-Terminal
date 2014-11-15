@@ -22,7 +22,6 @@ import TransportTerminal.network.TeleportMessage;
 import TransportTerminal.network.TeleportPacketHandler;
 import TransportTerminal.recipescreativetabs.CreativeTabsTransportTerminal;
 import TransportTerminal.recipescreativetabs.TransportTerminalCrafting;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -61,20 +60,23 @@ public class TransportTerminal {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		IS_RF_PRESENT = true; // The old method was broken, need to figure out a new one.
+
 		transportTerminalRemote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
 		transportTerminalChip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
 		transportTerminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
 		transportTerminalPlayerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
 		transportUtils = new BlockChipUtilities().setHardness(3.0F).setBlockName("transportUtils").setBlockTextureName("transportterminal:transportUtils");
 		transportCharger = new BlockCharger().setHardness(3.0F).setBlockName("transportCharger").setBlockTextureName("transportterminal:transportCharger");
-		
+
 		GameRegistry.registerItem(transportTerminalRemote, "Transport Terminal Remote");
 		GameRegistry.registerItem(transportTerminalChip, "Transport Terminal Chip");
 		GameRegistry.registerBlock(transportTerminal, "Transport Terminal");
 		GameRegistry.registerItem(transportTerminalPlayerChip, "Player Location Chip");
 		GameRegistry.registerBlock(transportUtils, "Transport Chip Utilities");
-		GameRegistry.registerBlock(transportCharger, "Transport Charger");
-		
+		if (IS_RF_PRESENT) // No need for a charger if there's no RF
+			GameRegistry.registerBlock(transportCharger, "Transport Charger");
+
 		TransportTerminalCrafting.addRecipes();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
@@ -91,7 +93,5 @@ public class TransportTerminal {
 	public void Init(FMLInitializationEvent event) {
 		proxy.registerTileEntities();
 		proxy.registerRenderInformation();
-
-		IS_RF_PRESENT = Loader.isModLoaded("CoFHLib") || Loader.isModLoaded("EnderIO");
 	}
 }

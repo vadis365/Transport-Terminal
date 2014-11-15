@@ -3,27 +3,43 @@ package TransportTerminal.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import TransportTerminal.TransportTerminal;
+import net.minecraftforge.common.util.ForgeDirection;
 import TransportTerminal.tileentites.TileEntityCharger;
 
 public class ContainerCharger extends Container {
-	
-	public int numRows = 2;
+
+	private final TileEntityCharger tile;
 
 	public ContainerCharger(InventoryPlayer playerInventory, TileEntityCharger tile) {
-		int i = (numRows - 4) * 18;
-		
-		addSlotToContainer(new Slot(tile, 0, 62, 9)); // Top
-		addSlotToContainer(new Slot(tile, 1, 62, 31)); // Middle
-		addSlotToContainer(new Slot(tile, 2, 62, 53)); // Bottom
-		
+		this.tile = tile;
+		addSlotToContainer(new Slot(tile, 0, 62, 9));
+		addSlotToContainer(new Slot(tile, 1, 62, 31));
+		addSlotToContainer(new Slot(tile, 2, 62, 53));
+		addSlotToContainer(new Slot(tile, 3, 62 + 36, 9));
+		addSlotToContainer(new Slot(tile, 4, 62 + 36, 31));
+		addSlotToContainer(new Slot(tile, 5, 62 + 36, 53));
+
 		for (int j = 0; j < 3; j++)
 			for (int k = 0; k < 9; k++)
-				addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 122 + j * 18 + i));
+				addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 86 + j * 18));
 		for (int j = 0; j < 9; j++)
-			addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
+			addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 144));
+	}
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		for (int i = 0; i < crafters.size(); i++)
+			((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+	}
+
+	@Override
+	public void updateProgressBar(int id, int value) {
+		if (id == 0)
+			tile.setEnergy(value);
 	}
 
 	@Override
@@ -33,30 +49,6 @@ public class ContainerCharger extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex) {
-		ItemStack stack = null;
-		Slot slot = (Slot) inventorySlots.get(slotIndex);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack stack1 = slot.getStack();
-			stack = stack1.copy();
-			if (slotIndex > 2) {
-				if (stack1.getItem() == TransportTerminal.transportTerminalRemote) {
-					if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
-						return null;
-				} else if (stack1.getItem() != TransportTerminal.transportTerminalRemote)
-					if (!mergeItemStack(stack1, 0, 3, true))
-						return null;
-			} else if (!mergeItemStack(stack1, 3, inventorySlots.size(), false))
-				return null;
-			if (stack1.stackSize == 0)
-				slot.putStack(null);
-			else
-				slot.onSlotChanged();
-			if (stack1.stackSize != stack.stackSize)
-				slot.onPickupFromSlot(player, stack1);
-			else
-				return null;
-		}
-		return stack;
+		return null;
 	}
 }
-

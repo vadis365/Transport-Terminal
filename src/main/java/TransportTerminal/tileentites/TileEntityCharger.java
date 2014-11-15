@@ -8,7 +8,7 @@ import cofh.api.energy.IEnergyContainerItem;
 public class TileEntityCharger extends TileEntityInventoryEnergy {
 
 	public TileEntityCharger() {
-		super(TransportTerminal.CHARGER_MAX_ENERGY, 3);
+		super(TransportTerminal.CHARGER_MAX_ENERGY, 6);
 	}
 
 	@Override
