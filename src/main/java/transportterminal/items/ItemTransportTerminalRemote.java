@@ -14,6 +14,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 import cofh.api.energy.IEnergyContainerItem;
@@ -28,7 +29,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 	private final int capacity;
 
 	public ItemTransportTerminalRemote() {
-		capacity = TransportTerminal.REMOTE_MAX_ENERGY;
+		capacity = ConfigHandler.REMOTE_MAX_ENERGY;
 		setMaxStackSize(1);
 		setCreativeTab(TransportTerminal.tab);
 	}
@@ -50,7 +51,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 		super.getSubItems(item, tab, list);
 		if (TransportTerminal.IS_RF_PRESENT) {
 			ItemStack charged = new ItemStack(item);
-			receiveEnergy(charged, TransportTerminal.REMOTE_MAX_ENERGY, false);
+			receiveEnergy(charged, ConfigHandler.REMOTE_MAX_ENERGY, false);
 			list.add(charged);
 		}
 	}
@@ -160,7 +161,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			int newDim = stack.getTagCompound().getInteger("dim");
 			if (!world.isRemote)
 				if (canTeleport(stack)) {
-					extractEnergy(stack, TransportTerminal.ENERGY_PER_TELEPORT, false);
+					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
 					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
 				}
 		}
@@ -176,7 +177,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 	}
 
 	private boolean canTeleport(ItemStack stack) {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(stack) >= TransportTerminal.ENERGY_PER_TELEPORT;
+		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(stack) >= ConfigHandler.ENERGY_PER_TELEPORT;
 	}
 
 	@Override

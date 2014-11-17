@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
-import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
@@ -38,7 +38,7 @@ public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessag
 				}
 				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 				if (console != null && console.canTeleport())
-					console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - TransportTerminal.ENERGY_PER_TELEPORT);
+					console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 				teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
 			}
 		return null;

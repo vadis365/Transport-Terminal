@@ -7,6 +7,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 
 public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
@@ -14,7 +15,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	private int tempSlot = 0;
 
 	public TileEntityTransportTerminal() {
-		super(TransportTerminal.TERMINAL_MAX_ENERGY, 16);
+		super(ConfigHandler.TERMINAL_MAX_ENERGY, 16);
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	}
 
 	public boolean canTeleport() {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(ForgeDirection.UNKNOWN) >= TransportTerminal.ENERGY_PER_TELEPORT;
+		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(ForgeDirection.UNKNOWN) >= ConfigHandler.ENERGY_PER_TELEPORT;
 	}
 
 	/**

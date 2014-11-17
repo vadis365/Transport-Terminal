@@ -7,6 +7,7 @@ import net.minecraftforge.common.ForgeChunkManager;
 import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockTransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalChip;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.items.ItemTransportTerminalRemote;
@@ -57,15 +58,10 @@ public class TransportTerminal {
 
 	public static boolean IS_RF_PRESENT;
 
-	// add configs for these
-	public static int ENERGY_PER_TELEPORT = 10000;
-	public static int REMOTE_MAX_ENERGY = 50000;
-	public static int TERMINAL_MAX_ENERGY = 320000;
-	public static int CHARGER_MAX_ENERGY = 320000;
-
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
+		ConfigHandler.INSTANCE.loadConfig(event);
 
 		remote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
 		chip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");

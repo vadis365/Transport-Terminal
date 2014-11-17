@@ -2,13 +2,13 @@ package transportterminal.tileentites;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
-import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import cofh.api.energy.IEnergyContainerItem;
 
 public class TileEntityCharger extends TileEntityInventoryEnergy {
 
 	public TileEntityCharger() {
-		super(TransportTerminal.CHARGER_MAX_ENERGY, 6);
+		super(ConfigHandler.CHARGER_MAX_ENERGY, 6);
 	}
 
 	@Override

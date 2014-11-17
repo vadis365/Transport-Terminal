@@ -3,7 +3,7 @@ package transportterminal.network.handler;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
-import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.message.EnergyMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -24,7 +24,7 @@ public class TeleportEnergyPacketHandler implements IMessageHandler<EnergyMessag
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
 				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 				if (console != null && console.canTeleport())
-					console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - TransportTerminal.ENERGY_PER_TELEPORT);
+					console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 			}
 		return null;
 	}
