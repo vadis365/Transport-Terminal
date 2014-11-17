@@ -14,7 +14,6 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import transportterminal.TransportTerminal;
-import transportterminal.network.message.EnergyMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 import cofh.api.energy.IEnergyContainerItem;
@@ -162,7 +161,6 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			if (!world.isRemote)
 				if (canTeleport(stack)) {
 					extractEnergy(stack, TransportTerminal.ENERGY_PER_TELEPORT, false);
-					TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(player, x, y, z));
 					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
 				}
 		}

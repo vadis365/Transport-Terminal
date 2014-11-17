@@ -80,11 +80,11 @@ public class GuiTerminal extends GuiContainer {
 						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
 					}
 				}
+				
 				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName())
-					if (tile.canTeleport()) {
+					if (tile.canTeleport())
 						TransportTerminal.networkWrapper.sendToServer(new PlayerChipMessage(mc.thePlayer, tile.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));
-						TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
-					}
+
 				mc.thePlayer.closeScreen();
 			}
 	}
