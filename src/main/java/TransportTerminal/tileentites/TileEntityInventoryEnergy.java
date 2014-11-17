@@ -1,4 +1,4 @@
-package TransportTerminal.tileentites;
+package transportterminal.tileentites;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

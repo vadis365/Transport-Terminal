@@ -1,4 +1,4 @@
-package TransportTerminal.inventory;
+package transportterminal.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -10,9 +10,10 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import TransportTerminal.TransportTerminal;
-import TransportTerminal.network.ChipUtilsMessage;
-import TransportTerminal.tileentites.TileEntityChipUtilities;
+import transportterminal.TransportTerminal;
+import transportterminal.gui.server.ContainerChipUtils;
+import transportterminal.network.message.ChipUtilsMessage;
+import transportterminal.tileentites.TileEntityChipUtilities;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -49,7 +50,7 @@ public class GuiChipUtils extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTickTime,int x, int y) {
+	protected void drawGuiContainerBackgroundLayer(float partialTickTime, int x, int y) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.getTextureManager().bindTexture(GUI_CHIP_UTILS);
 		int k = (width - xSize) / 2;
@@ -65,13 +66,13 @@ public class GuiChipUtils extends GuiContainer {
 
 		if (guibutton instanceof GuiButton) {
 			if (guibutton.id == 0) {
-					if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()) && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBlankChip(tile.getStackInSlot(1)))
-						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
+				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()) && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBlankChip(tile.getStackInSlot(1)))
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
 
-					if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()) && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isBlankPlayerChip(tile.getStackInSlot(1)))
-						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
+				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()) && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isBlankPlayerChip(tile.getStackInSlot(1)))
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
 			}
-			if (guibutton.id == 1) {
+			if (guibutton.id == 1)
 				if (tile.getStackInSlot(1) == null) {
 					if (tile.getStackInSlot(0) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()))
 						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_CHIP));
@@ -79,14 +80,11 @@ public class GuiChipUtils extends GuiContainer {
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
 						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_PLAYER_CHIP));
 				}
-			}
-			
-			if (guibutton.id == 2) {
-				if (tile.getStackInSlot(1) == null) {
+
+			if (guibutton.id == 2)
+				if (tile.getStackInSlot(1) == null)
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
 						mc.thePlayer.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, x, y, z);
-				}
-			}
 		}
 	}
 
@@ -99,11 +97,11 @@ public class GuiChipUtils extends GuiContainer {
 	}
 
 	public boolean isBasicChipItem(Item item) {
-		return item != null && item == TransportTerminal.transportTerminalChip;
+		return item != null && item == TransportTerminal.chip;
 	}
 
 	public boolean isPlayerChipItem(Item item) {
-		return item != null && item == TransportTerminal.transportTerminalPlayerChip;
+		return item != null && item == TransportTerminal.playerChip;
 	}
 
 }

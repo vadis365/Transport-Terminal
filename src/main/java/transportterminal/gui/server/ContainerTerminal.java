@@ -1,4 +1,4 @@
-package TransportTerminal.inventory;
+package transportterminal.gui.server;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,8 +7,10 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
-import TransportTerminal.TransportTerminal;
-import TransportTerminal.tileentites.TileEntityTransportTerminal;
+import transportterminal.TransportTerminal;
+import transportterminal.gui.slot.SlotChip;
+import transportterminal.gui.slot.SlotRemote;
+import transportterminal.tileentites.TileEntityTransportTerminal;
 
 public class ContainerTerminal extends Container {
 
@@ -65,10 +67,10 @@ public class ContainerTerminal extends Container {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 15) {
-				if (stack1.getItem() == TransportTerminal.transportTerminalChip || stack1.getItem() == TransportTerminal.transportTerminalPlayerChip) {
+				if (stack1.getItem() == TransportTerminal.chip || stack1.getItem() == TransportTerminal.playerChip) {
 					if (!mergeItemStack(stack1, 2, 16, false))
 						return null;
-				} else if (stack1.getItem() == TransportTerminal.transportTerminalRemote)
+				} else if (stack1.getItem() == TransportTerminal.remote)
 					if (!mergeItemStack(stack1, 0, 1, true))
 						return null;
 			} else if (!mergeItemStack(stack1, 16, inventorySlots.size(), false))

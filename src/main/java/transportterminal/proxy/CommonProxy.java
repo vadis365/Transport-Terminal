@@ -1,26 +1,26 @@
-package TransportTerminal;
+package transportterminal.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import TransportTerminal.inventory.ContainerCharger;
-import TransportTerminal.inventory.ContainerChipUtils;
-import TransportTerminal.inventory.ContainerTerminal;
-import TransportTerminal.inventory.GuiCharger;
-import TransportTerminal.inventory.GuiChipUtils;
-import TransportTerminal.inventory.GuiNaming;
-import TransportTerminal.inventory.GuiTerminal;
-import TransportTerminal.inventory.GuiUtilsNaming;
-import TransportTerminal.items.ItemTransportTerminalRemote;
-import TransportTerminal.tileentites.TileEntityCharger;
-import TransportTerminal.tileentites.TileEntityChipUtilities;
-import TransportTerminal.tileentites.TileEntityTransportTerminal;
+import transportterminal.gui.client.GuiCharger;
+import transportterminal.gui.client.GuiChipUtils;
+import transportterminal.gui.client.GuiNaming;
+import transportterminal.gui.client.GuiTerminal;
+import transportterminal.gui.client.GuiUtilsNaming;
+import transportterminal.gui.server.ContainerCharger;
+import transportterminal.gui.server.ContainerChipUtils;
+import transportterminal.gui.server.ContainerTerminal;
+import transportterminal.items.ItemTransportTerminalRemote;
+import transportterminal.tileentites.TileEntityCharger;
+import transportterminal.tileentites.TileEntityChipUtilities;
+import transportterminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class CommonProxyTransportTerminal implements IGuiHandler {
+public class CommonProxy implements IGuiHandler {
 
 	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4;
 
@@ -51,17 +51,16 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 			ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			return new ContainerTerminal(player.inventory, null, 1);
 		}
-		
+
 		if (ID == GUI_ID_CHIP_UTILS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityChipUtilities)
 				return new ContainerChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
 		}
-		
-		if (ID == GUI_ID_CHIP_UTILS_NAMING) {
+
+		if (ID == GUI_ID_CHIP_UTILS_NAMING)
 			return new ContainerChipUtils(player.inventory, null);
-		}
-		
+
 		if (ID == GUI_ID_CHARGER) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityCharger)
@@ -81,19 +80,19 @@ public class CommonProxyTransportTerminal implements IGuiHandler {
 
 		if (ID == GUI_ID_REMOTE)
 			return new GuiNaming(player);
-		
+
 		if (ID == GUI_ID_CHIP_UTILS) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityChipUtilities)
 				return new GuiChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
 		}
-		
-		if (ID == GUI_ID_CHIP_UTILS_NAMING){
+
+		if (ID == GUI_ID_CHIP_UTILS_NAMING) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityChipUtilities)
-			return new GuiUtilsNaming(player, (TileEntityChipUtilities) tileentity);
+				return new GuiUtilsNaming(player, (TileEntityChipUtilities) tileentity);
 		}
-		
+
 		if (ID == GUI_ID_CHARGER) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityCharger)

@@ -1,31 +1,32 @@
-package TransportTerminal.network;
+package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
-public class PlayerChipMessage implements IMessage {
+public class NamingMessage implements IMessage {
 
 	public int dimension, entityID, tileX, tileY, tileZ;
-	String playerOnChip;
+	public String name;
 
-	public PlayerChipMessage() {}
+	public NamingMessage() {
+	}
 
-	public PlayerChipMessage(EntityPlayer player, String string, int x, int y, int z) {
-		dimension = player.dimension;
+	public NamingMessage(EntityPlayer player, String string) {
+		dimension = player.getCurrentEquippedItem().getTagCompound().getInteger("dim");
 		entityID = player.getEntityId();
-		playerOnChip = string;
-		tileX = x;
-		tileY = y;
-		tileZ = z;
+		name = string;
+		tileX = player.getCurrentEquippedItem().getTagCompound().getInteger("homeX");
+		tileY = player.getCurrentEquippedItem().getTagCompound().getInteger("homeY");
+		tileZ = player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ");
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
-		ByteBufUtils.writeUTF8String(buf, playerOnChip);
+		ByteBufUtils.writeUTF8String(buf, name);
 		buf.writeInt(tileX);
 		buf.writeInt(tileY);
 		buf.writeInt(tileZ);
@@ -35,7 +36,7 @@ public class PlayerChipMessage implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
-		playerOnChip = ByteBufUtils.readUTF8String(buf);
+		name = ByteBufUtils.readUTF8String(buf);
 		tileX = buf.readInt();
 		tileY = buf.readInt();
 		tileZ = buf.readInt();

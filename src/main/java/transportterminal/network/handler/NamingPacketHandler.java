@@ -1,15 +1,15 @@
-package TransportTerminal.network;
+package transportterminal.network.handler;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import TransportTerminal.tileentites.TileEntityTransportTerminal;
+import transportterminal.network.message.NamingMessage;
+import transportterminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class NamingPacketHandler implements
-		IMessageHandler<NamingMessage, IMessage> {
+public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMessage> {
 
 	@Override
 	public IMessage onMessage(NamingMessage message, MessageContext ctx) {
@@ -19,7 +19,7 @@ public class NamingPacketHandler implements
 		if (world == null)
 			return null;
 
-		else if (!world.isRemote) {
+		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				world = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
@@ -27,7 +27,6 @@ public class NamingPacketHandler implements
 				if (console != null)
 					console.setName(message.name);
 			}
-		}
 		return null;
 	}
 }

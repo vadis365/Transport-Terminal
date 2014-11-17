@@ -1,4 +1,4 @@
-package TransportTerminal.inventory;
+package transportterminal.gui.client;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -8,7 +8,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import TransportTerminal.tileentites.TileEntityCharger;
+import transportterminal.gui.server.ContainerCharger;
+import transportterminal.tileentites.TileEntityCharger;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

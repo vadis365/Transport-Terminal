@@ -1,27 +1,26 @@
-package TransportTerminal;
+package transportterminal;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeChunkManager;
-import TransportTerminal.blocks.BlockCharger;
-import TransportTerminal.blocks.BlockChipUtilities;
-import TransportTerminal.blocks.BlockTransportTerminal;
-import TransportTerminal.items.ItemTransportTerminalChip;
-import TransportTerminal.items.ItemTransportTerminalPlayerChip;
-import TransportTerminal.items.ItemTransportTerminalRemote;
-import TransportTerminal.network.ChipUtilsMessage;
-import TransportTerminal.network.ChipUtilsPacketHandler;
-import TransportTerminal.network.EnergyMessage;
-import TransportTerminal.network.NamingMessage;
-import TransportTerminal.network.NamingPacketHandler;
-import TransportTerminal.network.PlayerChipMessage;
-import TransportTerminal.network.PlayerChipPacketHandler;
-import TransportTerminal.network.TeleportEnergyPacketHandler;
-import TransportTerminal.network.TeleportMessage;
-import TransportTerminal.network.TeleportPacketHandler;
-import TransportTerminal.recipescreativetabs.CreativeTabsTransportTerminal;
-import TransportTerminal.recipescreativetabs.TransportTerminalCrafting;
+import transportterminal.blocks.BlockCharger;
+import transportterminal.blocks.BlockChipUtilities;
+import transportterminal.blocks.BlockTransportTerminal;
+import transportterminal.items.ItemTransportTerminalChip;
+import transportterminal.items.ItemTransportTerminalPlayerChip;
+import transportterminal.items.ItemTransportTerminalRemote;
+import transportterminal.network.handler.ChipUtilsPacketHandler;
+import transportterminal.network.handler.NamingPacketHandler;
+import transportterminal.network.handler.PlayerChipPacketHandler;
+import transportterminal.network.handler.TeleportEnergyPacketHandler;
+import transportterminal.network.handler.TeleportPacketHandler;
+import transportterminal.network.message.ChipUtilsMessage;
+import transportterminal.network.message.EnergyMessage;
+import transportterminal.network.message.NamingMessage;
+import transportterminal.network.message.PlayerChipMessage;
+import transportterminal.network.message.TeleportMessage;
+import transportterminal.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -40,16 +39,21 @@ public class TransportTerminal {
 	@Instance("transportterminal")
 	public static TransportTerminal instance;
 
-	@SidedProxy(clientSide = "TransportTerminal.ClientProxyTransportTerminal", serverSide = "TransportTerminal.CommonProxyTransportTerminal")
-	public static CommonProxyTransportTerminal proxy;
+	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
+	public static CommonProxy proxy;
 
-	public static Item transportTerminalRemote;
-	public static Item transportTerminalChip;
-	public static Block transportTerminal, transportUtils, transportCharger;
-	public static Item transportTerminalPlayerChip;
+	public static Item remote, chip, playerChip;
+	public static Block terminal, utils, charger;
 
 	public static SimpleNetworkWrapper networkWrapper;
-	public static CreativeTabs creativeTabsTT = new CreativeTabsTransportTerminal("TransportTerminals");
+
+	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
+
+		@Override
+		public Item getTabIconItem() {
+			return TransportTerminal.remote;
+		}
+	};
 
 	public static boolean IS_RF_PRESENT;
 
@@ -63,22 +67,22 @@ public class TransportTerminal {
 	public void preInit(FMLPreInitializationEvent event) {
 		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
 
-		transportTerminalRemote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
-		transportTerminalChip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
-		transportTerminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
-		transportTerminalPlayerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
-		transportUtils = new BlockChipUtilities().setHardness(3.0F).setBlockName("transportUtils").setBlockTextureName("transportterminal:transportUtils");
-		transportCharger = new BlockCharger().setHardness(3.0F).setBlockName("transportCharger").setBlockTextureName("transportterminal:transportCharger");
+		remote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
+		chip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
+		terminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
+		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
+		utils = new BlockChipUtilities().setHardness(3.0F).setBlockName("transportUtils").setBlockTextureName("transportterminal:transportUtils");
+		charger = new BlockCharger().setHardness(3.0F).setBlockName("transportCharger").setBlockTextureName("transportterminal:transportCharger");
 
-		GameRegistry.registerItem(transportTerminalRemote, "Transport Terminal Remote");
-		GameRegistry.registerItem(transportTerminalChip, "Transport Terminal Chip");
-		GameRegistry.registerBlock(transportTerminal, "Transport Terminal");
-		GameRegistry.registerItem(transportTerminalPlayerChip, "Player Location Chip");
-		GameRegistry.registerBlock(transportUtils, "Transport Chip Utilities");
+		GameRegistry.registerItem(remote, "Transport Terminal Remote");
+		GameRegistry.registerItem(chip, "Transport Terminal Chip");
+		GameRegistry.registerBlock(terminal, "Transport Terminal");
+		GameRegistry.registerItem(playerChip, "Player Location Chip");
+		GameRegistry.registerBlock(utils, "Transport Chip Utilities");
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
-			GameRegistry.registerBlock(transportCharger, "Transport Charger");
+			GameRegistry.registerBlock(charger, "Transport Charger");
 
-		TransportTerminalCrafting.addRecipes();
+		ModRecipes.addRecipes();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");

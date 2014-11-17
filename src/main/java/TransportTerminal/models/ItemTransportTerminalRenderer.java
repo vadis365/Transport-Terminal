@@ -1,4 +1,4 @@
-package TransportTerminal.models;
+package transportterminal.models;
 
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;

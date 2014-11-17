@@ -1,4 +1,4 @@
-package TransportTerminal.inventory;
+package transportterminal.gui.server;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,7 +7,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
-import TransportTerminal.tileentites.TileEntityCharger;
+import transportterminal.tileentites.TileEntityCharger;
 
 public class ContainerCharger extends Container {
 

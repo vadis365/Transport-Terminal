@@ -1,4 +1,4 @@
-package TransportTerminal.inventory;
+package transportterminal.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -10,20 +10,25 @@ import net.minecraft.util.StringUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import TransportTerminal.TransportTerminal;
-import TransportTerminal.network.NamingMessage;
+import transportterminal.TransportTerminal;
+import transportterminal.gui.server.ContainerTerminal;
+import transportterminal.network.message.ChipUtilsMessage;
+import transportterminal.tileentites.TileEntityChipUtilities;
 
-public class GuiNaming extends GuiContainer {
+public class GuiUtilsNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
 	private GuiTextField textFieldName;
 	private EntityPlayer playerSent;
+	private final TileEntityChipUtilities tile;
+	public final int NAME_PLAYER_CHIP = 3;
 
-	public GuiNaming(EntityPlayer player) {
+	public GuiUtilsNaming(EntityPlayer player, TileEntityChipUtilities tile) {
 		super(new ContainerTerminal(player.inventory, null, 1));
 		xSize = 176;
 		ySize = 51;
 		playerSent = player;
+		this.tile = tile;
 	}
 
 	@Override
@@ -72,12 +77,16 @@ public class GuiNaming extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
+		int x = tile.xCoord;
+		int y = tile.yCoord;
+		int z = tile.zCoord;
+
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, "Un-named Location"));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, "Arch Stanton", x, y, z, NAME_PLAYER_CHIP));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, textFieldName.getText()));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, textFieldName.getText(), x, y, z, NAME_PLAYER_CHIP));
 				playerSent.closeScreen();
 			}
 	}

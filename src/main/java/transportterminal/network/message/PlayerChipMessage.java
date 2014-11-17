@@ -1,47 +1,45 @@
-package TransportTerminal.network;
+package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
-public class ChipUtilsMessage implements IMessage {
+public class PlayerChipMessage implements IMessage {
 
-	public int dimension, entityID, tileX, tileY, tileZ, funcID;
-	String name;
+	public int dimension, entityID, tileX, tileY, tileZ;
+	public String playerOnChip;
 
-	public ChipUtilsMessage() {}
+	public PlayerChipMessage() {
+	}
 
-	public ChipUtilsMessage(EntityPlayer player, String string, int x, int y, int z, int id) {
+	public PlayerChipMessage(EntityPlayer player, String string, int x, int y, int z) {
 		dimension = player.dimension;
 		entityID = player.getEntityId();
-		name = string;
+		playerOnChip = string;
 		tileX = x;
 		tileY = y;
 		tileZ = z;
-		funcID = id;
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
-		ByteBufUtils.writeUTF8String(buf, name);
+		ByteBufUtils.writeUTF8String(buf, playerOnChip);
 		buf.writeInt(tileX);
 		buf.writeInt(tileY);
 		buf.writeInt(tileZ);
-		buf.writeInt(funcID);
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
-		name = ByteBufUtils.readUTF8String(buf);
+		playerOnChip = ByteBufUtils.readUTF8String(buf);
 		tileX = buf.readInt();
 		tileY = buf.readInt();
 		tileZ = buf.readInt();
-		funcID = buf.readInt();
 	}
 
 }

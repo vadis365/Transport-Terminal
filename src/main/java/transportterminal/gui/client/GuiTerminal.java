@@ -1,4 +1,4 @@
-package TransportTerminal.inventory;
+package transportterminal.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -9,11 +9,12 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import TransportTerminal.TransportTerminal;
-import TransportTerminal.network.EnergyMessage;
-import TransportTerminal.network.PlayerChipMessage;
-import TransportTerminal.network.TeleportMessage;
-import TransportTerminal.tileentites.TileEntityTransportTerminal;
+import transportterminal.TransportTerminal;
+import transportterminal.gui.server.ContainerTerminal;
+import transportterminal.network.message.EnergyMessage;
+import transportterminal.network.message.PlayerChipMessage;
+import transportterminal.network.message.TeleportMessage;
+import transportterminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

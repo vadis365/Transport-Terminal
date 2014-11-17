@@ -1,4 +1,4 @@
-package TransportTerminal.network;
+package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,8 +7,9 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 public class EnergyMessage implements IMessage {
 
 	public int dimension, entityID, tileX, tileY, tileZ;
-	
-	public EnergyMessage() {}
+
+	public EnergyMessage() {
+	}
 
 	public EnergyMessage(EntityPlayer player, int x, int y, int z) {
 		dimension = player.dimension;

@@ -1,4 +1,4 @@
-package TransportTerminal.items;
+package transportterminal.items;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import TransportTerminal.TransportTerminal;
-import TransportTerminal.network.EnergyMessage;
-import TransportTerminal.network.TeleportMessage;
-import TransportTerminal.tileentites.TileEntityTransportTerminal;
+import transportterminal.TransportTerminal;
+import transportterminal.network.message.EnergyMessage;
+import transportterminal.network.message.TeleportMessage;
+import transportterminal.tileentites.TileEntityTransportTerminal;
 import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
@@ -31,7 +31,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 	public ItemTransportTerminalRemote() {
 		capacity = TransportTerminal.REMOTE_MAX_ENERGY;
 		setMaxStackSize(1);
-		setCreativeTab(TransportTerminal.creativeTabsTT);
+		setCreativeTab(TransportTerminal.tab);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
-					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
+					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.chip) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX"))
 							return true;
@@ -111,7 +111,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
-					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.transportTerminalChip) {
+					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.chip) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
 							if (!world2.isRemote) {

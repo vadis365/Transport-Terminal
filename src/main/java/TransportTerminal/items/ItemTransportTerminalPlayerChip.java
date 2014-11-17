@@ -1,4 +1,4 @@
-package TransportTerminal.items;
+package transportterminal.items;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import TransportTerminal.TransportTerminal;
+import transportterminal.TransportTerminal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -17,7 +17,7 @@ public class ItemTransportTerminalPlayerChip extends Item {
 	public ItemTransportTerminalPlayerChip() {
 		super();
 		setMaxStackSize(1);
-		setCreativeTab(TransportTerminal.creativeTabsTT);
+		setCreativeTab(TransportTerminal.tab);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -25,9 +25,9 @@ public class ItemTransportTerminalPlayerChip extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		if (hasTag(stack))
-			if (stack.stackTagCompound != null && stack.hasDisplayName()) {
+			if (stack.stackTagCompound != null && stack.hasDisplayName())
 				list.add(EnumChatFormatting.GREEN + "Player: " + stack.getDisplayName());
-			} else
+			else
 				list.add("Empty Player Location Chip");
 	}
 

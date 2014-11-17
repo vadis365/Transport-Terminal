@@ -1,4 +1,4 @@
-package TransportTerminal.network;
+package transportterminal.network;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.Teleporter;
@@ -11,5 +11,6 @@ public class TransportTerminalTeleporter extends Teleporter {
 	}
 
 	@Override
-	public void placeInPortal(Entity pEntity, double posX, double posY, double posZ, float rotationYaw) {}
+	public void placeInPortal(Entity pEntity, double posX, double posY, double posZ, float rotationYaw) {
+	}
 }

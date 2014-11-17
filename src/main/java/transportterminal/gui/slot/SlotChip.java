@@ -1,10 +1,10 @@
-package TransportTerminal.inventory;
+package transportterminal.gui.slot;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import TransportTerminal.items.ItemTransportTerminalChip;
-import TransportTerminal.items.ItemTransportTerminalPlayerChip;
+import transportterminal.items.ItemTransportTerminalChip;
+import transportterminal.items.ItemTransportTerminalPlayerChip;
 
 public class SlotChip extends Slot {
 

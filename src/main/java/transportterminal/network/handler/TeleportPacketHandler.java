@@ -1,10 +1,12 @@
-package TransportTerminal.network;
+package transportterminal.network.handler;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import TransportTerminal.blocks.BlockTransportTerminal;
+import transportterminal.blocks.BlockTransportTerminal;
+import transportterminal.network.TransportTerminalTeleporter;
+import transportterminal.network.message.TeleportMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;

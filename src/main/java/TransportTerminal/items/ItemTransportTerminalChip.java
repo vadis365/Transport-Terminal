@@ -1,4 +1,4 @@
-package TransportTerminal.items;
+package transportterminal.items;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import TransportTerminal.TransportTerminal;
+import transportterminal.TransportTerminal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -17,7 +17,7 @@ public class ItemTransportTerminalChip extends Item {
 	public ItemTransportTerminalChip() {
 		super();
 		setMaxStackSize(1);
-		setCreativeTab(TransportTerminal.creativeTabsTT);
+		setCreativeTab(TransportTerminal.tab);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

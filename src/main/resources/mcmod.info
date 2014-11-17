@@ -1,0 +1,20 @@
+[
+{
+  "modid": "transportterminal",
+  "name": "Transport Terminals",
+  "description": "Terminals that teleport",
+  "version": "1.0b",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "ganymedes01"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]

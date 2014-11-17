@@ -1,8 +1,8 @@
-package TransportTerminal.tileentites;
+package transportterminal.tileentites;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
-import TransportTerminal.TransportTerminal;
+import transportterminal.TransportTerminal;
 import cofh.api.energy.IEnergyContainerItem;
 
 public class TileEntityCharger extends TileEntityInventoryEnergy {

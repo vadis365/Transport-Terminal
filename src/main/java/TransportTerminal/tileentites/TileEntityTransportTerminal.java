@@ -1,4 +1,4 @@
-package TransportTerminal.tileentites;
+package transportterminal.tileentites;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -6,7 +6,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import TransportTerminal.TransportTerminal;
+import transportterminal.TransportTerminal;
 
 public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
@@ -27,7 +27,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		inventory[slot] = is;
 		if (is != null && is.stackSize > getInventoryStackLimit())
 			is.stackSize = getInventoryStackLimit();
-		if (is != null && slot == 0 && is.getItem() == TransportTerminal.transportTerminalRemote) {
+		if (is != null && slot == 0 && is.getItem() == TransportTerminal.remote) {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
@@ -54,7 +54,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if (slot == 0 && is.getItem() == TransportTerminal.transportTerminalRemote)
+		if (slot == 0 && is.getItem() == TransportTerminal.remote)
 			return true;
 		return false;
 	}
@@ -67,7 +67,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	public void setName(String text) {
 		chipName = text;
 		ItemStack is = getStackInSlot(getTempSlot());
-		if (is != null && is.getItem() == TransportTerminal.transportTerminalChip)
+		if (is != null && is.getItem() == TransportTerminal.chip)
 			is.getTagCompound().setString("description", chipName);
 	}
 
