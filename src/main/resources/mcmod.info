@@ -2,7 +2,7 @@
 {
   "modid": "transportterminal",
   "name": "Transport Terminals",
-  "description": "Terminals that teleport",
+  "description": "A mod based around interdimensional transportation",
   "version": "1.0b",
   "url": "",
   "updateUrl": "",
