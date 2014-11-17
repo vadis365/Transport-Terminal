@@ -42,10 +42,8 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy proxy;
-
 	public static Item remote, chip, playerChip;
 	public static Block terminal, utils, charger;
-
 	public static SimpleNetworkWrapper networkWrapper;
 
 	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
