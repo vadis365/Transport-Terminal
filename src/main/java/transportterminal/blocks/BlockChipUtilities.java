@@ -1,7 +1,5 @@
 package transportterminal.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -35,21 +33,6 @@ public class BlockChipUtilities extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileEntityChipUtilities();
-	}
-
-	@Override
-	public int getRenderType() {
-		return 0;
-	}
-
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
-
-	@Override
-	public boolean renderAsNormalBlock() {
-		return true;
 	}
 
 	@Override
@@ -91,16 +74,6 @@ public class BlockChipUtilities extends BlockContainer {
 			}
 		world.setBlockToAir(x, y, z);
 		super.breakBlock(world, x, y, z, block, meta);
-	}
-
-	@Override
-	public int quantityDropped(Random rand) {
-		return 1;
-	}
-
-	@Override
-	public Item getItemDropped(int meta, Random rand, int fortune) {
-		return Item.getItemFromBlock(this);
 	}
 
 	@Override
