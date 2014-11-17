@@ -45,7 +45,6 @@ public class TransportTerminal {
 	public static Item remote, chip, playerChip;
 	public static Block terminal, utils, charger;
 	public static SimpleNetworkWrapper networkWrapper;
-
 	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
 
 		@Override
