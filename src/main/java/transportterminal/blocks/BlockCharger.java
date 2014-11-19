@@ -72,6 +72,9 @@ public class BlockCharger extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
+		if (meta == 0 && side == 3)
+   	    		 return blockIcon;
+		
 		return side != (meta & 7) ? sides : blockIcon;
 	}
 
