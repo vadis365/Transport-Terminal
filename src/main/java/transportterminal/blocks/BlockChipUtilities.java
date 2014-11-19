@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -45,13 +44,8 @@ public class BlockChipUtilities extends BlockContainer {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (world.isRemote)
 			return true;
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile != null && tile instanceof TileEntityChipUtilities) {
-			ItemStack current = player.inventory.getCurrentItem();
-			if (current != null && current.getItem() == Item.getItemFromBlock(this) || current != null && current.getItem() == TransportTerminal.remote)
-				return false;
+		if (world.getTileEntity(x, y, z) instanceof TileEntityChipUtilities)
 			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_CHIP_UTILS, world, x, y, z);
-		}
 		return true;
 	}
 
