@@ -25,7 +25,7 @@ public class TileEntityCharger extends TileEntityInventoryEnergy {
 		for (ItemStack stack : inventory) {
 			if (stored <= 0)
 				return;
-			if (stack != null) {
+			if (stack != null && stack.getItem() instanceof IEnergyContainerItem && stack.stackSize == 1) {
 				IEnergyContainerItem item = (IEnergyContainerItem) stack.getItem();
 				int received = item.receiveEnergy(stack, stored, false);
 				extractEnergy(ForgeDirection.UNKNOWN, received, false);
