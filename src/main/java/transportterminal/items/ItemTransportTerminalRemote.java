@@ -22,7 +22,7 @@ import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHLib")
+@Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI")
 public class ItemTransportTerminalRemote extends Item implements IEnergyContainerItem {
 
 	private Ticket ticket;

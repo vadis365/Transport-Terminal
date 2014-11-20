@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 import cpw.mods.fml.common.Optional;
 
-@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHLib")
+@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
 public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyHandler {
 
 	private final int capacity;
