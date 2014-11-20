@@ -1,6 +1,6 @@
 Transport Terminal
 ==================
 
-A mod based around teleportation and inter-dimensional transportation.
+A technological mod based around teleportation and inter-dimensional transportation.
 
 By: vadis365 & ganymedes01
