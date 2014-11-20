@@ -55,25 +55,20 @@ public class ContainerCharger extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
-			
-			if (slotIndex > 5) {
-				if (stack1.getItem() instanceof IEnergyContainerItem) {
-					if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
-						return null;
-				} else if (!(stack1.getItem() instanceof IEnergyContainerItem))
-					if (!mergeItemStack(stack1, 0, 6, true))
-						return null;
-			} else if (!mergeItemStack(stack1, 6, inventorySlots.size(), false))
+
+			if (slotIndex < 6) {
+				if (!mergeItemStack(stack1, 6, inventorySlots.size(), true))
+					return null;
+			} else if (stack1.getItem() instanceof IEnergyContainerItem) {
+				if (!mergeItemStack(stack1, 0, 6, false))
+					return null;
+			} else
 				return null;
 
 			if (stack1.stackSize == 0)
 				slot.putStack(null);
 			else
 				slot.onSlotChanged();
-			if (stack1.stackSize != stack.stackSize)
-				slot.onPickupFromSlot(player, stack1);
-			else
-				return null;
 		}
 
 		return stack;
