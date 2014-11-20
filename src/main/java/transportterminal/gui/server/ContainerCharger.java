@@ -7,7 +7,6 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
-import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityCharger;
 import cofh.api.energy.IEnergyContainerItem;
 
@@ -56,31 +55,17 @@ public class ContainerCharger extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
+			
+			if (slotIndex > 5) {
+				if (stack1.getItem() instanceof IEnergyContainerItem) {
+					if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
+						return null;
+				} else if (!(stack1.getItem() instanceof IEnergyContainerItem))
+					if (!mergeItemStack(stack1, 0, 6, true))
+						return null;
+			} else if (!mergeItemStack(stack1, 6, inventorySlots.size(), false))
+				return null;
 
-			if (TransportTerminal.IS_RF_PRESENT) {
-				if (slotIndex > 5) {
-					if (stack1.getItem() instanceof IEnergyContainerItem) {
-						if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
-							return null;
-					} else if (!(stack1.getItem() instanceof IEnergyContainerItem))
-						if (!mergeItemStack(stack1, 0, 6, true))
-							return null;
-				} else if (!mergeItemStack(stack1, 6, inventorySlots.size(), false))
-					return null;
-			}
-			
-			else if (!TransportTerminal.IS_RF_PRESENT) {
-				if (slotIndex > 5) {
-					if (stack1.getItem() == TransportTerminal.remote) {
-						if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
-							return null;
-					} else if (stack1.getItem() != TransportTerminal.remote)
-						if (!mergeItemStack(stack1, 0, 6, true))
-							return null;
-				} else if (!mergeItemStack(stack1, 6, inventorySlots.size(), false))
-					return null;	
-			}
-			
 			if (stack1.stackSize == 0)
 				slot.putStack(null);
 			else
@@ -90,6 +75,7 @@ public class ContainerCharger extends Container {
 			else
 				return null;
 		}
+
 		return stack;
 	}
 }
