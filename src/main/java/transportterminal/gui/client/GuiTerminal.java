@@ -77,7 +77,8 @@ public class GuiTerminal extends GuiContainer {
 					int z = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipZ");
 
 					if (tile.canTeleport()) {
-						TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
+						if(TransportTerminal.IS_RF_PRESENT)
+							TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
 						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
 					}
 				}
