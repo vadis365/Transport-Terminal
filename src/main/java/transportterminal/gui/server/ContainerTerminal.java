@@ -16,9 +16,11 @@ public class ContainerTerminal extends Container {
 
 	private final int numRows = 2;
 	private TileEntityTransportTerminal tile;
+	private int id;
 
 	public ContainerTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
 		this.tile = tile;
+		this.id = id;
 		int i = (numRows - 4) * 18;
 
 		if (id == 0) {
@@ -40,10 +42,12 @@ public class ContainerTerminal extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		if (!TransportTerminal.IS_RF_PRESENT)
-			return;
-		for (int i = 0; i < crafters.size(); i++)
-			((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+		if(id == 0) {
+			if (!TransportTerminal.IS_RF_PRESENT)
+				return;
+			for (int i = 0; i < crafters.size(); i++)
+				((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+		}
 	}
 
 	@Override
