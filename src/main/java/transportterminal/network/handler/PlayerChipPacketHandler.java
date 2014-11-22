@@ -21,8 +21,7 @@ public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessag
 	@Override
 	public IMessage onMessage(PlayerChipMessage message, MessageContext ctx) {
 
-		EntityPlayer playerOnChip = MinecraftServer.getServer()
-				.getConfigurationManager().func_152612_a(message.playerOnChip);
+		EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(message.playerOnChip);
 		World world = DimensionManager.getWorld(message.dimension);
 
 		if (world == null || playerOnChip == null)
