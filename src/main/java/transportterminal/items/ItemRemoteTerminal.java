@@ -99,18 +99,11 @@ public class ItemRemoteTerminal extends Item implements IEnergyContainerItem {
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
 		
-		int homeX = stack.getTagCompound().getInteger("homeX");
-		int homeY = stack.getTagCompound().getInteger("homeY");
-		int homeZ = stack.getTagCompound().getInteger("homeZ");
-
-		TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
-		if (tile != null) {
 			if (canTeleport(stack)) {
 				extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_TERMINAL, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 			}
-		}
 		}
 		return stack;
 	}

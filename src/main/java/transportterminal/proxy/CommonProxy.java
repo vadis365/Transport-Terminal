@@ -42,15 +42,17 @@ public class CommonProxy implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			TileEntity tileentity;
 			ItemStack stack = player.getCurrentEquippedItem();
-			if(stack.getItem() == TransportTerminal.remoteTerminal) {
+			if(stack !=null && stack.getItem() == TransportTerminal.remoteTerminal) {
 				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 				int xx = stack.getTagCompound().getInteger("homeX");
 				int yy = stack.getTagCompound().getInteger("homeY");
 				int zz = stack.getTagCompound().getInteger("homeZ"); 
 				tileentity = world2.getTileEntity(xx, yy, zz);
 				}
+			else
+				tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportTerminal)
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
@@ -83,15 +85,17 @@ public class CommonProxy implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			TileEntity tileentity;
 			ItemStack stack = player.getCurrentEquippedItem();
-			if(stack.getItem() == TransportTerminal.remoteTerminal) {
+			if(stack !=null && stack.getItem() == TransportTerminal.remoteTerminal) {
 				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 				int xx = stack.getTagCompound().getInteger("homeX");
 				int yy = stack.getTagCompound().getInteger("homeY");
 				int zz = stack.getTagCompound().getInteger("homeZ"); 
 				tileentity = world2.getTileEntity(xx, yy, zz);
 				}
+			else
+				tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportTerminal)
 				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}

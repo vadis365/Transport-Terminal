@@ -63,7 +63,7 @@ public class TransportTerminal {
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		remote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
-		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("transportTerminalRemoteTerminal").setTextureName("transportterminal:transportTerminalRemote");
+		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("transportTerminalRemoteTerminal").setTextureName("transportterminal:transportRemoteTerminal");
 		
 		chip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
 		terminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
