@@ -5,6 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import transportterminal.items.ItemTransportTerminalRemote;
+import transportterminal.items.ItemRemoteTerminal;
 
 public class SlotRemote extends Slot {
 
@@ -15,7 +16,7 @@ public class SlotRemote extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return stack.getItem() instanceof ItemTransportTerminalRemote;
+		return stack.getItem() instanceof ItemTransportTerminalRemote || stack.getItem() instanceof ItemRemoteTerminal;
 	}
 
 	@Override

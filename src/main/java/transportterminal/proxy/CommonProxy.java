@@ -4,7 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import transportterminal.TransportTerminal;
 import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
 import transportterminal.gui.client.GuiNaming;
@@ -41,6 +43,14 @@ public class CommonProxy implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
+			ItemStack stack = player.getCurrentEquippedItem();
+			if(stack.getItem() == TransportTerminal.remoteTerminal) {
+				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+				int xx = stack.getTagCompound().getInteger("homeX");
+				int yy = stack.getTagCompound().getInteger("homeY");
+				int zz = stack.getTagCompound().getInteger("homeZ"); 
+				tileentity = world2.getTileEntity(xx, yy, zz);
+				}
 			if (tileentity instanceof TileEntityTransportTerminal)
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
@@ -74,6 +84,14 @@ public class CommonProxy implements IGuiHandler {
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
+			ItemStack stack = player.getCurrentEquippedItem();
+			if(stack.getItem() == TransportTerminal.remoteTerminal) {
+				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+				int xx = stack.getTagCompound().getInteger("homeX");
+				int yy = stack.getTagCompound().getInteger("homeY");
+				int zz = stack.getTagCompound().getInteger("homeZ"); 
+				tileentity = world2.getTileEntity(xx, yy, zz);
+				}
 			if (tileentity instanceof TileEntityTransportTerminal)
 				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}

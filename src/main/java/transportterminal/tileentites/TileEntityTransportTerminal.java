@@ -28,7 +28,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		inventory[slot] = is;
 		if (is != null && is.stackSize > getInventoryStackLimit())
 			is.stackSize = getInventoryStackLimit();
-		if (is != null && slot == 0 && is.getItem() == TransportTerminal.remote) {
+		if (is != null && slot == 0 && is.getItem() == TransportTerminal.remote || is != null && slot == 0 && is.getItem() == TransportTerminal.remoteTerminal) {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
@@ -55,7 +55,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if (slot == 0 && is.getItem() == TransportTerminal.remote)
+		if (slot == 0 && is.getItem() == TransportTerminal.remote || slot == 0 && is.getItem() == TransportTerminal.remoteTerminal)
 			return true;
 		return false;
 	}

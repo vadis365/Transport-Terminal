@@ -11,6 +11,7 @@ import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalChip;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.items.ItemTransportTerminalRemote;
+import transportterminal.items.ItemRemoteTerminal;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
 import transportterminal.network.handler.PlayerChipPacketHandler;
@@ -43,7 +44,7 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy proxy;
-	public static Item remote, chip, playerChip;
+	public static Item remote, remoteTerminal, chip, playerChip;
 	public static Block terminal, utils, charger;
 	public static SimpleNetworkWrapper networkWrapper;
 	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
@@ -62,6 +63,8 @@ public class TransportTerminal {
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		remote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
+		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("transportTerminalRemoteTerminal").setTextureName("transportterminal:transportTerminalRemote");
+		
 		chip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
 		terminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
 		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
@@ -69,6 +72,7 @@ public class TransportTerminal {
 		charger = new BlockCharger().setHardness(3.0F).setBlockName("transportCharger").setBlockTextureName("transportterminal:transportCharger");
 
 		GameRegistry.registerItem(remote, "Transport Terminal Remote");
+		GameRegistry.registerItem(remoteTerminal, "Transport Terminal Interface");
 		GameRegistry.registerItem(chip, "Transport Terminal Chip");
 		GameRegistry.registerBlock(terminal, "Transport Terminal");
 		GameRegistry.registerItem(playerChip, "Player Location Chip");
