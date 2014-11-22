@@ -74,24 +74,27 @@ public class ItemRemoteTerminal extends Item implements IEnergyContainerItem {
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		return false;
-	}
-
-	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (!world.isRemote && hasTag(stack) && !player.isSneaking()) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+
 			if (ticket == null)
 				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-		
-			if (canTeleport(stack)) {
-				extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
-				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
-				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_TERMINAL, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-			}
+		}
+		return false;
+	}
+
+	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!player.isSneaking() && stack.stackTagCompound.hasKey("homeX")) {
+			if (!world.isRemote)
+				if (canTeleport(stack)) {
+					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
+					world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
+					player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_TERMINAL, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+				}
 		}
 		return stack;
 	}

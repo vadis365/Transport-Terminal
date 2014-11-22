@@ -160,10 +160,11 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			int z = stack.getTagCompound().getInteger("homeZ");
 			int newDim = stack.getTagCompound().getInteger("dim");
 			if (!world.isRemote)
-				if (canTeleport(stack)) {
+				if (canTeleport(stack))
 					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
+			if (world.isRemote)
+				if (canTeleport(stack))
 					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
-				}
 		}
 		return stack;
 	}
