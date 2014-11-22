@@ -13,7 +13,8 @@ public class ConfigHandler {
 	public static int REMOTE_MAX_ENERGY;
 	public static int TERMINAL_MAX_ENERGY;
 	public static int CHARGER_MAX_ENERGY;
-	public final String[] usedCategories = { "RF Energy Settings" };
+	public static boolean ALLOW_TELEPORT_TO_PLAYER;
+	public final String[] usedCategories = { "RF Energy Settings", "Game Settings" };
 
 	public void loadConfig(FMLPreInitializationEvent event) {
 		config = new Configuration(event.getSuggestedConfigurationFile());
@@ -26,6 +27,7 @@ public class ConfigHandler {
 		REMOTE_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored on Remotes", 50000).getInt(50000);
 		TERMINAL_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Consoles", 320000).getInt(320000);
 		CHARGER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Charger", 320000).getInt(320000);
+		ALLOW_TELEPORT_TO_PLAYER = config.get("Game Settings", "Enable Player Location Chips", true).getBoolean(true);
 		if (config.hasChanged()) {
 			config.save();
 		}

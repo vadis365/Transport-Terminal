@@ -22,6 +22,7 @@ import transportterminal.network.message.NamingMessage;
 import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -34,7 +35,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "transportterminal", name = "Transport Terminals", version = "1.0b")
+@Mod(modid = "transportterminal", name = "Transport Terminals", version = "1.0b", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
 public class TransportTerminal {
 
 	@Instance("transportterminal")
@@ -91,5 +92,6 @@ public class TransportTerminal {
 	public void Init(FMLInitializationEvent event) {
 		proxy.registerTileEntities();
 		proxy.registerRenderInformation();
+		FMLCommonHandler.instance().bus().register(ConfigHandler.INSTANCE);
 	}
 }

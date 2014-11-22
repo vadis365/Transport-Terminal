@@ -10,6 +10,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.network.message.EnergyMessage;
 import transportterminal.network.message.PlayerChipMessage;
@@ -82,7 +83,7 @@ public class GuiTerminal extends GuiContainer {
 				}
 				
 				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName())
-					if (tile.canTeleport())
+					if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_TO_PLAYER)
 						TransportTerminal.networkWrapper.sendToServer(new PlayerChipMessage(mc.thePlayer, tile.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));
 
 				mc.thePlayer.closeScreen();
