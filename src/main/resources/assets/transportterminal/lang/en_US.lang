@@ -1,4 +1,5 @@
 item.transportTerminalRemote.name=Transport Terminal Remote
+item.transportTerminalRemoteTerminal.name=Wireless Console Interface
 item.transportTerminalChip.name=Transport Chip
 item.transportTerminalPlayerChip.name=Player Location Chip
 tile.transportTerminal.name=Transport Terminal Console
