@@ -11,7 +11,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
-import transportterminal.gui.server.ContainerTerminalShadow;
+import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.network.message.ButtonMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 import cofh.api.energy.IEnergyContainerItem;
@@ -25,7 +25,7 @@ public class GuiTerminalShadow extends GuiContainer {
 	private EntityPlayer playerSent;
 
 	public GuiTerminalShadow(InventoryPlayer inventory, EntityPlayer player) {
-		super(new ContainerTerminalShadow(inventory, new TileEntityTransportTerminal(), 0));
+		super(new ContainerTerminal(inventory, new TileEntityTransportTerminal(), 0));
 		playerSent = player;
 		allowUserInput = false;
 		ySize = 168;

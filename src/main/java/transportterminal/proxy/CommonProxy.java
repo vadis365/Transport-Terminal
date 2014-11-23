@@ -16,7 +16,6 @@ import transportterminal.gui.client.GuiUtilsNaming;
 import transportterminal.gui.server.ContainerCharger;
 import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.gui.server.ContainerTerminal;
-import transportterminal.gui.server.ContainerTerminalShadow;
 import transportterminal.items.ItemTransportTerminalRemote;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityChipUtilities;
@@ -73,7 +72,7 @@ public class CommonProxy implements IGuiHandler {
 		
 		if (ID == GUI_ID_REMOTE_TERMINAL) {
 			if (getTile(player, world, x, y, z) instanceof TileEntityTransportTerminal)
-				return new ContainerTerminalShadow(player.inventory, (TileEntityTransportTerminal) getTile(player, world, x, y, z), 0);
+				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) getTile(player, world, x, y, z), 0);
 		}
 
 		return null;
