@@ -31,7 +31,7 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 				ItemStack stack = player.getCurrentEquippedItem();
 				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 				WorldServer worldserver = (WorldServer) world;
-				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(message.chipX, message.chipY, message.chipZ); 
+				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(message.tileX, message.tileY, message.tileZ); 
 				if (tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).stackTagCompound.hasKey("chipX")) {
 					int newDim = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipDim");
 					int x = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipX");
@@ -43,35 +43,35 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 				}
-				if (world2.getBlock(message.chipX, message.chipY, message.chipZ) instanceof BlockTransportTerminal)
-					switch (world2.getBlockMetadata(message.chipX, message.chipY, message.chipZ)) {
+				if (world2.getBlock(x, y, z) instanceof BlockTransportTerminal)
+					switch (world2.getBlockMetadata(x, y, z)) {
 						case 2:
-							if (world2.isAirBlock(message.chipX, message.chipY, message.chipZ - 1) && world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ - 1)) {
-								teleportPlayer(player, message.chipX + 0.5D, message.chipY, message.chipZ - 0.5D, 0, player.rotationPitch);
+							if (world2.isAirBlock(x, y, z - 1) && world2.isAirBlock(x, y + 1, z - 1)) {
+								teleportPlayer(player, x + 0.5D, y, z - 0.5D, 0, player.rotationPitch);
 								consumeEnergy(tile);
 							}
 							break;
 						case 3:
-							if (world2.isAirBlock(message.chipX, message.chipY, message.chipZ + 1) && world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ + 1)) {
-								teleportPlayer(player, message.chipX + 0.5D, message.chipY, message.chipZ + 1.5D, 180, player.rotationPitch);
+							if (world2.isAirBlock(x, y, z + 1) && world2.isAirBlock(x, y + 1, z + 1)) {
+								teleportPlayer(player, x + 0.5D, y, z + 1.5D, 180, player.rotationPitch);
 								consumeEnergy(tile);
 							}
 							break;
 						case 4:
-							if (world2.isAirBlock(message.chipX - 1, message.chipY, message.chipZ) && world2.isAirBlock(message.chipX - 1, message.chipY + 1, message.chipZ)) {
-								teleportPlayer(player, message.chipX - 0.5D, message.chipY, message.chipZ + 0.5D, 270, player.rotationPitch);
+							if (world2.isAirBlock(x - 1, y, z) && world2.isAirBlock(x - 1, y + 1, z)) {
+								teleportPlayer(player, x - 0.5D, y, z + 0.5D, 270, player.rotationPitch);
 								consumeEnergy(tile);
 							}
 							break;
 						case 5:
-							if (world2.isAirBlock(message.chipX + 1, message.chipY, message.chipZ) && world2.isAirBlock(message.chipX + 1, message.chipY + 1, message.chipZ)) {
-								teleportPlayer(player, message.chipX + 1.5D, message.chipY, message.chipZ + 0.5D, 90, player.rotationPitch);
+							if (world2.isAirBlock(x + 1, y, z) && world2.isAirBlock(x + 1, y + 1, z)) {
+								teleportPlayer(player, x + 1.5D, y, z + 0.5D, 90, player.rotationPitch);
 								consumeEnergy(tile);
 							}
 							break;
 					}
-				else if (world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ) && world2.isAirBlock(message.chipX, message.chipY + 2, message.chipZ)) {
-					teleportPlayer(player, message.chipX + 0.5, message.chipY + 1.0, message.chipZ + 0.5, player.rotationYaw, player.rotationPitch);
+				else if (world2.isAirBlock(x, y + 1, z) && world2.isAirBlock(x, y + 2, z)) {
+					teleportPlayer(player, x + 0.5, y + 1.0, z + 0.5, player.rotationYaw, player.rotationPitch);
 					consumeEnergy(tile);
 					}				
 				}

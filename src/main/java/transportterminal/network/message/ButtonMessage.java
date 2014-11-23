@@ -6,7 +6,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 public class ButtonMessage implements IMessage {
 
-	public int dimension, entityID, buttonID, chipX, chipY, chipZ;
+	public int dimension, entityID, buttonID, tileX, tileY, tileZ;
 
 	public ButtonMessage() {
 	}
@@ -15,9 +15,9 @@ public class ButtonMessage implements IMessage {
 		dimension = player.dimension;
 		entityID = player.getEntityId();
 		buttonID = button;
-		chipX = x;
-		chipY = y;
-		chipZ = z;
+		tileX = x;
+		tileY = y;
+		tileZ = z;
 	}
 
 	@Override
@@ -25,9 +25,9 @@ public class ButtonMessage implements IMessage {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
 		buf.writeInt(buttonID);
-		buf.writeInt(chipX);
-		buf.writeInt(chipY);
-		buf.writeInt(chipZ);
+		buf.writeInt(tileX);
+		buf.writeInt(tileY);
+		buf.writeInt(tileZ);
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class ButtonMessage implements IMessage {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
 		buttonID = buf.readInt();
-		chipX = buf.readInt();
-		chipY = buf.readInt();
-		chipZ = buf.readInt();
+		tileX = buf.readInt();
+		tileY = buf.readInt();
+		tileZ = buf.readInt();
 	}
 }
