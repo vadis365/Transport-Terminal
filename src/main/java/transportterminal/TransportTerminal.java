@@ -8,15 +8,17 @@ import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
+import transportterminal.items.ItemRemoteTerminal;
 import transportterminal.items.ItemTransportTerminalChip;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.items.ItemTransportTerminalRemote;
-import transportterminal.items.ItemRemoteTerminal;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
 import transportterminal.network.handler.PlayerChipPacketHandler;
+import transportterminal.network.handler.ShadowTeleportPacketHandler;
 import transportterminal.network.handler.TeleportEnergyPacketHandler;
 import transportterminal.network.handler.TeleportPacketHandler;
+import transportterminal.network.message.ButtonMessage;
 import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.network.message.EnergyMessage;
 import transportterminal.network.message.NamingMessage;
@@ -89,6 +91,7 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(TeleportEnergyPacketHandler.class, EnergyMessage.class, 2, Side.SERVER);
 		networkWrapper.registerMessage(PlayerChipPacketHandler.class, PlayerChipMessage.class, 3, Side.SERVER);
 		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 4, Side.SERVER);
+		networkWrapper.registerMessage(ShadowTeleportPacketHandler.class, ButtonMessage.class, 5, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 
