@@ -7,7 +7,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ForgeDirection;
 import transportterminal.TransportTerminal;
-import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.ButtonMessage;
@@ -32,48 +31,22 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 				WorldServer worldserver = (WorldServer) world;
 				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(message.tileX, message.tileY, message.tileZ); 
-				if (tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).stackTagCompound.hasKey("chipX")) {
+				if (tile != null && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).stackTagCompound.hasKey("chipX")) {
 					int newDim = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipDim");
 					int x = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipX");
 					int y = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipY");
-					int z = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipZ");								
-				if (newDim != player.dimension && player.dimension != 1)
-					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
-				if (newDim != player.dimension && player.dimension == 1) {
-					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
-					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
-				}
-				if (world2.getBlock(x, y, z) instanceof BlockTransportTerminal)
-					switch (world2.getBlockMetadata(x, y, z)) {
-						case 2:
-							if (world2.isAirBlock(x, y, z - 1) && world2.isAirBlock(x, y + 1, z - 1)) {
-								teleportPlayer(player, x + 0.5D, y, z - 0.5D, 0, player.rotationPitch);
-								consumeEnergy(tile);
-							}
-							break;
-						case 3:
-							if (world2.isAirBlock(x, y, z + 1) && world2.isAirBlock(x, y + 1, z + 1)) {
-								teleportPlayer(player, x + 0.5D, y, z + 1.5D, 180, player.rotationPitch);
-								consumeEnergy(tile);
-							}
-							break;
-						case 4:
-							if (world2.isAirBlock(x - 1, y, z) && world2.isAirBlock(x - 1, y + 1, z)) {
-								teleportPlayer(player, x - 0.5D, y, z + 0.5D, 270, player.rotationPitch);
-								consumeEnergy(tile);
-							}
-							break;
-						case 5:
-							if (world2.isAirBlock(x + 1, y, z) && world2.isAirBlock(x + 1, y + 1, z)) {
-								teleportPlayer(player, x + 1.5D, y, z + 0.5D, 90, player.rotationPitch);
-								consumeEnergy(tile);
-							}
-							break;
+					int z = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipZ");	
+					if (newDim != player.dimension && player.dimension != 1)
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
+					if (newDim != player.dimension && player.dimension == 1) {
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 					}
-				else if (world2.isAirBlock(x, y + 1, z) && world2.isAirBlock(x, y + 2, z)) {
-					teleportPlayer(player, x + 0.5, y + 1.0, z + 0.5, player.rotationYaw, player.rotationPitch);
-					consumeEnergy(tile);
-					}				
+					world2 = DimensionManager.getWorld(newDim);
+					if (world2.isAirBlock(x, y + 1, z) && world2.isAirBlock(x, y + 2, z)) {
+						teleportPlayer(player, x + 0.5D, y + 1.0D, z + 0.5D, player.rotationYaw, player.rotationPitch);
+						consumeEnergy(tile);
+					}
 				}
 			}
 		return null;
