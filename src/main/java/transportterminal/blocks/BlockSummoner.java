@@ -13,7 +13,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import transportterminal.TransportTerminal;
-import transportterminal.tileentites.TileEntityChipUtilities;
 import transportterminal.tileentites.TileEntitySummoner;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -43,7 +42,7 @@ public class BlockSummoner extends BlockContainer {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if (world.isRemote)
 			return true;
-		if (world.getTileEntity(x, y, z) instanceof TileEntityChipUtilities)
+		if (world.getTileEntity(x, y, z) instanceof TileEntitySummoner)
 			player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_SUMMONER, world, x, y, z);
 		return true;
 	}
@@ -51,7 +50,7 @@ public class BlockSummoner extends BlockContainer {
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile != null && tile instanceof TileEntityChipUtilities)
+		if (tile != null && tile instanceof TileEntitySummoner)
 			for (int i = 0; i < ((IInventory) tile).getSizeInventory(); i++) {
 				ItemStack is = ((IInventory) tile).getStackInSlot(i);
 				if (is != null)
