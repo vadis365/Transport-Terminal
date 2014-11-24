@@ -76,13 +76,6 @@ public class GuiTerminalShadow extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
 				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id,  xx, yy, zz));
-/*
-				TODO implement this in to the button packet for teleporting
-				
-				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName())
-					if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_TO_PLAYER)
-						TransportTerminal.networkWrapper.sendToServer(new PlayerChipMessage(mc.thePlayer, tile.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));
-*/
 				mc.thePlayer.closeScreen();
 			}
 	}
