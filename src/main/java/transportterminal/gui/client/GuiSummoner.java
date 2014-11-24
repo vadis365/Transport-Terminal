@@ -37,7 +37,7 @@ public class GuiSummoner extends GuiContainer {
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
-		buttonList.add(new GuiButton(0, xOffSet + 61, yOffSet + 30, 54, 12, "Teleport"));
+		buttonList.add(new GuiButton(0, xOffSet + 61, yOffSet + 48, 54, 12, "Teleport"));
 		}
 
 	@Override
