@@ -71,7 +71,7 @@ public class BlockSummoner extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return side != (meta & 7) ? sides : blockIcon;
+		return side > 1 ? sides : blockIcon;
 	}
 
 	@Override
