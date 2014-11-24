@@ -15,8 +15,8 @@ import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.items.ItemTransportTerminalRemote;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
-import transportterminal.network.handler.PlayerSummonPacketHandler;
 import transportterminal.network.handler.PlayerChipPacketHandler;
+import transportterminal.network.handler.PlayerSummonPacketHandler;
 import transportterminal.network.handler.ShadowTeleportPacketHandler;
 import transportterminal.network.handler.TeleportEnergyPacketHandler;
 import transportterminal.network.handler.TeleportPacketHandler;
@@ -94,10 +94,10 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(TeleportPacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
 		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
 		networkWrapper.registerMessage(TeleportEnergyPacketHandler.class, EnergyMessage.class, 2, Side.SERVER);
-		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerChipMessage.class, 3, Side.SERVER);
+		networkWrapper.registerMessage(PlayerChipPacketHandler.class, PlayerChipMessage.class, 3, Side.SERVER);
 		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 4, Side.SERVER);
 		networkWrapper.registerMessage(ShadowTeleportPacketHandler.class, ButtonMessage.class, 5, Side.SERVER);
-		networkWrapper.registerMessage(PlayerChipPacketHandler.class, PlayerSummonMessage.class, 6, Side.SERVER);
+		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 6, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 
