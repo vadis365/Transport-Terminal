@@ -57,9 +57,9 @@ public class ContainerSummoner extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
-			if (slotIndex == 0) {
+			if (slotIndex > 0) {
 				if (stack1.getItem() == TransportTerminal.playerChip) {
-					if (!mergeItemStack(stack1, 0, 0, false))
+					if (!mergeItemStack(stack1, 0, 1, false))
 						return null;
 				}
 			} else if (!mergeItemStack(stack1, 1, inventorySlots.size(), false))
