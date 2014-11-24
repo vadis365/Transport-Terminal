@@ -15,6 +15,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import transportterminal.TransportTerminal;
+import transportterminal.proxy.ClientProxy.BlockRenderIDs;
 import transportterminal.tileentites.TileEntitySummoner;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -76,6 +77,21 @@ public class BlockSummoner extends BlockContainer {
 		super.breakBlock(world, x, y, z, block, meta);
 	}
 
+	@Override
+	public int getRenderType() {
+		return BlockRenderIDs.SUMMON_BLOCK.id();
+	}
+
+	@Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+   
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
