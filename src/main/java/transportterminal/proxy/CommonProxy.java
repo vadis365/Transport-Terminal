@@ -10,22 +10,25 @@ import transportterminal.TransportTerminal;
 import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
 import transportterminal.gui.client.GuiNaming;
+import transportterminal.gui.client.GuiSummoner;
 import transportterminal.gui.client.GuiTerminal;
 import transportterminal.gui.client.GuiTerminalShadow;
 import transportterminal.gui.client.GuiUtilsNaming;
 import transportterminal.gui.server.ContainerCharger;
 import transportterminal.gui.server.ContainerChipUtils;
+import transportterminal.gui.server.ContainerSummoner;
 import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.items.ItemTransportTerminalRemote;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityChipUtilities;
+import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy implements IGuiHandler {
 
-	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5;
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 5;
 
 	public void registerRenderInformation() {
 	}
@@ -73,7 +76,12 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == GUI_ID_REMOTE_TERMINAL)
 			if (getTile(player, world, x, y, z) instanceof TileEntityTransportTerminal)
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) getTile(player, world, x, y, z), 0);
-
+		
+		if (ID == GUI_ID_SUMMONER) {
+			TileEntity tileentity = world.getTileEntity(x, y, z);
+			if (tileentity instanceof TileEntitySummoner)
+				return new ContainerSummoner(player.inventory, (TileEntitySummoner) tileentity);
+		}
 		return null;
 	}
 
@@ -108,7 +116,13 @@ public class CommonProxy implements IGuiHandler {
 
 		if (ID == GUI_ID_REMOTE_TERMINAL)
 			return new GuiTerminalShadow(player.inventory, player);
-
+		
+		if (ID == GUI_ID_SUMMONER) {
+			TileEntity tileentity = world.getTileEntity(x, y, z);
+			if (tileentity instanceof TileEntitySummoner)
+				return new GuiSummoner(player.inventory, (TileEntitySummoner) tileentity);
+		}
+		
 		return null;
 	}
 

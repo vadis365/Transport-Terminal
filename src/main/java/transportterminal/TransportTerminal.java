@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeChunkManager;
 import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
+import transportterminal.blocks.BlockSummoner;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemRemoteTerminal;
@@ -15,6 +16,7 @@ import transportterminal.items.ItemTransportTerminalRemote;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
 import transportterminal.network.handler.PlayerChipPacketHandler;
+import transportterminal.network.handler.PlayerSummonPacketHandler;
 import transportterminal.network.handler.ShadowTeleportPacketHandler;
 import transportterminal.network.handler.TeleportEnergyPacketHandler;
 import transportterminal.network.handler.TeleportPacketHandler;
@@ -23,6 +25,7 @@ import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.network.message.EnergyMessage;
 import transportterminal.network.message.NamingMessage;
 import transportterminal.network.message.PlayerChipMessage;
+import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -47,7 +50,7 @@ public class TransportTerminal {
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy proxy;
 	public static Item remote, remoteTerminal, chip, playerChip;
-	public static Block terminal, utils, charger;
+	public static Block terminal, utils, charger, summoner;
 	public static SimpleNetworkWrapper networkWrapper;
 	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
 
@@ -72,6 +75,7 @@ public class TransportTerminal {
 		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
 		utils = new BlockChipUtilities().setHardness(3.0F).setBlockName("transportUtils").setBlockTextureName("transportterminal:transportUtils");
 		charger = new BlockCharger().setHardness(3.0F).setBlockName("transportCharger").setBlockTextureName("transportterminal:transportCharger");
+		summoner = new BlockSummoner().setHardness(3.0F).setBlockName("transportSummoner").setBlockTextureName("transportterminal:transportSummoner");
 
 		GameRegistry.registerItem(remote, "Transport Terminal Remote");
 		GameRegistry.registerItem(remoteTerminal, "Transport Terminal Interface");
@@ -81,6 +85,8 @@ public class TransportTerminal {
 		GameRegistry.registerBlock(utils, "Transport Chip Utilities");
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
 			GameRegistry.registerBlock(charger, "Transport Charger");
+		if (ConfigHandler.INSTANCE.ALLOW_TELEPORT_SUMMON_PLAYER)
+			GameRegistry.registerBlock(summoner, "Player Summoner");
 
 		ModRecipes.addRecipes();
 
@@ -92,6 +98,7 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(PlayerChipPacketHandler.class, PlayerChipMessage.class, 3, Side.SERVER);
 		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 4, Side.SERVER);
 		networkWrapper.registerMessage(ShadowTeleportPacketHandler.class, ButtonMessage.class, 5, Side.SERVER);
+		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 6, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 
