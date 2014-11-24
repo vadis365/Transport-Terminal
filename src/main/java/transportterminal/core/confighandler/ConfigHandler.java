@@ -1,12 +1,12 @@
 package transportterminal.core.confighandler;
 
 import net.minecraftforge.common.config.Configuration;
-import transportterminal.TransportTerminal;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigHandler {
+
 	public static final ConfigHandler INSTANCE = new ConfigHandler();
 	public Configuration config;
 	public static int ENERGY_PER_TELEPORT;
@@ -28,15 +28,13 @@ public class ConfigHandler {
 		TERMINAL_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Consoles", 320000).getInt(320000);
 		CHARGER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Charger", 320000).getInt(320000);
 		ALLOW_TELEPORT_TO_PLAYER = config.get("Game Settings", "Enable Player Location Chips", true).getBoolean(true);
-		if (config.hasChanged()) {
+		if (config.hasChanged())
 			config.save();
-		}
 	}
 
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (TransportTerminal.instance.equals(event.modID)) {
+		if (event.modID.equals("transportterminal"))
 			syncConfigs();
-		}
 	}
 }
