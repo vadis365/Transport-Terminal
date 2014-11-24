@@ -52,14 +52,9 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 						consumeEnergy(tile);
 					}
 				}
-				
 				if (tile != null && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).hasDisplayName() && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalPlayerChip) {
 					if (ConfigHandler.ALLOW_TELEPORT_TO_PLAYER) {
 						EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(tile.getStackInSlot(message.buttonID).getDisplayName());
-						int newDim = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipDim");
-						int x = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipX");
-						int y = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipY");
-						int z = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipZ");	
 						if (playerOnChip != null && playerOnChip!= player) {
 							if (playerOnChip.dimension != player.dimension && player.dimension != 1)
 								player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnChip.dimension, new TransportTerminalTeleporter(worldserver));
