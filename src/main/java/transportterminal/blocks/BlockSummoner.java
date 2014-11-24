@@ -79,6 +79,6 @@ public class BlockSummoner extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister reg) {
 		blockIcon = reg.registerIcon("transportterminal:transportSummoner");
-		sides = reg.registerIcon("transportterminal:transportSummonerSides");
+		sides = reg.registerIcon("transportterminal:transportSummonerSide");
 	}
 }
