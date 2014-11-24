@@ -20,7 +20,7 @@ public class ContainerSummoner extends Container {
 		this.tile = tile;
 		int i = (numRows - 4) * 18;
 
-			addSlotToContainer(new SlotChip(tile, 0, 80, 18));
+			addSlotToContainer(new SlotChip(tile, 0, 80, 9));
 
 			for (int j = 0; j < 3; j++)
 				for (int k = 0; k < 9; k++)

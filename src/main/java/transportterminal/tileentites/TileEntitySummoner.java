@@ -39,8 +39,8 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 	@Override
 	public String getInventoryName() {
 		if(getStackInSlot(0) !=null && getStackInSlot(0).hasDisplayName() && getStackInSlot(0).getItem() instanceof ItemTransportTerminalPlayerChip)
-			return "Teleport: " + getStackInSlot(0).getDisplayName();
-		return "Teleport: Empty";
+			return getStackInSlot(0).getDisplayName();
+		return "Empty";
 	}
 
 	@Override
