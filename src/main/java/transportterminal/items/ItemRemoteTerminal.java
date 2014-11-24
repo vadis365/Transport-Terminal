@@ -88,14 +88,13 @@ public class ItemRemoteTerminal extends Item implements IEnergyContainerItem {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!player.isSneaking() && stack.stackTagCompound.hasKey("homeX")) {
+		if (!player.isSneaking() && stack.stackTagCompound.hasKey("homeX"))
 			if (!world.isRemote)
 				if (canTeleport(stack)) {
 					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
 					world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
-					player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE_TERMINAL, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+					player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 				}
-		}
 		return stack;
 	}
 

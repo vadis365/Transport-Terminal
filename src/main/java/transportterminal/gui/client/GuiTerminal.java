@@ -77,12 +77,12 @@ public class GuiTerminal extends GuiContainer {
 					int z = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipZ");
 
 					if (tile.canTeleport()) {
-						if(TransportTerminal.IS_RF_PRESENT)
+						if (TransportTerminal.IS_RF_PRESENT)
 							TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
 						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
 					}
 				}
-				
+
 				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName())
 					if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_TO_PLAYER)
 						TransportTerminal.networkWrapper.sendToServer(new PlayerChipMessage(mc.thePlayer, tile.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));

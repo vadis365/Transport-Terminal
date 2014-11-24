@@ -31,7 +31,6 @@ public class GuiTerminalShadow extends GuiContainer {
 		ySize = 168;
 	}
 
-
 	@Override
 	@SuppressWarnings("unchecked")
 	public void initGui() {
@@ -72,10 +71,10 @@ public class GuiTerminalShadow extends GuiContainer {
 		int xx = stack.getTagCompound().getInteger("homeX");
 		int yy = stack.getTagCompound().getInteger("homeY");
 		int zz = stack.getTagCompound().getInteger("homeZ");
-		
+
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id,  xx, yy, zz));
+				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, xx, yy, zz));
 				mc.thePlayer.closeScreen();
 			}
 	}

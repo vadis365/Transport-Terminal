@@ -42,7 +42,7 @@ public class ContainerTerminal extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		if(id == 0) {
+		if (id == 0) {
 			if (!TransportTerminal.IS_RF_PRESENT)
 				return;
 			for (int i = 0; i < crafters.size(); i++)
