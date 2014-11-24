@@ -10,7 +10,7 @@ import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.PlayerSummonMessage;
-import transportterminal.tileentites.TileEntityTransportTerminal;
+import transportterminal.tileentites.TileEntitySummoner;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -37,10 +37,10 @@ public class PlayerSummonPacketHandler implements IMessageHandler<PlayerSummonMe
 						playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 						playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 					}
-					TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
-					if (console != null && console.canTeleport())
+					TileEntitySummoner summoner = (TileEntitySummoner) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
+					if (summoner != null && summoner.canTeleport())
 						if (TransportTerminal.IS_RF_PRESENT)
-							console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+							summoner.setEnergy(summoner.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 					teleportPlayer(playerOnChip, message.tileX, message.tileY, message.tileZ, playerOnChip.rotationYaw, playerOnChip.rotationPitch);
 				}
 			}
