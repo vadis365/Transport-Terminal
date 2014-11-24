@@ -1,5 +1,6 @@
 package transportterminal.network.handler;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessag
 	@Override
 	public IMessage onMessage(PlayerChipMessage message, MessageContext ctx) {
 
-		EntityPlayerMP playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(message.playerOnChip);
+		EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(message.playerOnChip);
 		World world = DimensionManager.getWorld(message.dimension);
 
 		if (world == null || playerOnChip == null)
@@ -31,17 +32,17 @@ public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessag
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				WorldServer worldserver = (WorldServer) world;
 				if (player != playerOnChip) {
-					if (player.dimension != playerOnChip.dimension && playerOnChip.dimension != 1)
-						playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
-					if (player.dimension != playerOnChip.dimension && playerOnChip.dimension == 1) {
-						playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
-						playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
+					if (playerOnChip.dimension != player.dimension && player.dimension != 1)
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnChip.dimension, new TransportTerminalTeleporter(worldserver));
+					if (playerOnChip.dimension != player.dimension && player.dimension == 1) {
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnChip.dimension, new TransportTerminalTeleporter(worldserver));
+						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnChip.dimension, new TransportTerminalTeleporter(worldserver));
 					}
 					TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 					if (console != null && console.canTeleport())
 						if (TransportTerminal.IS_RF_PRESENT)
 							console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
-					teleportPlayer(playerOnChip, message.tileX, message.tileY, message.tileZ, playerOnChip.rotationYaw, playerOnChip.rotationPitch);
+					teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
 				}
 			}
 		return null;
