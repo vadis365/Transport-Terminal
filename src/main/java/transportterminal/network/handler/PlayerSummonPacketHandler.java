@@ -41,7 +41,7 @@ public class PlayerSummonPacketHandler implements IMessageHandler<PlayerSummonMe
 					if (summoner != null && summoner.canTeleport())
 						if (TransportTerminal.IS_RF_PRESENT)
 							summoner.setEnergy(summoner.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
-					teleportPlayer(playerOnChip, message.tileX, message.tileY, message.tileZ, playerOnChip.rotationYaw, playerOnChip.rotationPitch);
+					teleportPlayer(playerOnChip, message.tileX + 0.5D, message.tileY, message.tileZ + 0.5D, playerOnChip.rotationYaw, playerOnChip.rotationPitch);
 				}
 			}
 		return null;
