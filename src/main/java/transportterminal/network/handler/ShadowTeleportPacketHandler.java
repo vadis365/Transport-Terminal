@@ -35,7 +35,7 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 				WorldServer worldserver = (WorldServer) world;
 				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(message.tileX, message.tileY, message.tileZ);
-				if (tile != null && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).stackTagCompound.hasKey("chipX") && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalChip) {
+				if (tile != null && tile.canTeleport() && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).stackTagCompound.hasKey("chipX") && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalChip) {
 					int newDim = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipDim");
 					int x = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipX");
 					int y = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipY");
@@ -52,7 +52,7 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 						consumeEnergy(tile);
 					}
 				}
-				if (tile != null && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).hasDisplayName() && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalPlayerChip)
+				if (tile != null && tile.canTeleport() && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).hasDisplayName() && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalPlayerChip)
 					if (ConfigHandler.ALLOW_TELEPORT_TO_PLAYER) {
 						EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(tile.getStackInSlot(message.buttonID).getDisplayName());
 						if (playerOnChip != null && playerOnChip != player) {
