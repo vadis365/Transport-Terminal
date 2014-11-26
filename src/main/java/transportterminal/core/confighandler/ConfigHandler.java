@@ -11,8 +11,10 @@ public class ConfigHandler {
 	public Configuration config;
 	public static int ENERGY_PER_TELEPORT;
 	public static int REMOTE_MAX_ENERGY;
+	public static int REMOTE_TERMINAL_MAX_ENERGY;
 	public static int TERMINAL_MAX_ENERGY;
 	public static int CHARGER_MAX_ENERGY;
+	public static int SUMMONER_MAX_ENERGY;
 	public static boolean ALLOW_TELEPORT_TO_PLAYER;
 	public static boolean ALLOW_TELEPORT_SUMMON_PLAYER;
 	public final String[] usedCategories = { "RF Energy Settings", "Game Settings" };
@@ -26,10 +28,13 @@ public class ConfigHandler {
 	private void syncConfigs() {
 		ENERGY_PER_TELEPORT = config.get("RF Energy Settings", "RF Used to Teleport", 10000).getInt(10000);
 		REMOTE_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored on Remotes", 50000).getInt(50000);
+		REMOTE_TERMINAL_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored on Wireless Terminal Interface", 50000).getInt(50000);
 		TERMINAL_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Consoles", 320000).getInt(320000);
 		CHARGER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Charger", 320000).getInt(320000);
+		SUMMONER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Player Summoner", 320000).getInt(320000);
+		
 		ALLOW_TELEPORT_TO_PLAYER = config.get("Game Settings", "Enable Player Location Chips", true).getBoolean(true);
-		ALLOW_TELEPORT_SUMMON_PLAYER = config.get("Game Settings", "Enable Player Location Chips Summoning", true).getBoolean(true);
+		ALLOW_TELEPORT_SUMMON_PLAYER = config.get("Game Settings", "Enable Player Summoning Block", true).getBoolean(true);
 		
 		if (config.hasChanged())
 			config.save();

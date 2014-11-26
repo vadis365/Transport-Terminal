@@ -13,7 +13,7 @@ import transportterminal.items.ItemTransportTerminalPlayerChip;
 public class TileEntitySummoner extends TileEntityInventoryEnergy {
 
 	public TileEntitySummoner() {
-		super(ConfigHandler.TERMINAL_MAX_ENERGY, 1);
+		super(ConfigHandler.SUMMONER_MAX_ENERGY, 1);
 	}
 
 	@Override

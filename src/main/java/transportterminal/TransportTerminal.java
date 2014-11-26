@@ -82,11 +82,10 @@ public class TransportTerminal {
 		GameRegistry.registerBlock(terminal, "Transport Terminal");
 		GameRegistry.registerItem(playerChip, "Player Location Chip");
 		GameRegistry.registerBlock(utils, "Transport Chip Utilities");
+		GameRegistry.registerBlock(summoner, "Player Summoner");
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
 			GameRegistry.registerBlock(charger, "Transport Charger");
-		if (ConfigHandler.INSTANCE.ALLOW_TELEPORT_SUMMON_PLAYER)
-			GameRegistry.registerBlock(summoner, "Player Summoner");
-
+			
 		ModRecipes.addRecipes();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);

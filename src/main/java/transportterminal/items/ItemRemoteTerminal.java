@@ -27,7 +27,7 @@ public class ItemRemoteTerminal extends Item implements IEnergyContainerItem {
 	private final int capacity;
 
 	public ItemRemoteTerminal() {
-		capacity = ConfigHandler.REMOTE_MAX_ENERGY;
+		capacity = ConfigHandler.REMOTE_TERMINAL_MAX_ENERGY;
 		setMaxStackSize(1);
 		setCreativeTab(TransportTerminal.tab);
 	}
