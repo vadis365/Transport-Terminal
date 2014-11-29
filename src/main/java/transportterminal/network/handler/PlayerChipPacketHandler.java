@@ -10,6 +10,8 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
@@ -39,9 +41,9 @@ public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessag
 					BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
 					TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(pos);
 					if (console != null && console.canTeleport())
-						//if (TransportTerminal.IS_RF_PRESENT)
-						//	console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
-						teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
+						if (TransportTerminal.IS_RF_PRESENT)
+							console.setEnergy(console.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
+					teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
 				}
 			}
 		return null;

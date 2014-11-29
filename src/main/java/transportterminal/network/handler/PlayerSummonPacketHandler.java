@@ -9,6 +9,8 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.tileentites.TileEntitySummoner;
@@ -38,8 +40,8 @@ public class PlayerSummonPacketHandler implements IMessageHandler<PlayerSummonMe
 					BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
 					TileEntitySummoner summoner = (TileEntitySummoner) world.getTileEntity(pos);
 					if (summoner != null && summoner.canTeleport())
-					//	if (TransportTerminal.IS_RF_PRESENT)
-					//		summoner.setEnergy(summoner.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+						if (TransportTerminal.IS_RF_PRESENT)
+							summoner.setEnergy(summoner.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
 					teleportPlayer(playerOnChip, message.tileX + 0.5D, message.tileY, message.tileZ + 0.5D, playerOnChip.rotationYaw, playerOnChip.rotationPitch);
 				}
 			}

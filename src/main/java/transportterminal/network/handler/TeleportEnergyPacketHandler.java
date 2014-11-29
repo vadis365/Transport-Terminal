@@ -24,8 +24,8 @@ public class TeleportEnergyPacketHandler implements IMessageHandler<EnergyMessag
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
 				BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
 				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(pos);
-			//	if (console != null && console.canTeleport())
-			//		console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+				if (console != null && console.canTeleport())
+					console.setEnergy(console.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
 			}
 		return null;
 	}

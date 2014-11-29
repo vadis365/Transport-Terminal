@@ -9,13 +9,13 @@ import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
 
 public class ConfigGUI extends GuiConfig {
+
 	public static final String MOD_ID = "transportterminal";
 
 	public ConfigGUI(GuiScreen parent) {
 		super(parent, getElements(), MOD_ID, MOD_ID, false, false, GuiConfig.getAbridgedConfigPath(ConfigHandler.INSTANCE.config.toString()));
 	}
 
-	@SuppressWarnings({ "rawtypes" })
 	private static List<IConfigElement> getElements() {
 		List<IConfigElement> list = new ArrayList<IConfigElement>();
 		for (String category : ConfigHandler.INSTANCE.usedCategories)

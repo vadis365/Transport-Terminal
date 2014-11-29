@@ -74,9 +74,9 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 	}
 
 	private void consumeEnergy(TileEntityTransportTerminal tile) {
-	//	if (tile.canTeleport())
-	//		if (TransportTerminal.IS_RF_PRESENT)
-	//			tile.setEnergy(tile.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+		if (tile.canTeleport())
+			if (TransportTerminal.IS_RF_PRESENT)
+				tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
 	}
 
 	private void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {

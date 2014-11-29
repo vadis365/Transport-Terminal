@@ -20,9 +20,9 @@ public class ItemTransportTerminalPlayerChip extends Item {
 		setCreativeTab(TransportTerminal.tab);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		if (hasTag(stack))
 			if (stack.getTagCompound() != null && stack.hasDisplayName())
