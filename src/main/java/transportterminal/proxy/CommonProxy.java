@@ -3,9 +3,12 @@ package transportterminal.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import transportterminal.TransportTerminal;
 import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
@@ -23,8 +26,6 @@ import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityChipUtilities;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy implements IGuiHandler {
 
@@ -34,10 +35,10 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void registerTileEntities() {
-		registerTileEntity(TileEntityTransportTerminal.class, "transportTerminal");
-		registerTileEntity(TileEntityChipUtilities.class, "transportUtils");
-		registerTileEntity(TileEntityCharger.class, "transportCharger");
-		registerTileEntity(TileEntitySummoner.class, "transportSummoner");
+		registerTileEntity(TileEntityTransportTerminal.class, "console");
+		registerTileEntity(TileEntityChipUtilities.class, "utils");
+		registerTileEntity(TileEntityCharger.class, "charger");
+		registerTileEntity(TileEntitySummoner.class, "summoner");
 	}
 
 	private void registerTileEntity(Class<? extends TileEntity> cls, String baseName) {
@@ -47,7 +48,8 @@ public class CommonProxy implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityTransportTerminal)
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
@@ -60,7 +62,8 @@ public class CommonProxy implements IGuiHandler {
 		}
 
 		if (ID == GUI_ID_CHIP_UTILS) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityChipUtilities)
 				return new ContainerChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
 		}
@@ -69,7 +72,8 @@ public class CommonProxy implements IGuiHandler {
 			return new ContainerChipUtils(player.inventory, null);
 
 		if (ID == GUI_ID_CHARGER) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityCharger)
 				return new ContainerCharger(player.inventory, (TileEntityCharger) tileentity);
 		}
@@ -79,7 +83,8 @@ public class CommonProxy implements IGuiHandler {
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) getTile(player, world, x, y, z), 0);
 		
 		if (ID == GUI_ID_SUMMONER) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntitySummoner)
 				return new ContainerSummoner(player.inventory, (TileEntitySummoner) tileentity);
 		}
@@ -89,7 +94,8 @@ public class CommonProxy implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityTransportTerminal)
 				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
@@ -98,19 +104,22 @@ public class CommonProxy implements IGuiHandler {
 			return new GuiNaming(player);
 
 		if (ID == GUI_ID_CHIP_UTILS) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityChipUtilities)
 				return new GuiChipUtils(player.inventory, (TileEntityChipUtilities) tileentity);
 		}
 
 		if (ID == GUI_ID_CHIP_UTILS_NAMING) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityChipUtilities)
 				return new GuiUtilsNaming(player, (TileEntityChipUtilities) tileentity);
 		}
 
 		if (ID == GUI_ID_CHARGER) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityCharger)
 				return new GuiCharger(player.inventory, (TileEntityCharger) tileentity);
 		}
@@ -119,7 +128,8 @@ public class CommonProxy implements IGuiHandler {
 			return new GuiTerminalShadow(player.inventory, player);
 		
 		if (ID == GUI_ID_SUMMONER) {
-			TileEntity tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntitySummoner)
 				return new GuiSummoner(player.inventory, (TileEntitySummoner) tileentity);
 		}
@@ -135,9 +145,12 @@ public class CommonProxy implements IGuiHandler {
 			int xx = stack.getTagCompound().getInteger("homeX");
 			int yy = stack.getTagCompound().getInteger("homeY");
 			int zz = stack.getTagCompound().getInteger("homeZ");
-			tileentity = world2.getTileEntity(xx, yy, zz);
-		} else
-			tileentity = world.getTileEntity(x, y, z);
+			BlockPos pos = new BlockPos(xx, yy, zz);
+			tileentity = world2.getTileEntity(pos);
+		} else {
+			BlockPos pos = new BlockPos(x, y, z);
+			tileentity = world.getTileEntity(pos);
+		}
 		return tileentity;
 	}
 }

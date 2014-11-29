@@ -4,10 +4,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalChip;
@@ -15,9 +18,6 @@ import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.ButtonMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessage, IMessage> {
 
@@ -34,8 +34,9 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 				ItemStack stack = player.getCurrentEquippedItem();
 				WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 				WorldServer worldserver = (WorldServer) world;
-				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(message.tileX, message.tileY, message.tileZ);
-				if (tile != null && tile.canTeleport() && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).stackTagCompound.hasKey("chipX") && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalChip) {
+				BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
+				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(pos);
+				if (tile != null && tile.canTeleport() && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).getTagCompound().hasKey("chipX") && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalChip) {
 					int newDim = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipDim");
 					int x = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipX");
 					int y = tile.getStackInSlot(message.buttonID).getTagCompound().getInteger("chipY");
@@ -47,7 +48,9 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 					}
 					world2 = DimensionManager.getWorld(newDim);
-					if (world2.isAirBlock(x, y + 1, z) && world2.isAirBlock(x, y + 2, z)) {
+					BlockPos pos1 = new BlockPos(x, y + 1, z);
+					BlockPos pos2 = new BlockPos(x, y + 2, z);
+					if (world2.isAirBlock(pos1) && world2.isAirBlock(pos2)) {
 						teleportPlayer(player, x + 0.5D, y + 1.0D, z + 0.5D, player.rotationYaw, player.rotationPitch);
 						consumeEnergy(tile);
 					}
@@ -71,9 +74,9 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 	}
 
 	private void consumeEnergy(TileEntityTransportTerminal tile) {
-		if (tile.canTeleport())
-			if (TransportTerminal.IS_RF_PRESENT)
-				tile.setEnergy(tile.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+	//	if (tile.canTeleport())
+	//		if (TransportTerminal.IS_RF_PRESENT)
+	//			tile.setEnergy(tile.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 	}
 
 	private void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {

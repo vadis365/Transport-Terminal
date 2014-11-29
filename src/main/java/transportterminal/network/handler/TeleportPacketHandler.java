@@ -4,12 +4,11 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import transportterminal.blocks.BlockTransportTerminal;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.TeleportMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, IMessage> {
 
@@ -31,6 +30,8 @@ public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, I
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, message.chipDim, new TransportTerminalTeleporter(worldserver));
 				}
 				World world2 = DimensionManager.getWorld(message.chipDim);
+			
+				/* TODO fixy
 				if (world2.getBlock(message.chipX, message.chipY, message.chipZ) instanceof BlockTransportTerminal)
 					switch (world2.getBlockMetadata(message.chipX, message.chipY, message.chipZ)) {
 						case 2:
@@ -51,7 +52,7 @@ public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, I
 							break;
 					}
 				else if (world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ) && world2.isAirBlock(message.chipX, message.chipY + 2, message.chipZ))
-					teleportPlayer(player, message.chipX + 0.5, message.chipY + 1.0, message.chipZ + 0.5, player.rotationYaw, player.rotationPitch);
+					*/teleportPlayer(player, message.chipX + 0.5, message.chipY + 1.0, message.chipZ + 0.5, player.rotationYaw, player.rotationPitch);
 			}
 		return null;
 	}

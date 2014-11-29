@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
@@ -14,8 +16,6 @@ import transportterminal.TransportTerminal;
 import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.tileentites.TileEntityChipUtilities;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiChipUtils extends GuiContainer {
@@ -45,7 +45,7 @@ public class GuiChipUtils extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getInventoryName()), 8, 6, 4210752);
+		//fontRendererObj.drawString(StatCollector.translateToLocal(tile.getInventoryName()), 8, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
 	}
 
@@ -60,9 +60,9 @@ public class GuiChipUtils extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		int x = tile.xCoord;
-		int y = tile.yCoord;
-		int z = tile.zCoord;
+		int x = tile.getPos().getX();
+		int y = tile.getPos().getY();
+		int z = tile.getPos().getZ();
 
 		if (guibutton instanceof GuiButton) {
 			if (guibutton.id == 0) {
@@ -89,11 +89,11 @@ public class GuiChipUtils extends GuiContainer {
 	}
 
 	public boolean isBlankChip(ItemStack stack) {
-		return stack.stackTagCompound != null && !stack.stackTagCompound.hasKey("chipDim");
+		return stack.getTagCompound() != null && !stack.getTagCompound().hasKey("chipDim");
 	}
 
 	public boolean isBlankPlayerChip(ItemStack stack) {
-		return stack.stackTagCompound != null && !stack.hasDisplayName();
+		return stack.getTagCompound() != null && !stack.hasDisplayName();
 	}
 
 	public boolean isBasicChipItem(Item item) {

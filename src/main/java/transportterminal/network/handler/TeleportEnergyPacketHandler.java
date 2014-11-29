@@ -1,14 +1,14 @@
 package transportterminal.network.handler;
 
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.message.EnergyMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class TeleportEnergyPacketHandler implements IMessageHandler<EnergyMessage, IMessage> {
 
@@ -22,9 +22,10 @@ public class TeleportEnergyPacketHandler implements IMessageHandler<EnergyMessag
 
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
-				if (console != null && console.canTeleport())
-					console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+				BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
+				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(pos);
+			//	if (console != null && console.canTeleport())
+			//		console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 			}
 		return null;
 	}

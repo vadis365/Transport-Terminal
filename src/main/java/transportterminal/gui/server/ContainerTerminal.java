@@ -6,7 +6,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 import transportterminal.TransportTerminal;
 import transportterminal.gui.slot.SlotChip;
 import transportterminal.gui.slot.SlotRemote;
@@ -45,8 +44,8 @@ public class ContainerTerminal extends Container {
 		if (id == 0) {
 			if (!TransportTerminal.IS_RF_PRESENT)
 				return;
-			for (int i = 0; i < crafters.size(); i++)
-				((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+		//	for (int i = 0; i < crafters.size(); i++)
+		//		((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
 		}
 	}
 
