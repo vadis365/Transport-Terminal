@@ -24,9 +24,10 @@ public class ModRecipes {
 		addShapedRecipe(new ItemStack(TransportTerminal.remoteTerminal), "IGI", "RXR", "ICI", 'R', "dustRedstone", 'G', "blockGlass", 'C', TransportTerminal.chip, 'I', "ingotIron", 'X', TransportTerminal.remote);
 		addShapedRecipe(new ItemStack(TransportTerminal.terminal), "EGE", "IRI", "SSS", 'E', Items.ender_eye, 'G', "blockGlass", 'I', "blockIron", 'R', "blockRedstone", 'S', Blocks.stone_slab);
 		addShapedRecipe(new ItemStack(TransportTerminal.utils), "CTC", "IRI", "xxx", 'C', TransportTerminal.chip, 'T', Items.name_tag, 'I', "blockIron", 'R', "blockRedstone", 'x', "ingotIron");
-		if (TransportTerminal.IS_RF_PRESENT) // removes crash if derps try to craft it
-			addShapedRecipe(new ItemStack(TransportTerminal.charger), "CRC", "GQG", "CLC", 'C', TransportTerminal.chip, 'G', "blockGold", 'Q', "blockQuartz", 'R', "blockRedstone", 'L', "blockLapis");
 		addShapedRecipe(new ItemStack(TransportTerminal.summoner), "P P", "ERE", "P P", 'P', TransportTerminal.playerChip, 'E', "gemEmerald", 'R', "blockRedstone");
+
+		if (TransportTerminal.IS_RF_PRESENT)
+			addShapedRecipe(new ItemStack(TransportTerminal.charger), "CRC", "GQG", "CLC", 'C', TransportTerminal.chip, 'G', "blockGold", 'Q', "blockQuartz", 'R', "blockRedstone", 'L', "blockLapis");
 	}
 
 	private static void addShapelessRecipe(ItemStack output, Object... parameters) {
