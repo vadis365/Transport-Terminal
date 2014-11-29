@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "transportterminal:blocks/summoner",
+        "front": "transportterminal:blocks/summonerSide",
+        "side": "transportterminal:blocks/summonerSide"
+    }
+}

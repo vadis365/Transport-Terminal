@@ -1,5 +1,5 @@
 {
-    "parent": "transportterminal:block/utils",
+    "parent": "transportterminal:block/charger",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],
