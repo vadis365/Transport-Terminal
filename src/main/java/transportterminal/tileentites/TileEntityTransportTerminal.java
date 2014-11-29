@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.util.EnumFacing;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 
@@ -86,7 +87,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	}
 
 	public boolean canTeleport() {
-		return !TransportTerminal.IS_RF_PRESENT;// TODO Fixy || getEnergyStored(ForgeDirection.UNKNOWN) >= ConfigHandler.ENERGY_PER_TELEPORT;
+		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT;
 	}
 
 	@Override
@@ -94,10 +95,8 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		return true;
 	}
 
-	/**
-	 * This is not a battery, energy should not be extractable
-	 *
-	 * @Override public int extractEnergy(ForgeDirection from, int maxExtract,
-	 *           boolean simulate) { return 0; }
-	 */
+	@Override
+	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
+		return 0;
+	}
 }
