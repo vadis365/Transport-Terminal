@@ -7,8 +7,8 @@ import transportterminal.models.ItemTransportTerminalRenderer;
 import transportterminal.models.SummonerBlockRender;
 import transportterminal.models.TileEntityTransportTerminalRenderer;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
 	

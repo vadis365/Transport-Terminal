@@ -15,8 +15,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityChipUtilities;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockChipUtilities extends BlockContainer {
 
