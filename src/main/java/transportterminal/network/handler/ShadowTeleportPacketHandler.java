@@ -1,5 +1,7 @@
 package transportterminal.network.handler;
 
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -18,6 +20,8 @@ import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.ButtonMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
+
+import com.mojang.authlib.GameProfile;
 
 public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessage, IMessage> {
 
@@ -57,7 +61,8 @@ public class ShadowTeleportPacketHandler implements IMessageHandler<ButtonMessag
 				}
 				if (tile != null && tile.canTeleport() && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).hasDisplayName() && tile.getStackInSlot(message.buttonID).getItem() instanceof ItemTransportTerminalPlayerChip)
 					if (ConfigHandler.ALLOW_TELEPORT_TO_PLAYER) {
-						EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(tile.getStackInSlot(message.buttonID).getDisplayName());
+						String name = tile.getStackInSlot(message.buttonID).getDisplayName();
+						EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().createPlayerForUser(new GameProfile(UUID.nameUUIDFromBytes(name.getBytes()), name));
 						if (playerOnChip != null && playerOnChip != player) {
 							if (playerOnChip.dimension != player.dimension && player.dimension != 1)
 								player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnChip.dimension, new TransportTerminalTeleporter(worldserver));

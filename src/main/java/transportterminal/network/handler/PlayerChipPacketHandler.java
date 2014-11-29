@@ -1,5 +1,7 @@
 package transportterminal.network.handler;
 
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
@@ -16,12 +18,14 @@ import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
+import com.mojang.authlib.GameProfile;
+
 public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessage, IMessage> {
 
 	@Override
 	public IMessage onMessage(PlayerChipMessage message, MessageContext ctx) {
 
-		EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(message.playerOnChip);
+		EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().createPlayerForUser(new GameProfile(UUID.nameUUIDFromBytes(message.playerOnChip.getBytes()), message.playerOnChip));
 		World world = DimensionManager.getWorld(message.dimension);
 
 		if (world == null || playerOnChip == null)
