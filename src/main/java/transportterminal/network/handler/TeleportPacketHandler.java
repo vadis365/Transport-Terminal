@@ -1,12 +1,17 @@
 package transportterminal.network.handler;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import transportterminal.blocks.BlockDirectional;
+import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.TeleportMessage;
 
@@ -30,29 +35,16 @@ public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, I
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, message.chipDim, new TransportTerminalTeleporter(worldserver));
 				}
 				World world2 = DimensionManager.getWorld(message.chipDim);
-			
-				/* TODO fixy
-				if (world2.getBlock(message.chipX, message.chipY, message.chipZ) instanceof BlockTransportTerminal)
-					switch (world2.getBlockMetadata(message.chipX, message.chipY, message.chipZ)) {
-						case 2:
-							if (world2.isAirBlock(message.chipX, message.chipY, message.chipZ - 1) && world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ - 1))
-								teleportPlayer(player, message.chipX + 0.5D, message.chipY, message.chipZ - 0.5D, 0, player.rotationPitch);
-							break;
-						case 3:
-							if (world2.isAirBlock(message.chipX, message.chipY, message.chipZ + 1) && world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ + 1))
-								teleportPlayer(player, message.chipX + 0.5D, message.chipY, message.chipZ + 1.5D, 180, player.rotationPitch);
-							break;
-						case 4:
-							if (world2.isAirBlock(message.chipX - 1, message.chipY, message.chipZ) && world2.isAirBlock(message.chipX - 1, message.chipY + 1, message.chipZ))
-								teleportPlayer(player, message.chipX - 0.5D, message.chipY, message.chipZ + 0.5D, 270, player.rotationPitch);
-							break;
-						case 5:
-							if (world2.isAirBlock(message.chipX + 1, message.chipY, message.chipZ) && world2.isAirBlock(message.chipX + 1, message.chipY + 1, message.chipZ))
-								teleportPlayer(player, message.chipX + 1.5D, message.chipY, message.chipZ + 0.5D, 90, player.rotationPitch);
-							break;
-					}
-				else if (world2.isAirBlock(message.chipX, message.chipY + 1, message.chipZ) && world2.isAirBlock(message.chipX, message.chipY + 2, message.chipZ))
-					*/teleportPlayer(player, message.chipX + 0.5, message.chipY + 1.0, message.chipZ + 0.5, player.rotationYaw, player.rotationPitch);
+
+				IBlockState state = world2.getBlockState(new BlockPos(message.chipX, message.chipY, message.chipZ));
+				if (state.getBlock() instanceof BlockTransportTerminal) {
+					EnumFacing facing = (EnumFacing) state.getValue(BlockDirectional.FACING);
+					BlockPos pos = new BlockPos(message.chipX, message.chipY, message.chipZ);
+
+					if (world2.isAirBlock(pos.add(facing.getFrontOffsetX(), facing.getFrontOffsetY(), facing.getFrontOffsetZ())) && world2.isAirBlock(pos.add(0, 1, 0)))
+						teleportPlayer(player, message.chipX + 0.5D * facing.getFrontOffsetX(), message.chipY + 0.5 * facing.getFrontOffsetY(), message.chipZ + 0.5D * facing.getFrontOffsetZ(), 0, player.rotationPitch);
+				} else if (world2.isAirBlock(new BlockPos(message.chipX, message.chipY + 1, message.chipZ)) && world2.isAirBlock(new BlockPos(message.chipX, message.chipY + 2, message.chipZ)))
+					teleportPlayer(player, message.chipX + 0.5, message.chipY + 1.0, message.chipZ + 0.5, player.rotationYaw, player.rotationPitch);
 			}
 		return null;
 	}
