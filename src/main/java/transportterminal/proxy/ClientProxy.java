@@ -4,12 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
-import transportterminal.models.ItemTransportTerminalRenderer;
 import transportterminal.models.TileEntityTransportTerminalRenderer;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
@@ -19,7 +17,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderInformation() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTransportTerminal.class, new TileEntityTransportTerminalRenderer());
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(TransportTerminal.terminal), new ItemTransportTerminalRenderer());
 
 		ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 		mesher.register(TransportTerminal.chip, 0, new ModelResourceLocation("transportterminal:chip", "inventory"));
