@@ -44,8 +44,8 @@ public class ContainerTerminal extends Container {
 		if (id == 0) {
 			if (!TransportTerminal.IS_RF_PRESENT)
 				return;
-		//	for (int i = 0; i < crafters.size(); i++)
-		//		((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+			for (int i = 0; i < crafters.size(); i++)
+				((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(null));
 		}
 	}
 

@@ -41,7 +41,7 @@ public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessag
 					if (console != null && console.canTeleport())
 						//if (TransportTerminal.IS_RF_PRESENT)
 						//	console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
-					teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
+						teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
 				}
 			}
 		return null;

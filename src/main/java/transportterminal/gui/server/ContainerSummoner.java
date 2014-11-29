@@ -19,13 +19,13 @@ public class ContainerSummoner extends Container {
 		this.tile = tile;
 		int i = (numRows - 4) * 18;
 
-			addSlotToContainer(new SlotChip(tile, 0, 80, 9));
+		addSlotToContainer(new SlotChip(tile, 0, 80, 9));
 
-			for (int j = 0; j < 3; j++)
-				for (int k = 0; k < 9; k++)
-					addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 122 + j * 18 + i));
-			for (int j = 0; j < 9; j++)
-				addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
+		for (int j = 0; j < 3; j++)
+			for (int k = 0; k < 9; k++)
+				addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 122 + j * 18 + i));
+		for (int j = 0; j < 9; j++)
+			addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
 	}
 
 	@Override
@@ -33,15 +33,15 @@ public class ContainerSummoner extends Container {
 		super.detectAndSendChanges();
 		if (!TransportTerminal.IS_RF_PRESENT)
 			return;
-	//	for (int i = 0; i < crafters.size(); i++)
-	//		((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+		for (int i = 0; i < crafters.size(); i++)
+			((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(null));
 	}
 
 	@Override
 	public void updateProgressBar(int id, int value) {
 		if (!TransportTerminal.IS_RF_PRESENT)
 			return;
-			tile.setEnergy(value);
+		tile.setEnergy(value);
 	}
 
 	@Override
@@ -57,10 +57,9 @@ public class ContainerSummoner extends Container {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 0) {
-				if (stack1.getItem() == TransportTerminal.playerChip) {
+				if (stack1.getItem() == TransportTerminal.playerChip)
 					if (!mergeItemStack(stack1, 0, 1, false))
 						return null;
-				}
 			} else if (!mergeItemStack(stack1, 1, inventorySlots.size(), false))
 				return null;
 			if (stack1.stackSize == 0)
