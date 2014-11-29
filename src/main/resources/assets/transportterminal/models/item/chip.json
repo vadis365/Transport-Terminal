@@ -1,5 +1,5 @@
 {
-    "parent": "transportterminal:builtin/generated",
+    "parent": "builtin/generated",
     "textures": {
         "layer0": "transportterminal:items/chip.png"
     },
