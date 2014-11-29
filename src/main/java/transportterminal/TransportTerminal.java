@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.ModAPIManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -67,14 +66,17 @@ public class TransportTerminal {
 		IS_RF_PRESENT = false;//ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
-		remote = new ItemTransportTerminalRemote().setUnlocalizedName("remote");//.setTextureName("transportterminal:transportTerminalRemote");
-		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("remoteTerminal");//.setTextureName("transportterminal:transportRemoteTerminal");
-		chip = new ItemTransportTerminalChip().setUnlocalizedName("chip");//.setTextureName("transportterminal:transportTerminalChipBlank");
-		terminal = new BlockTransportTerminal().setHardness(3.0F).setUnlocalizedName("console");//.setBlockTextureName("transportterminal:transportTerminal");
-		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("playerChip");//.setTextureName("transportterminal:transportTerminalPlayerChip");
-		utils = new BlockChipUtilities().setHardness(3.0F).setUnlocalizedName("utils");//.setBlockTextureName("transportterminal:transportUtils");
-		charger = new BlockCharger().setHardness(3.0F).setUnlocalizedName("charger");//.setBlockTextureName("transportterminal:transportCharger");
-		summoner = new BlockSummoner().setHardness(3.0F).setUnlocalizedName("summoner");//.setBlockTextureName("transportterminal:transportSummoner");
+		// Items
+		remote = new ItemTransportTerminalRemote().setUnlocalizedName("remote");
+		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("remoteTerminal");
+		chip = new ItemTransportTerminalChip().setUnlocalizedName("chip");
+		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("playerChip");
+
+		// Blocks
+		terminal = new BlockTransportTerminal().setHardness(3.0F).setUnlocalizedName("console");
+		utils = new BlockChipUtilities().setHardness(3.0F).setUnlocalizedName("utils");
+		charger = new BlockCharger().setHardness(3.0F).setUnlocalizedName("charger");
+		summoner = new BlockSummoner().setHardness(3.0F).setUnlocalizedName("summoner");
 
 		GameRegistry.registerItem(remote, "remote");
 		GameRegistry.registerItem(remoteTerminal, "remoteTerminal");
