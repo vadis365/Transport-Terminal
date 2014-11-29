@@ -4,17 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockSummoner;
@@ -39,6 +28,18 @@ import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.ModAPIManager;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = "transportterminal", name = "Transport Terminals", version = "1.0b", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
 public class TransportTerminal {
@@ -63,27 +64,27 @@ public class TransportTerminal {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		IS_RF_PRESENT = false;//ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
+		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
-		remote = new ItemTransportTerminalRemote().setUnlocalizedName("remote");//.setTextureName("transportterminal:transportTerminalRemote");
-		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("remoteTerminal");//.setTextureName("transportterminal:transportRemoteTerminal");
-		chip = new ItemTransportTerminalChip().setUnlocalizedName("chip");//.setTextureName("transportterminal:transportTerminalChipBlank");
-		terminal = new BlockTransportTerminal().setHardness(3.0F).setUnlocalizedName("console");//.setBlockTextureName("transportterminal:transportTerminal");
-		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("playerChip");//.setTextureName("transportterminal:transportTerminalPlayerChip");
-		utils = new BlockChipUtilities().setHardness(3.0F).setUnlocalizedName("utils");//.setBlockTextureName("transportterminal:transportUtils");
-		charger = new BlockCharger().setHardness(3.0F).setUnlocalizedName("charger");//.setBlockTextureName("transportterminal:transportCharger");
-		summoner = new BlockSummoner().setHardness(3.0F).setUnlocalizedName("summoner");//.setBlockTextureName("transportterminal:transportSummoner");
+		remote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
+		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("transportTerminalRemoteTerminal").setTextureName("transportterminal:transportRemoteTerminal");
+		chip = new ItemTransportTerminalChip().setUnlocalizedName("transportTerminalChip").setTextureName("transportterminal:transportTerminalChipBlank");
+		terminal = new BlockTransportTerminal().setHardness(3.0F).setBlockName("transportTerminal").setBlockTextureName("transportterminal:transportTerminal");
+		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("transportTerminalPlayerChip").setTextureName("transportterminal:transportTerminalPlayerChip");
+		utils = new BlockChipUtilities().setHardness(3.0F).setBlockName("transportUtils").setBlockTextureName("transportterminal:transportUtils");
+		charger = new BlockCharger().setHardness(3.0F).setBlockName("transportCharger").setBlockTextureName("transportterminal:transportCharger");
+		summoner = new BlockSummoner().setHardness(3.0F).setBlockName("transportSummoner").setBlockTextureName("transportterminal:transportSummoner");
 
-		GameRegistry.registerItem(remote, "remote");
-		GameRegistry.registerItem(remoteTerminal, "remoteTerminal");
-		GameRegistry.registerItem(chip, "chip");
-		GameRegistry.registerBlock(terminal, "console");
-		GameRegistry.registerItem(playerChip, "playerChip");
-		GameRegistry.registerBlock(utils, "utils");
-		GameRegistry.registerBlock(summoner, "summoner");
+		GameRegistry.registerItem(remote, "Transport Terminal Remote");
+		GameRegistry.registerItem(remoteTerminal, "Transport Terminal Interface");
+		GameRegistry.registerItem(chip, "Transport Terminal Chip");
+		GameRegistry.registerBlock(terminal, "Transport Terminal");
+		GameRegistry.registerItem(playerChip, "Player Location Chip");
+		GameRegistry.registerBlock(utils, "Transport Chip Utilities");
+		GameRegistry.registerBlock(summoner, "Player Summoner");
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
-			GameRegistry.registerBlock(charger, "charger");
+			GameRegistry.registerBlock(charger, "Transport Charger");
 			
 		ModRecipes.addRecipes();
 

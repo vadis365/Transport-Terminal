@@ -6,6 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.ForgeDirection;
 import transportterminal.tileentites.TileEntityCharger;
 import cofh.api.energy.IEnergyContainerItem;
 
@@ -32,8 +33,8 @@ public class ContainerCharger extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-	//	for (int i = 0; i < crafters.size(); i++)
-	//		((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
+		for (int i = 0; i < crafters.size(); i++)
+			((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
 	}
 
 	@Override

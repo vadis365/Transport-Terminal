@@ -9,13 +9,17 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IChatComponent;
 import transportterminal.TransportTerminal;
 
 public class TileEntityChipUtilities extends TileEntity implements IInventory {
 
 	private ItemStack[] inventory = new ItemStack[3];
 	private String playerChipName = "Blank";
+
+	@Override
+	public boolean canUpdate() {
+		return false;
+	}
 
 	@Override
 	public int getSizeInventory() {
@@ -102,7 +106,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(pos) != this ? false : player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
@@ -110,17 +114,34 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 		return false;
 	}
 
+	@Override
+	public String getInventoryName() {
+		return "";
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return false;
+	}
+
+	@Override
+	public void openInventory() {
+	}
+
+	@Override
+	public void closeInventory() {
+	}
 
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(pos, 1, tag);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
-		readFromNBT(packet.getNbtCompound());
+		readFromNBT(packet.func_148857_g());
 	}
 
 	public void copyChip() {
@@ -144,59 +165,5 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 		ItemStack stack = getStackInSlot(1);
 		if (stack != null && stack.getItem() == TransportTerminal.playerChip)
 			stack.setStackDisplayName(playerChipName);
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public IChatComponent getDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void openInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getField(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getFieldCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void clearInventory() {
-		// TODO Auto-generated method stub
-		
 	}
 }

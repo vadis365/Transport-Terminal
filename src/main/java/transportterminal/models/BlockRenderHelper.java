@@ -1,11 +1,13 @@
 package transportterminal.models;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class BlockRenderHelper
@@ -13,7 +15,7 @@ public class BlockRenderHelper
 
 	public static void renderSimpleBlock(Block block, int metadata, RenderBlocks renderer)
 	{
-		Tessellator tessellator = Tessellator.getInstance();
+		Tessellator tessellator = Tessellator.instance;
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 
 		tessellator.startDrawingQuads();

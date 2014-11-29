@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemTransportTerminalPlayerChip extends Item {
 
@@ -25,7 +25,7 @@ public class ItemTransportTerminalPlayerChip extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		if (hasTag(stack))
-			if (stack.getTagCompound() != null && stack.hasDisplayName())
+			if (stack.stackTagCompound != null && stack.hasDisplayName())
 				list.add(EnumChatFormatting.GREEN + "Player: " + stack.getDisplayName());
 			else
 				list.add("Empty Player Location Chip");
@@ -46,9 +46,9 @@ public class ItemTransportTerminalPlayerChip extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean hasEffect(ItemStack stack, int pass) {
 		if (hasTag(stack))
-			if (stack.getTagCompound() != null && stack.hasDisplayName())
+			if (stack.stackTagCompound != null && stack.hasDisplayName())
 				return true;
 		return false;
 	}

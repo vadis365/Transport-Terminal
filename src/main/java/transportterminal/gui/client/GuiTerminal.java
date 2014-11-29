@@ -5,8 +5,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
@@ -17,6 +16,8 @@ import transportterminal.network.message.EnergyMessage;
 import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiTerminal extends GuiContainer {
@@ -48,8 +49,8 @@ public class GuiTerminal extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getInventoryName()), 8, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
-	//	if (TransportTerminal.IS_RF_PRESENT)
-	//		fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + tile.getEnergyStored(ForgeDirection.UNKNOWN)), 100, ySize - 96 + 2, 4210752);
+		if (TransportTerminal.IS_RF_PRESENT)
+			fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + tile.getEnergyStored(ForgeDirection.UNKNOWN)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override
@@ -63,13 +64,13 @@ public class GuiTerminal extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		int xx = tile.getPos().getX();
-		int yy = tile.getPos().getY();
-		int zz = tile.getPos().getZ();
+		int xx = tile.xCoord;
+		int yy = tile.yCoord;
+		int zz = tile.zCoord;
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).getTagCompound().hasKey("chipX")) {
+				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).stackTagCompound.hasKey("chipX")) {
 					int newDim = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipDim");
 					int x = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipX");
 					int y = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipY");

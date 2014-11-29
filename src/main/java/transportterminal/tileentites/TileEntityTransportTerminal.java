@@ -1,12 +1,11 @@
 package transportterminal.tileentites;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.util.IChatComponent;
+import net.minecraftforge.common.util.ForgeDirection;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 
@@ -20,6 +19,11 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	}
 
 	@Override
+	public boolean canUpdate() {
+		return false;
+	}
+
+	@Override
 	public void setInventorySlotContents(int slot, ItemStack is) {
 		inventory[slot] = is;
 		if (is != null && is.stackSize > getInventoryStackLimit())
@@ -28,9 +32,9 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
-			stack.getTagCompound().setInteger("homeX", pos.getX());
-			stack.getTagCompound().setInteger("homeY", pos.getY());
-			stack.getTagCompound().setInteger("homeZ", pos.getZ());
+			stack.getTagCompound().setInteger("homeX", xCoord);
+			stack.getTagCompound().setInteger("homeY", yCoord);
+			stack.getTagCompound().setInteger("homeZ", zCoord);
 			setInventorySlotContents(1, stack);
 		}
 	}
@@ -56,8 +60,9 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		return false;
 	}
 
+	@Override
 	public String getInventoryName() {
-		return "Location X: " + pos.getX() + " Y: " + pos.getY() + " Z: " + pos.getZ();
+		return "Location X: " + xCoord + " Y: " + yCoord + " Z: " + zCoord;
 	}
 
 	public void setName(String text) {
@@ -79,77 +84,23 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(pos, 1, tag);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
-		readFromNBT(packet.getNbtCompound());
+		readFromNBT(packet.func_148857_g());
 	}
 
 	public boolean canTeleport() {
-		return !TransportTerminal.IS_RF_PRESENT;// TODO Fixy || getEnergyStored(ForgeDirection.UNKNOWN) >= ConfigHandler.ENERGY_PER_TELEPORT;
-	}
-
-	@Override
-	public void openInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getField(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getFieldCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void clearInventory() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public IChatComponent getDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
+		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(ForgeDirection.UNKNOWN) >= ConfigHandler.ENERGY_PER_TELEPORT;
 	}
 
 	/**
 	 * This is not a battery, energy should not be extractable
-	 
+	 */
 	@Override
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
 		return 0;
-	}*/
+	}
 }

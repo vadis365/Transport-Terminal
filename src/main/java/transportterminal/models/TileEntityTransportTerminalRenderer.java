@@ -3,12 +3,12 @@ package transportterminal.models;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.tileentites.TileEntityTransportTerminal;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityTransportTerminalRenderer extends TileEntitySpecialRenderer {
@@ -17,7 +17,7 @@ public class TileEntityTransportTerminalRenderer extends TileEntitySpecialRender
 	private static final ModelTransportTerminal model = new ModelTransportTerminal();
 
 	@Override
-	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTickTime, int something) {
+	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTickTime) {
 		TileEntityTransportTerminal terminal = (TileEntityTransportTerminal) tile;
 		int meta = terminal.getBlockMetadata();
 		bindTexture(texture);
@@ -41,5 +41,4 @@ public class TileEntityTransportTerminalRenderer extends TileEntitySpecialRender
 		model.render();
 		GL11.glPopMatrix();
 	}
-
 }

@@ -3,16 +3,18 @@ package transportterminal.network.handler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.common.util.ForgeDirection;
+import transportterminal.TransportTerminal;
+import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessage, IMessage> {
 
@@ -36,11 +38,10 @@ public class PlayerChipPacketHandler implements IMessageHandler<PlayerChipMessag
 						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnChip.dimension, new TransportTerminalTeleporter(worldserver));
 						player.mcServer.getConfigurationManager().transferPlayerToDimension(player, playerOnChip.dimension, new TransportTerminalTeleporter(worldserver));
 					}
-					BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
-					TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(pos);
+					TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 					if (console != null && console.canTeleport())
-						//if (TransportTerminal.IS_RF_PRESENT)
-						//	console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+						if (TransportTerminal.IS_RF_PRESENT)
+							console.setEnergy(console.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 					teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
 				}
 			}

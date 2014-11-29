@@ -7,22 +7,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 import cofh.api.energy.IEnergyContainerItem;
+import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI")
 public class ItemTransportTerminalRemote extends Item implements IEnergyContainerItem {
@@ -65,7 +63,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 		if (TransportTerminal.IS_RF_PRESENT)
 			list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
 		if (hasTag(stack))
-			if (stack.getTagCompound().hasKey("dim")) {
+			if (stack.stackTagCompound.hasKey("dim")) {
 				list.add("Terminal Dimension: " + stack.getTagCompound().getInteger("dim") + " " + stack.getTagCompound().getString("dimName"));
 				list.add("Target X: " + stack.getTagCompound().getInteger("homeX"));
 				list.add("Target Y: " + stack.getTagCompound().getInteger("homeY"));
@@ -79,7 +77,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 	}
 
 	public static boolean foundFreeChip(EntityPlayer player, ItemStack stack) {
-		if (hasTag(stack) && player.isSneaking() && stack.getTagCompound().hasKey("dim")) {
+		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			if (world2 == null)
 				return false;
@@ -87,13 +85,13 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			int homeX = stack.getTagCompound().getInteger("homeX");
 			int homeY = stack.getTagCompound().getInteger("homeY");
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
-			BlockPos pos = new BlockPos(homeX, homeY, homeZ);
-			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(pos);
+
+			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
 					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.chip) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
-						if (chipStack.getTagCompound() != null && !chipStack.getTagCompound().hasKey("chipX"))
+						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX"))
 							return true;
 					}
 		}
@@ -101,7 +99,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 	}
 
 	public static TileEntityTransportTerminal getTile(EntityPlayer player, ItemStack stack, int x, int y, int z) {
-		if (hasTag(stack) && player.isSneaking() && stack.getTagCompound().hasKey("dim")) {
+		if (hasTag(stack) && player.isSneaking() && stack.stackTagCompound.hasKey("dim")) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			if (world2 == null)
 				return null;
@@ -109,13 +107,13 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			int homeX = stack.getTagCompound().getInteger("homeX");
 			int homeY = stack.getTagCompound().getInteger("homeY");
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
-			BlockPos pos = new BlockPos(homeX, homeY, homeZ);
-			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(pos);
+
+			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
 					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.chip) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
-						if (chipStack.getTagCompound() != null && !chipStack.getTagCompound().hasKey("chipX")) {
+						if (chipStack.stackTagCompound != null && !chipStack.stackTagCompound.hasKey("chipX")) {
 							if (!world2.isRemote) {
 								tile.setTempSlot(slot);
 								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
@@ -132,8 +130,8 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (!worldIn.isRemote && hasTag(stack) && playerIn.isSneaking()) {
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 
 			if (ticket == null)
@@ -142,21 +140,21 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
 
-			if (foundFreeChip(playerIn, stack)) {
-				worldIn.playSoundEffect(playerIn.posX, playerIn.posY, playerIn.posZ, "transportterminal:oksound", 1.0F, 1.0F);
-				playerIn.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			if (foundFreeChip(player, stack)) {
+				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
+				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);
 				return true;
 			}
 
-			if (!foundFreeChip(playerIn, stack))
-				worldIn.playSoundEffect(playerIn.posX, playerIn.posY, playerIn.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
+			if (!foundFreeChip(player, stack))
+				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
 		}
 		return false;
 	}
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!player.isSneaking() && stack.getTagCompound().hasKey("homeX")) {
+		if (!player.isSneaking() && stack.stackTagCompound.hasKey("homeX")) {
 			int x = stack.getTagCompound().getInteger("homeX");
 			int y = stack.getTagCompound().getInteger("homeY");
 			int z = stack.getTagCompound().getInteger("homeZ");
@@ -185,9 +183,9 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean hasEffect(ItemStack stack, int pass) {
 		if (hasTag(stack))
-			if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("dim"))
+			if (stack.stackTagCompound != null && stack.stackTagCompound.hasKey("dim"))
 				return true;
 		return false;
 	}
@@ -196,37 +194,37 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 
 	@Override
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
-		if (container.getTagCompound() == null)
-			container.setTagCompound(new NBTTagCompound());
-		int energy = container.getTagCompound().getInteger("Energy");
+		if (container.stackTagCompound == null)
+			container.stackTagCompound = new NBTTagCompound();
+		int energy = container.stackTagCompound.getInteger("Energy");
 		int energyReceived = Math.min(capacity - energy, maxReceive);
 
 		if (!simulate) {
 			energy += energyReceived;
-			container.getTagCompound().setInteger("Energy", energy);
+			container.stackTagCompound.setInteger("Energy", energy);
 		}
 		return energyReceived;
 	}
 
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy"))
+		if (container.stackTagCompound == null || !container.stackTagCompound.hasKey("Energy"))
 			return 0;
-		int energy = container.getTagCompound().getInteger("Energy");
+		int energy = container.stackTagCompound.getInteger("Energy");
 		int energyExtracted = Math.min(energy, maxExtract);
 
 		if (!simulate) {
 			energy -= energyExtracted;
-			container.getTagCompound().setInteger("Energy", energy);
+			container.stackTagCompound.setInteger("Energy", energy);
 		}
 		return energyExtracted;
 	}
 
 	@Override
 	public int getEnergyStored(ItemStack container) {
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy"))
+		if (container.stackTagCompound == null || !container.stackTagCompound.hasKey("Energy"))
 			return 0;
-		return container.getTagCompound().getInteger("Energy");
+		return container.stackTagCompound.getInteger("Energy");
 	}
 
 	@Override

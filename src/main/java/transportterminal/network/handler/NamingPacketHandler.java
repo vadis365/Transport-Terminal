@@ -1,14 +1,13 @@
 package transportterminal.network.handler;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import transportterminal.network.message.NamingMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMessage> {
 
@@ -24,8 +23,7 @@ public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMess
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				world = DimensionManager.getWorld(player.getCurrentEquippedItem().getTagCompound().getInteger("dim"));
-				BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
-				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(pos);
+				TileEntityTransportTerminal console = (TileEntityTransportTerminal) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
 				if (console != null)
 					console.setName(message.name);
 			}

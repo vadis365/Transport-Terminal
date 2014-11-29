@@ -1,10 +1,10 @@
-item.remote.name=Transport Terminal Remote
-item.remoteTerminal.name=Wireless Console Interface
-item.chip.name=Transport Chip
-item.playerChip.name=Player Location Chip
-tile.console.name=Transport Terminal Console
-tile.utils.name=Transport Chip Utilities
-tile.charger.name=RF Item Charger
-tile.summoner.name=Player Summoner
+item.transportTerminalRemote.name=Transport Terminal Remote
+item.transportTerminalRemoteTerminal.name=Wireless Console Interface
+item.transportTerminalChip.name=Transport Chip
+item.transportTerminalPlayerChip.name=Player Location Chip
+tile.transportTerminal.name=Transport Terminal Console
+tile.transportUtils.name=Transport Chip Utilities
+tile.transportCharger.name=RF Item Charger
+tile.transportSummoner.name=Player Summoner
 
 itemGroup.TransportTerminals=Transport Terminals
