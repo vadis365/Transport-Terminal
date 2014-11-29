@@ -94,13 +94,13 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	@Override
 	public void openInventory(EntityPlayer playerIn) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer playerIn) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	@Override
 	public void setField(int id, int value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	@Override
 	public void clearInventory() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -145,11 +145,15 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		return null;
 	}
 
+	@Override
+	public boolean canRenderBreaking() {
+		return true;
+	}
+
 	/**
 	 * This is not a battery, energy should not be extractable
-	 
-	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		return 0;
-	}*/
+	 * 
+	 * @Override public int extractEnergy(ForgeDirection from, int maxExtract,
+	 *           boolean simulate) { return 0; }
+	 */
 }
