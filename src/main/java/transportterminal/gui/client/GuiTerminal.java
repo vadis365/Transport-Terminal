@@ -16,8 +16,8 @@ import transportterminal.network.message.EnergyMessage;
 import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiTerminal extends GuiContainer {
