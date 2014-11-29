@@ -1,11 +1,13 @@
 package transportterminal.tileentites;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
@@ -14,11 +16,6 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 
 	public TileEntitySummoner() {
 		super(ConfigHandler.SUMMONER_MAX_ENERGY, 1);
-	}
-
-	@Override
-	public boolean canUpdate() {
-		return false;
 	}
 
 	@Override
@@ -36,7 +33,6 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 		return false;
 	}
 
-	@Override
 	public String getInventoryName() {
 		if(getStackInSlot(0) !=null && getStackInSlot(0).hasDisplayName() && getStackInSlot(0).getItem() instanceof ItemTransportTerminalPlayerChip)
 			return getStackInSlot(0).getDisplayName();
@@ -47,24 +43,78 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+		return new S35PacketUpdateTileEntity(pos, 1, tag);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
-		readFromNBT(packet.func_148857_g());
+		readFromNBT(packet.getNbtCompound());
 	}
 
 	public boolean canTeleport() {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(ForgeDirection.UNKNOWN) >= ConfigHandler.ENERGY_PER_TELEPORT;
+		return !TransportTerminal.IS_RF_PRESENT; //TODO Fixy || getEnergyStored(ForgeDirection.UNKNOWN) >= ConfigHandler.ENERGY_PER_TELEPORT;
 	}
 
 	/**
 	 * This is not a battery, energy should not be extractable
 	 */
 	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+	public int extractEnergy(EnumFacing facing, int maxExtract, boolean simulate) {
 		return 0;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer playerIn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer playerIn) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getField(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getFieldCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clearInventory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomName() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IChatComponent getDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

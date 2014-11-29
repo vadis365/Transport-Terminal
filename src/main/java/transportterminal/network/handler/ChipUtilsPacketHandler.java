@@ -1,12 +1,13 @@
 package transportterminal.network.handler;
 
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.tileentites.TileEntityChipUtilities;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class ChipUtilsPacketHandler implements IMessageHandler<ChipUtilsMessage, IMessage> {
 
@@ -22,7 +23,8 @@ public class ChipUtilsPacketHandler implements IMessageHandler<ChipUtilsMessage,
 
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				TileEntityChipUtilities utilsTile = (TileEntityChipUtilities) world.getTileEntity(message.tileX, message.tileY, message.tileZ);
+				BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
+				TileEntityChipUtilities utilsTile = (TileEntityChipUtilities) world.getTileEntity(pos);
 				if (utilsTile != null) {
 					if (message.funcID == COPY_CHIP)
 						utilsTile.copyChip();

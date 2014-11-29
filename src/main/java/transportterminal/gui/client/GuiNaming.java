@@ -1,5 +1,7 @@
 package transportterminal.gui.client;
 
+import java.io.IOException;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -38,7 +40,7 @@ public class GuiNaming extends GuiContainer {
 	@SuppressWarnings("unchecked")
 	public void initGui() {
 		super.initGui();
-		textFieldName = new GuiTextField(fontRendererObj, 20, 15, 136, 20);
+		textFieldName = new GuiTextField(16, fontRendererObj, 20, 15, 136, 20);
 		textFieldName.setMaxStringLength(20);
 		textFieldName.setFocused(false);
 		textFieldName.setTextColor(5635925);
@@ -62,12 +64,22 @@ public class GuiNaming extends GuiContainer {
 	protected void keyTyped(char key, int keycode) {
 		textFieldName.textboxKeyTyped(key, keycode);
 		if (!(keycode != Keyboard.KEY_NONE && textFieldName.isFocused()))
-			super.keyTyped(key, keycode);
+			try {
+				super.keyTyped(key, keycode);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	@Override
 	public void mouseClicked(int i, int j, int k) {
-		super.mouseClicked(i, j, k);
+		try {
+			super.mouseClicked(i, j, k);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		textFieldName.mouseClicked(20, 15, k);
 	}
 

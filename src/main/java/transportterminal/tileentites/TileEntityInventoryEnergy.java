@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.common.Optional;
 import cofh.api.energy.IEnergyHandler;
-import cpw.mods.fml.common.Optional;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
 public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyHandler {
@@ -25,12 +25,12 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	/* ENERGY */
 
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
+	public boolean canConnectEnergy(EnumFacing facing) {
 		return true;
 	}
 
 	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+	public int receiveEnergy(EnumFacing facing, int maxReceive, boolean simulate) {
 		int energyReceived = Math.min(capacity - energy, maxReceive);
 		if (!simulate)
 			energy += energyReceived;
@@ -38,7 +38,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	}
 
 	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+	public int extractEnergy(EnumFacing facing, int maxExtract, boolean simulate) {
 		int energyExtracted = Math.min(energy, maxExtract);
 		if (!simulate)
 			energy -= energyExtracted;
@@ -46,12 +46,12 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	}
 
 	@Override
-	public int getEnergyStored(ForgeDirection from) {
+	public int getEnergyStored(EnumFacing facing) {
 		return energy;
 	}
 
 	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
+	public int getMaxEnergyStored(EnumFacing facing) {
 		return capacity;
 	}
 
@@ -108,16 +108,6 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	}
 
 	@Override
-	public String getInventoryName() {
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
-
-	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
@@ -125,14 +115,6 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
 		return true;
-	}
-
-	@Override
-	public void openInventory() {
-	}
-
-	@Override
-	public void closeInventory() {
 	}
 
 	@Override
@@ -166,5 +148,10 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 		nbt.setTag("Items", tags);
 		nbt.setInteger("energy", energy);
+	}
+
+	public void updateEntity() {
+		// TODO Auto-generated method stub
+		
 	}
 }

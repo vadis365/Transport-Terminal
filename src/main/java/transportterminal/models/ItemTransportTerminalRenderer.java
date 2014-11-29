@@ -4,12 +4,11 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ItemTransportTerminalRenderer implements IItemRenderer {
@@ -49,7 +48,8 @@ public class ItemTransportTerminalRenderer implements IItemRenderer {
 	}
 
 	private void renderBlock(float x, float y, float z, double size) {
-		if (RenderItem.renderInFrame) {
+	/*	TODO fixy
+	 * if (RenderItem.renderInFrame) {
 			GL11.glPushMatrix();
 			GL11.glTranslatef(x, y + 0.25F, z + 0.175F);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
@@ -57,7 +57,7 @@ public class ItemTransportTerminalRenderer implements IItemRenderer {
 			GL11.glScaled(size, size, size);
 			model.render();
 			GL11.glPopMatrix();
-		} else {
+		} else */ {
 			GL11.glPushMatrix();
 			GL11.glTranslatef(x, y, z);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
