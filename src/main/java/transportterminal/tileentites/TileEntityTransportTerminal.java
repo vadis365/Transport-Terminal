@@ -1,12 +1,10 @@
 package transportterminal.tileentites;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.util.IChatComponent;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 
@@ -92,67 +90,13 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	}
 
 	@Override
-	public void openInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getField(int id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getFieldCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void clearInventory() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public IChatComponent getDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean canRenderBreaking() {
 		return true;
 	}
 
 	/**
 	 * This is not a battery, energy should not be extractable
-	 * 
+	 *
 	 * @Override public int extractEnergy(ForgeDirection from, int maxExtract,
 	 *           boolean simulate) { return 0; }
 	 */

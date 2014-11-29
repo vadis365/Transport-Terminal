@@ -110,7 +110,6 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 		return false;
 	}
 
-
 	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
@@ -148,55 +147,44 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public IChatComponent getDisplayName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void openInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void clearInventory() {
-		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < inventory.length; i++)
+			inventory[i] = null;
 	}
 }
