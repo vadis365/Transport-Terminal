@@ -41,7 +41,7 @@ public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, I
 				if (state.getBlock() instanceof BlockTransportTerminal) {
 					EnumFacing facing = (EnumFacing) state.getValue(BlockDirectional.FACING);
 
-					if (world2.isAirBlock(pos.add(facing.getFrontOffsetX(), 0, facing.getFrontOffsetZ())) && world2.isAirBlock(pos.add(0, 1, 0)))
+					if (world2.isAirBlock(pos.add(facing.getFrontOffsetX(), 0, facing.getFrontOffsetZ())) && world2.isAirBlock(pos.add(facing.getFrontOffsetX(), 1, facing.getFrontOffsetZ())))
 						teleportPlayer(player, message.chipX + 0.5D * facing.getFrontOffsetX(), message.chipY, message.chipZ + 0.5D * facing.getFrontOffsetZ(), 0, player.rotationPitch);
 				}
 			}
