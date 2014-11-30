@@ -35,15 +35,36 @@ public class TeleportPacketHandler implements IMessageHandler<TeleportMessage, I
 					player.mcServer.getConfigurationManager().transferPlayerToDimension(player, message.chipDim, new TransportTerminalTeleporter(worldserver));
 				}
 				World world2 = DimensionManager.getWorld(message.chipDim);
-
 				BlockPos pos = new BlockPos(message.chipX, message.chipY, message.chipZ);
 				IBlockState state = world2.getBlockState(pos);
 				if (state.getBlock() instanceof BlockTransportTerminal) {
 					EnumFacing facing = (EnumFacing) state.getValue(BlockDirectional.FACING);
-
-					if (world2.isAirBlock(pos.add(facing.getFrontOffsetX(), 0, facing.getFrontOffsetZ())) && world2.isAirBlock(pos.add(facing.getFrontOffsetX(), 1, facing.getFrontOffsetZ())))
-						teleportPlayer(player, message.chipX + 0.5D * facing.getFrontOffsetX(), message.chipY, message.chipZ + 0.5D * facing.getFrontOffsetZ(), 0, player.rotationPitch);
-				}
+					int rotation = 0;
+					if (world2.isAirBlock(pos.add(facing.getFrontOffsetX(), 0, facing.getFrontOffsetZ())) && world2.isAirBlock(pos.add(facing.getFrontOffsetX(), 1, facing.getFrontOffsetZ()))) {
+						switch (facing) {
+						case DOWN:
+							break;
+						case EAST:
+							rotation = 90;
+							break;
+						case NORTH:
+							rotation = 0;
+							break;
+						case SOUTH:
+							rotation = 180;
+							break;
+						case UP:
+							break;
+						case WEST:
+							rotation = 270;
+							break;
+						default:
+							break;
+						}
+						teleportPlayer(player, message.chipX + 0.5D + facing.getFrontOffsetX(), message.chipY, message.chipZ + 0.5D + facing.getFrontOffsetZ(), rotation, player.rotationPitch);
+					}
+			} else if (world2.isAirBlock(pos.add(0, 1, 0)) && world2.isAirBlock(pos.add(0, 2, 0)))
+				teleportPlayer(player, message.chipX + 0.5, message.chipY + 1.0, message.chipZ + 0.5, player.rotationYaw, player.rotationPitch);
 			}
 		return null;
 	}
