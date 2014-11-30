@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "transportterminal:blocks/console",
+        "front": "transportterminal:blocks/console",
+        "side": "transportterminal:blocks/console"
+    }
+}

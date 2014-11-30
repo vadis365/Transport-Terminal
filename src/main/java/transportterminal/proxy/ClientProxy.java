@@ -27,5 +27,6 @@ public class ClientProxy extends CommonProxy {
 		mesher.register(Item.getItemFromBlock(TransportTerminal.utils), 0, new ModelResourceLocation("transportterminal:utils", "inventory"));
 		mesher.register(Item.getItemFromBlock(TransportTerminal.summoner), 0, new ModelResourceLocation("transportterminal:summoner", "inventory"));
 		mesher.register(Item.getItemFromBlock(TransportTerminal.charger), 0, new ModelResourceLocation("transportterminal:charger", "inventory"));
+		mesher.register(Item.getItemFromBlock(TransportTerminal.terminal), 0, new ModelResourceLocation("transportterminal:console", "inventory"));
 	}
 }
