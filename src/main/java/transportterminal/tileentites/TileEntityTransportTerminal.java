@@ -91,11 +91,6 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	}
 
 	@Override
-	public boolean canRenderBreaking() {
-		return true;
-	}
-
-	@Override
 	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
 		return 0;
 	}

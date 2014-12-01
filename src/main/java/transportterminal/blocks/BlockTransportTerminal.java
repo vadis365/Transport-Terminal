@@ -39,9 +39,14 @@ public class BlockTransportTerminal extends BlockDirectional {
 			InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityTransportTerminal) tileentity);
 		super.breakBlock(worldIn, pos, state);
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube() {
+		return false;
+	}
+
+	@Override
+	public boolean isFullCube() {
 		return false;
 	}
 }
