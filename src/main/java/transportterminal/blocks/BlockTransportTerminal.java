@@ -24,21 +24,6 @@ public class BlockTransportTerminal extends BlockDirectional {
 	}
 
 	@Override
-	public int getRenderType() {
-		return -1;
-	}
-
-	@Override
-	public boolean isFullCube() {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
-
-	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote)
 			return true;
@@ -53,5 +38,10 @@ public class BlockTransportTerminal extends BlockDirectional {
 		if (tileentity instanceof TileEntityTransportTerminal)
 			InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityTransportTerminal) tileentity);
 		super.breakBlock(worldIn, pos, state);
+	}
+	
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
 	}
 }
