@@ -17,7 +17,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	private int energy;
 	protected ItemStack[] inventory;
 
-	public TileEntityInventoryEnergy(int maxStorage, int invtSize) {
+	protected TileEntityInventoryEnergy(int maxStorage, int invtSize) {
 		capacity = maxStorage;
 		inventory = new ItemStack[invtSize];
 	}
