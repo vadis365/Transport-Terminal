@@ -52,10 +52,12 @@ public class ContainerTerminal extends Container {
 
 	@Override
 	public void updateProgressBar(int id, int value) {
-		if (!TransportTerminal.IS_RF_PRESENT)
-			return;
-		if (id == 0)
-			tile.setEnergy(value);
+		if (this.id == 0) {
+			if (!TransportTerminal.IS_RF_PRESENT)
+				return;
+			if (id == 0)
+				tile.setEnergy(value);
+		}
 	}
 
 	@Override
