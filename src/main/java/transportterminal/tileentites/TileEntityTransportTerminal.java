@@ -95,12 +95,4 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	public boolean canTeleport() {
 		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(ForgeDirection.UNKNOWN) >= ConfigHandler.ENERGY_PER_TELEPORT;
 	}
-
-	/**
-	 * This is not a battery, energy should not be extractable
-	 */
-	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		return 0;
-	}
 }
