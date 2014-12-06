@@ -15,7 +15,6 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 
 public class TeleportUtils {
 	
-	
 	public static void dimensionTransfer(WorldServer worldserver, EntityPlayerMP player, int newDim) {
 		if (player.dimension != newDim && player.dimension != 1)
 			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
@@ -57,12 +56,10 @@ public class TeleportUtils {
 		}
 	}
 
-
 	public static void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {
 		player.playerNetServerHandler.setPlayerLocation(x, y, z, yaw, pitch);
 		player.worldObj.playSoundEffect(x, y, z, "transportterminal:teleportsound", 1.0F, 1.0F);
 	}
-
 
 	public static boolean isConsole(World world, int x, int y, int z) {
 		return world.getBlock(x, y, z) instanceof BlockTransportTerminal;
@@ -75,7 +72,6 @@ public class TeleportUtils {
  	public static boolean isValidInterfacePlayerChip(TileEntityTransportTerminal tile, int buttonID) {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalPlayerChip;
 	}
-
 
 	public static boolean isValidInterfaceStandardChip(TileEntityTransportTerminal tile, int buttonID) {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).stackTagCompound.hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalChip;
