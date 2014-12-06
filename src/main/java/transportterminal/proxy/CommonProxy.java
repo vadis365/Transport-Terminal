@@ -11,8 +11,8 @@ import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
 import transportterminal.gui.client.GuiNaming;
 import transportterminal.gui.client.GuiSummoner;
-import transportterminal.gui.client.GuiTerminal;
-import transportterminal.gui.client.GuiTerminalShadow;
+import transportterminal.gui.client.GuiConsole;
+import transportterminal.gui.client.GuiWirelessConsole;
 import transportterminal.gui.client.GuiUtilsNaming;
 import transportterminal.gui.server.ContainerCharger;
 import transportterminal.gui.server.ContainerChipUtils;
@@ -91,7 +91,7 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == GUI_ID_TERMINAL) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
 			if (tileentity instanceof TileEntityTransportTerminal)
-				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
+				return new GuiConsole(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
 
 		if (ID == GUI_ID_REMOTE)
@@ -116,7 +116,7 @@ public class CommonProxy implements IGuiHandler {
 		}
 
 		if (ID == GUI_ID_REMOTE_TERMINAL)
-			return new GuiTerminalShadow(player.inventory, player);
+			return new GuiWirelessConsole(player.inventory, player);
 		
 		if (ID == GUI_ID_SUMMONER) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);

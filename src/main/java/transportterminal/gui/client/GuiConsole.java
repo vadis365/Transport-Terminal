@@ -10,22 +10,19 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
-import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.gui.server.ContainerTerminal;
-import transportterminal.network.message.EnergyMessage;
-import transportterminal.network.message.PlayerChipMessage;
-import transportterminal.network.message.TeleportMessage;
+import transportterminal.network.message.ButtonMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiTerminal extends GuiContainer {
+public class GuiConsole extends GuiContainer {
 
 	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transportTerminalGui.png");
 	private final TileEntityTransportTerminal tile;
 
-	public GuiTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
+	public GuiConsole(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
 		super(new ContainerTerminal(playerInventory, tile, id));
 		this.tile = tile;
 		allowUserInput = false;
@@ -64,29 +61,14 @@ public class GuiTerminal extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		int xx = tile.xCoord;
-		int yy = tile.yCoord;
-		int zz = tile.zCoord;
-
+		int newDim = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipDim");
+		int x = tile.xCoord;
+		int y = tile.yCoord;
+		int z = tile.zCoord;
+		
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).stackTagCompound.hasKey("chipX")) {
-					int newDim = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipDim");
-					int x = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipX");
-					int y = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipY");
-					int z = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipZ");
-
-					if (tile.canTeleport()) {
-						if (TransportTerminal.IS_RF_PRESENT)
-							TransportTerminal.networkWrapper.sendToServer(new EnergyMessage(mc.thePlayer, xx, yy, zz));
-						TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(mc.thePlayer, x, y, z, newDim));
-					}
-				}
-
-				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName())
-					if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_TO_PLAYER)
-						TransportTerminal.networkWrapper.sendToServer(new PlayerChipMessage(mc.thePlayer, tile.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));
-
+				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, 0));
 				mc.thePlayer.closeScreen();
 			}
 	}

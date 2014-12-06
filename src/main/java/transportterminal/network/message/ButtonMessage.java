@@ -6,13 +6,14 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 public class ButtonMessage implements IMessage {
 
-	public int dimension, entityID, buttonID, tileX, tileY, tileZ;
+	public int dimension, newDimension, entityID, buttonID, tileX, tileY, tileZ;
 
 	public ButtonMessage() {
 	}
 
-	public ButtonMessage(EntityPlayer player, int button, int x, int y, int z) {
+	public ButtonMessage(EntityPlayer player, int button, int x, int y, int z, int newDim) {
 		dimension = player.dimension;
+		newDimension = newDim;
 		entityID = player.getEntityId();
 		buttonID = button;
 		tileX = x;
@@ -23,6 +24,7 @@ public class ButtonMessage implements IMessage {
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(dimension);
+		buf.writeInt(newDimension);
 		buf.writeInt(entityID);
 		buf.writeInt(buttonID);
 		buf.writeInt(tileX);
@@ -33,6 +35,7 @@ public class ButtonMessage implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		dimension = buf.readInt();
+		newDimension = buf.readInt();
 		entityID = buf.readInt();
 		buttonID = buf.readInt();
 		tileX = buf.readInt();
