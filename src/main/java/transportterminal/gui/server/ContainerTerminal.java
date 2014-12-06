@@ -1,5 +1,7 @@
 package transportterminal.gui.server;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -17,6 +19,7 @@ public class ContainerTerminal extends Container {
 	private final int numRows = 2;
 	private TileEntityTransportTerminal tile;
 	private int id;
+	private int lastEnergy;
 
 	public ContainerTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
 		this.tile = tile;
@@ -40,23 +43,36 @@ public class ContainerTerminal extends Container {
 	}
 
 	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
-		if (id == 0) {
-			if (!TransportTerminal.IS_RF_PRESENT)
-				return;
-			for (int i = 0; i < crafters.size(); i++)
-				((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
-		}
-	}
-
-	@Override
 	public void updateProgressBar(int id, int value) {
 		if (this.id == 0) {
 			if (!TransportTerminal.IS_RF_PRESENT)
 				return;
 			if (id == 0)
 				tile.setEnergy(value);
+		}
+	}
+	
+	@Override
+	public void addCraftingToCrafters(ICrafting crafting) {
+		super.addCraftingToCrafters(crafting);
+		crafting.sendProgressBarUpdate(this, 0, tile.energy);
+	}
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		if (id == 0) {
+			if (!TransportTerminal.IS_RF_PRESENT)
+				return;
+			
+			for (Object crafter : crafters) {
+				ICrafting icrafting = (ICrafting) crafter;
+
+				if (lastEnergy != tile.energy)
+					icrafting.sendProgressBarUpdate(this, 0, tile.energy);
+			}
+
+			lastEnergy = tile.energy;
 		}
 	}
 
