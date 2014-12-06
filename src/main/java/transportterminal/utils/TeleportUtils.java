@@ -10,9 +10,11 @@ import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalChip;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.network.TransportTerminalTeleporter;
+import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
 public class TeleportUtils {
+	
 	
 	public static void dimensionTransfer(WorldServer worldserver, EntityPlayerMP player, int newDim) {
 		if (player.dimension != newDim && player.dimension != 1)
@@ -23,7 +25,16 @@ public class TeleportUtils {
 			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 		}
 	}
-
+	
+	public static void dimensionTransfer(WorldServer worldserver, EntityPlayerMP player, EntityPlayerMP playerOnChip) {
+		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension != 1)
+			playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
+		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension == 1) {
+			//this has to be done twice because of stupid vanilla hacks
+			playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
+			playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
+		}
+	}
 
 	public static void teleportToConsole(World world, EntityPlayerMP player, int x, int y, int z) {
 		switch (world.getBlockMetadata(x, y, z)) {
@@ -70,7 +81,12 @@ public class TeleportUtils {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).stackTagCompound.hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalChip;
 	}
 
-	public static void consumeEnergy(TileEntityTransportTerminal tile) {
+	public static void consumeConsoleEnergy(TileEntityTransportTerminal tile) {
+		if (TransportTerminal.IS_RF_PRESENT)
+			tile.setEnergy(tile.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
+	}
+	
+	public static void consumeSummonerEnergy(TileEntitySummoner tile) {
 		if (TransportTerminal.IS_RF_PRESENT)
 			tile.setEnergy(tile.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 	}

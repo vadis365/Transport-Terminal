@@ -41,7 +41,7 @@ public class ConsolePacketHandler implements
 					world2 = DimensionManager.getWorld(newDim);
 					if (TeleportUtils.freeSpace(world2, x, y, z)) {
 						TeleportUtils.teleportPlayer(player, x + 0.5D, y + 1.0D, z + 0.5D, player.rotationYaw, player.rotationPitch);
-						TeleportUtils.consumeEnergy(tile);
+						TeleportUtils.consumeConsoleEnergy(tile);
 					}
 				}
 				if (tile != null && tile.canTeleport() && TeleportUtils.isValidInterfacePlayerChip(tile, message.buttonID)) {
@@ -50,7 +50,7 @@ public class ConsolePacketHandler implements
 						if (playerOnChip != null && playerOnChip != player)
 							TeleportUtils.dimensionTransfer(worldserver, player, playerOnChip.dimension);
 						TeleportUtils.teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
-						TeleportUtils.consumeEnergy(tile);
+						TeleportUtils.consumeConsoleEnergy(tile);
 					}
 				}
 			}

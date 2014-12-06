@@ -10,7 +10,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
-import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.gui.server.ContainerSummoner;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.tileentites.TileEntitySummoner;
@@ -59,16 +58,14 @@ public class GuiSummoner extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		int xx = tile.xCoord;
-		int yy = tile.yCoord;
-		int zz = tile.zCoord;
+		int x = tile.xCoord;
+		int y = tile.yCoord;
+		int z = tile.zCoord;
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
-				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).hasDisplayName())
-					if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_SUMMON_PLAYER)
-						TransportTerminal.networkWrapper.sendToServer(new PlayerSummonMessage(mc.thePlayer, tile.getStackInSlot(guibutton.id).getDisplayName(), xx, yy, zz));
-				mc.thePlayer.closeScreen();
+				TransportTerminal.networkWrapper.sendToServer(new PlayerSummonMessage(mc.thePlayer, guibutton.id, x, y, z));
+				mc.thePlayer.closeScreen(); 
 			}
 	}
 }

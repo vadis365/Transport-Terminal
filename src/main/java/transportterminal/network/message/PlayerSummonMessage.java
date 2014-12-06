@@ -2,21 +2,19 @@ package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 public class PlayerSummonMessage implements IMessage {
 
-	public int dimension, entityID, tileX, tileY, tileZ;
-	public String playerOnChip;
-
+	public int dimension, entityID, buttonID, tileX, tileY, tileZ;
+	
 	public PlayerSummonMessage() {
 	}
-
-	public PlayerSummonMessage(EntityPlayer player, String string, int x, int y, int z) {
+	
+	public PlayerSummonMessage(EntityPlayer player, int button, int x, int y, int z) {
 		dimension = player.dimension;
 		entityID = player.getEntityId();
-		playerOnChip = string;
+		buttonID = button;
 		tileX = x;
 		tileY = y;
 		tileZ = z;
@@ -26,7 +24,7 @@ public class PlayerSummonMessage implements IMessage {
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
-		ByteBufUtils.writeUTF8String(buf, playerOnChip);
+		buf.writeInt(buttonID);
 		buf.writeInt(tileX);
 		buf.writeInt(tileY);
 		buf.writeInt(tileZ);
@@ -36,7 +34,7 @@ public class PlayerSummonMessage implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
-		playerOnChip = ByteBufUtils.readUTF8String(buf);
+		buttonID = buf.readInt();
 		tileX = buf.readInt();
 		tileY = buf.readInt();
 		tileZ = buf.readInt();
