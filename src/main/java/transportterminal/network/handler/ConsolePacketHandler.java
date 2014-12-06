@@ -47,10 +47,11 @@ public class ConsolePacketHandler implements
 				if (tile != null && tile.canTeleport() && TeleportUtils.isValidInterfacePlayerChip(tile, message.buttonID)) {
 					if (ConfigHandler.ALLOW_TELEPORT_TO_PLAYER) {
 						EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(tile.getStackInSlot(message.buttonID).getDisplayName());
-						if (playerOnChip != null && playerOnChip != player)
+						if (playerOnChip != null && playerOnChip != player) {
 							TeleportUtils.dimensionTransfer(worldserver, player, playerOnChip.dimension);
-						TeleportUtils.teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
-						TeleportUtils.consumeConsoleEnergy(tile);
+							TeleportUtils.teleportPlayer(player, playerOnChip.posX, playerOnChip.posY, playerOnChip.posZ, player.rotationYaw, player.rotationPitch);
+							TeleportUtils.consumeConsoleEnergy(tile);
+						}
 					}
 				}
 			}
