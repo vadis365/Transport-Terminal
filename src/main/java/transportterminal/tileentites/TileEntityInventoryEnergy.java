@@ -14,7 +14,7 @@ import cpw.mods.fml.common.Optional;
 public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyHandler {
 
 	private final int capacity;
-	public int energy;
+	private int energy;
 	protected ItemStack[] inventory;
 
 	protected TileEntityInventoryEnergy(int maxStorage, int invtSize) {
