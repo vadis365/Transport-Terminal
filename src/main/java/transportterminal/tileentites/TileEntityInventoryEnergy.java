@@ -147,7 +147,11 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 			if (j >= 0 && j < inventory.length)
 				inventory[j] = ItemStack.loadItemStackFromNBT(data);
 		}
+		
 		energy = nbt.getInteger("energy");
+		if (energy > capacity) {
+			energy = capacity;
+		}
 	}
 
 	@Override
@@ -164,6 +168,10 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 			}
 
 		nbt.setTag("Items", tags);
+		
+		if (energy < 0) {
+			energy = 0;
+		}
 		nbt.setInteger("energy", energy);
 	}
 }
