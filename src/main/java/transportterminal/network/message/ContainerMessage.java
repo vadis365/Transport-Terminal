@@ -6,6 +6,9 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 public class ContainerMessage implements IMessage {
 
 	public int windowId, power;
+	
+	public ContainerMessage() {
+	}
 
 	public ContainerMessage(int windowId, int power) {
 		this.windowId = windowId;
