@@ -67,11 +67,9 @@ public class GuiConsole extends GuiContainer {
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				if (tile.getStackInSlot(guibutton.id) != null && tile.getStackInSlot(guibutton.id).getTagCompound().hasKey("chipDim")) {
-					int newDim = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipDim");
-					TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, newDim));
-					mc.thePlayer.closeScreen();
-				}
+				int newDim = mc.thePlayer.dimension;
+				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, newDim));
+				mc.thePlayer.closeScreen();
 			}
 	}
 }
