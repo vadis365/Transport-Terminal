@@ -2,7 +2,6 @@ package transportterminal.network.handler;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -15,8 +14,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class ConsolePacketHandler implements
-		IMessageHandler<ButtonMessage, IMessage> {
+public class ConsolePacketHandler implements IMessageHandler<ButtonMessage, IMessage> {
 
 	@Override
 	public IMessage onMessage(ButtonMessage message, MessageContext ctx) {
@@ -28,7 +26,6 @@ public class ConsolePacketHandler implements
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-				ItemStack stack = player.getCurrentEquippedItem();
 				WorldServer world2 = DimensionManager.getWorld(message.newDimension);
 				WorldServer worldserver = (WorldServer) world;
 				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(message.tileX, message.tileY, message.tileZ);
@@ -44,7 +41,7 @@ public class ConsolePacketHandler implements
 						TeleportUtils.consumeConsoleEnergy(tile);
 					}
 				}
-				if (tile != null && tile.canTeleport() && TeleportUtils.isValidInterfacePlayerChip(tile, message.buttonID)) {
+				if (tile != null && tile.canTeleport() && TeleportUtils.isValidInterfacePlayerChip(tile, message.buttonID))
 					if (ConfigHandler.ALLOW_TELEPORT_TO_PLAYER) {
 						EntityPlayer playerOnChip = MinecraftServer.getServer().getConfigurationManager().func_152612_a(tile.getStackInSlot(message.buttonID).getDisplayName());
 						if (playerOnChip != null && playerOnChip != player) {
@@ -53,7 +50,6 @@ public class ConsolePacketHandler implements
 							TeleportUtils.consumeConsoleEnergy(tile);
 						}
 					}
-				}
 			}
 		return null;
 	}

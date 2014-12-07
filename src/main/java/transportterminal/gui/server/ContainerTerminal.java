@@ -1,28 +1,20 @@
 package transportterminal.gui.server;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 import transportterminal.TransportTerminal;
 import transportterminal.gui.slot.SlotChip;
 import transportterminal.gui.slot.SlotRemote;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
-public class ContainerTerminal extends Container {
+public class ContainerTerminal extends ContainerEnergy {
 
 	private final int numRows = 2;
-	private TileEntityTransportTerminal tile;
-	private int id;
 
 	public ContainerTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
-		this.tile = tile;
-		this.id = id;
+		super(tile);
 		int i = (numRows - 4) * 18;
 
 		if (id == 0) {
@@ -39,33 +31,6 @@ public class ContainerTerminal extends Container {
 			for (int j = 0; j < 9; j++)
 				addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 180 + i));
 		}
-	}
-
-	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
-		if (id == 0) {
-			if (!TransportTerminal.IS_RF_PRESENT)
-				return;
-			for (int i = 0; i < crafters.size(); i++)
-				((ICrafting) crafters.get(i)).sendProgressBarUpdate(this, 0, tile.getEnergyStored(ForgeDirection.UNKNOWN));
-		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void updateProgressBar(int id, int value) {
-		if (this.id == 0) {
-			if (!TransportTerminal.IS_RF_PRESENT)
-				return;
-			if (id == 0)
-				tile.setEnergy(value);
-		}
-	}
-
-	@Override
-	public boolean canInteractWith(EntityPlayer player) {
-		return true;
 	}
 
 	@Override

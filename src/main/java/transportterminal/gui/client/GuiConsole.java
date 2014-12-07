@@ -61,11 +61,10 @@ public class GuiConsole extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		int newDim = tile.getStackInSlot(guibutton.id).getTagCompound().getInteger("chipDim");
 		int x = tile.xCoord;
 		int y = tile.yCoord;
 		int z = tile.zCoord;
-		
+
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
 				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, 0));
