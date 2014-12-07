@@ -15,11 +15,13 @@ import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.items.ItemTransportTerminalRemote;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.ConsolePacketHandler;
+import transportterminal.network.handler.ContainerPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
 import transportterminal.network.handler.PlayerSummonPacketHandler;
 import transportterminal.network.handler.RemotePacketHandler;
 import transportterminal.network.message.ButtonMessage;
 import transportterminal.network.message.ChipUtilsMessage;
+import transportterminal.network.message.ContainerMessage;
 import transportterminal.network.message.NamingMessage;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
@@ -81,7 +83,7 @@ public class TransportTerminal {
 		GameRegistry.registerBlock(summoner, "Player Summoner");
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
 			GameRegistry.registerBlock(charger, "Transport Charger");
-			
+
 		ModRecipes.addRecipes();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
@@ -91,6 +93,7 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 2, Side.SERVER);
 		networkWrapper.registerMessage(ConsolePacketHandler.class, ButtonMessage.class, 3, Side.SERVER);
 		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 4, Side.SERVER);
+		networkWrapper.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.SERVER);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 
