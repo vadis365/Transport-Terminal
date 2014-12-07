@@ -31,11 +31,9 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
-		System.out.println("cap: " + capacity + ", e: " + energy + ", rec:" + maxReceive + ", isRemote: " + worldObj.isRemote);
 		int energyReceived = Math.max(0, Math.min(capacity - energy, maxReceive));
 		if (!simulate)
 			energy += energyReceived;
-		System.out.println("cap: " + capacity + ", e: " + energy + ", rec:" + maxReceive + ", isRemote: " + worldObj.isRemote);
 		return energyReceived;
 	}
 

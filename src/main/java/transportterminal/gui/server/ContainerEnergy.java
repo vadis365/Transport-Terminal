@@ -11,6 +11,7 @@ import transportterminal.tileentites.TileEntityInventoryEnergy;
 public abstract class ContainerEnergy extends Container {
 
 	protected final TileEntityInventoryEnergy tile;
+	private int lastEnergyAmount = -1;
 
 	protected ContainerEnergy(TileEntityInventoryEnergy tile) {
 		this.tile = tile;
@@ -25,8 +26,15 @@ public abstract class ContainerEnergy extends Container {
 		super.detectAndSendChanges();
 		if (!TransportTerminal.IS_RF_PRESENT)
 			return;
-		for (int i = 0; i < crafters.size(); i++)
-			TransportTerminal.networkWrapper.sendTo(new ContainerMessage(windowId, tile.getEnergyStored(ForgeDirection.UNKNOWN)), (EntityPlayerMP) crafters.get(i));
+		int currentEnergyAmount = tile.getEnergyStored(ForgeDirection.UNKNOWN);
+		if (currentEnergyAmount == lastEnergyAmount)
+			return;
+
+		for (Object obj : crafters)
+			if (obj instanceof EntityPlayerMP)
+				TransportTerminal.networkWrapper.sendTo(new ContainerMessage(windowId, currentEnergyAmount), (EntityPlayerMP) obj);
+
+		lastEnergyAmount = currentEnergyAmount;
 	}
 
 	@Override

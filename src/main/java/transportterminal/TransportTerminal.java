@@ -93,7 +93,7 @@ public class TransportTerminal {
 		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 2, Side.SERVER);
 		networkWrapper.registerMessage(ConsolePacketHandler.class, ButtonMessage.class, 3, Side.SERVER);
 		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 4, Side.SERVER);
-		networkWrapper.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.SERVER);
+		networkWrapper.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.CLIENT);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 
