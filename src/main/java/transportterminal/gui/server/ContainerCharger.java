@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 import transportterminal.tileentites.TileEntityCharger;
 import cofh.api.energy.IEnergyContainerItem;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerCharger extends Container {
 
@@ -38,6 +40,7 @@ public class ContainerCharger extends Container {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int id, int value) {
 		if (id == 0)
 			tile.setEnergy(value);

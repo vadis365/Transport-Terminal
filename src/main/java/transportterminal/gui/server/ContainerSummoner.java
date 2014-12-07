@@ -1,5 +1,7 @@
 package transportterminal.gui.server;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -39,6 +41,7 @@ public class ContainerSummoner extends Container {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int id, int value) {
 		if (!TransportTerminal.IS_RF_PRESENT)
 			return;
