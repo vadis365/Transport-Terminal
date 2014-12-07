@@ -12,10 +12,11 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 public class ContainerTerminal extends ContainerEnergy {
 
 	private final int numRows = 2;
-
+	private int idType;
 	public ContainerTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
 		super(tile);
 		int i = (numRows - 4) * 18;
+		idType = id;
 
 		if (id == 0) {
 			addSlotToContainer(new SlotRemote(tile, 0, 15, 18));
@@ -59,5 +60,11 @@ public class ContainerTerminal extends ContainerEnergy {
 				return null;
 		}
 		return stack;
+	}
+	
+	@Override
+	public void detectAndSendChanges() {
+		if (idType == 0)
+			super.detectAndSendChanges();	
 	}
 }
