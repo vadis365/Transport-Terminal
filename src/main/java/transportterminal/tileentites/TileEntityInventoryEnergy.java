@@ -7,14 +7,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyReceiver;
 import cpw.mods.fml.common.Optional;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
-public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyHandler {
+public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyReceiver {
 
-	private final int capacity;
-	private int energy;
+	protected final int capacity;
+	protected int energy;
 	protected ItemStack[] inventory;
 
 	protected TileEntityInventoryEnergy(int maxStorage, int invtSize) {
@@ -35,11 +35,6 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 		if (!simulate)
 			energy += energyReceived;
 		return energyReceived;
-	}
-
-	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-		return 0;
 	}
 
 	@Override
