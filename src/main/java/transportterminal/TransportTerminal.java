@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.ModAPIManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -63,7 +64,7 @@ public class TransportTerminal {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		IS_RF_PRESENT = false;//ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
+		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		// Items

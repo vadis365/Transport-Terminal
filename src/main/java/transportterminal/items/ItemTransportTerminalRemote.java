@@ -2,11 +2,8 @@ package transportterminal.items;
 
 import java.util.List;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -15,55 +12,26 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import cofh.api.energy.IEnergyContainerItem;
 
-@Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI")
-public class ItemTransportTerminalRemote extends Item implements IEnergyContainerItem {
+public class ItemTransportTerminalRemote extends ItemEnergy {
 
 	private Ticket ticket;
-	private final int capacity;
 
 	public ItemTransportTerminalRemote() {
-		capacity = ConfigHandler.REMOTE_MAX_ENERGY;
-		setMaxStackSize(1);
-		setCreativeTab(TransportTerminal.tab);
-	}
-
-	@Override
-	public double getDurabilityForDisplay(ItemStack stack) {
-		return 1 - (double) getEnergyStored(stack) / (double) getMaxEnergyStored(stack);
-	}
-
-	@Override
-	public boolean showDurabilityBar(ItemStack stack) {
-		return TransportTerminal.IS_RF_PRESENT;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		super.getSubItems(item, tab, list);
-		if (TransportTerminal.IS_RF_PRESENT) {
-			ItemStack charged = new ItemStack(item);
-			receiveEnergy(charged, ConfigHandler.REMOTE_MAX_ENERGY, false);
-			list.add(charged);
-		}
+		super(ConfigHandler.REMOTE_MAX_ENERGY);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
+		super.addInformation(stack, player, list, flag);
 		if (hasTag(stack))
 			if (stack.getTagCompound().hasKey("dim")) {
 				list.add("Terminal Dimension: " + stack.getTagCompound().getInteger("dim") + " " + stack.getTagCompound().getString("dimName"));
@@ -171,18 +139,6 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 		return stack;
 	}
 
-	private static boolean hasTag(ItemStack stack) {
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-			return false;
-		}
-		return true;
-	}
-
-	private boolean canTeleport(ItemStack stack) {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(stack) >= ConfigHandler.ENERGY_PER_TELEPORT;
-	}
-
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
@@ -190,47 +146,5 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("dim"))
 				return true;
 		return false;
-	}
-
-	/* ENERGY */
-
-	@Override
-	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
-		if (container.getTagCompound() == null)
-			container.setTagCompound(new NBTTagCompound());
-		int energy = container.getTagCompound().getInteger("Energy");
-		int energyReceived = Math.min(capacity - energy, maxReceive);
-
-		if (!simulate) {
-			energy += energyReceived;
-			container.getTagCompound().setInteger("Energy", energy);
-		}
-		return energyReceived;
-	}
-
-	@Override
-	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy"))
-			return 0;
-		int energy = container.getTagCompound().getInteger("Energy");
-		int energyExtracted = Math.min(energy, maxExtract);
-
-		if (!simulate) {
-			energy -= energyExtracted;
-			container.getTagCompound().setInteger("Energy", energy);
-		}
-		return energyExtracted;
-	}
-
-	@Override
-	public int getEnergyStored(ItemStack container) {
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy"))
-			return 0;
-		return container.getTagCompound().getInteger("Energy");
-	}
-
-	@Override
-	public int getMaxEnergyStored(ItemStack container) {
-		return capacity;
 	}
 }
