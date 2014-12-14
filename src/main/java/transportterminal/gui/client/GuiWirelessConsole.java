@@ -19,12 +19,12 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 import cofh.api.energy.IEnergyContainerItem;
 
 @SideOnly(Side.CLIENT)
-public class GuiTerminalShadow extends GuiContainer {
+public class GuiWirelessConsole extends GuiContainer {
 
 	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transportTerminalGui.png");
 	private EntityPlayer playerSent;
 
-	public GuiTerminalShadow(InventoryPlayer inventory, EntityPlayer player) {
+	public GuiWirelessConsole(InventoryPlayer inventory, EntityPlayer player) {
 		super(new ContainerTerminal(inventory, new TileEntityTransportTerminal(), 0));
 		playerSent = player;
 		allowUserInput = false;
@@ -68,13 +68,14 @@ public class GuiTerminalShadow extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
 		ItemStack stack = playerSent.getCurrentEquippedItem();
-		int xx = stack.getTagCompound().getInteger("homeX");
-		int yy = stack.getTagCompound().getInteger("homeY");
-		int zz = stack.getTagCompound().getInteger("homeZ");
+		int newDim = stack.getTagCompound().getInteger("dim");
+		int x = stack.getTagCompound().getInteger("homeX");
+		int y = stack.getTagCompound().getInteger("homeY");
+		int z = stack.getTagCompound().getInteger("homeZ");
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, xx, yy, zz));
+				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, newDim));
 				mc.thePlayer.closeScreen();
 			}
 	}

@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 
@@ -55,7 +54,8 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		return false;
 	}
 
-	public String getInventoryName() {
+	@Override
+	public String getName() {
 		return "Location X: " + pos.getX() + " Y: " + pos.getY() + " Z: " + pos.getZ();
 	}
 
@@ -88,10 +88,5 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
 	public boolean canTeleport() {
 		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT;
-	}
-
-	@Override
-	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
-		return 0;
 	}
 }

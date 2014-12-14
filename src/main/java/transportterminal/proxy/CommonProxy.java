@@ -12,11 +12,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import transportterminal.TransportTerminal;
 import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
+import transportterminal.gui.client.GuiConsole;
 import transportterminal.gui.client.GuiNaming;
 import transportterminal.gui.client.GuiSummoner;
-import transportterminal.gui.client.GuiTerminal;
-import transportterminal.gui.client.GuiTerminalShadow;
 import transportterminal.gui.client.GuiUtilsNaming;
+import transportterminal.gui.client.GuiWirelessConsole;
 import transportterminal.gui.server.ContainerCharger;
 import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.gui.server.ContainerSummoner;
@@ -81,7 +81,7 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == GUI_ID_REMOTE_TERMINAL)
 			if (getTile(player, world, x, y, z) instanceof TileEntityTransportTerminal)
 				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) getTile(player, world, x, y, z), 0);
-		
+
 		if (ID == GUI_ID_SUMMONER) {
 			BlockPos pos = new BlockPos(x, y, z);
 			TileEntity tileentity = world.getTileEntity(pos);
@@ -94,10 +94,9 @@ public class CommonProxy implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == GUI_ID_TERMINAL) {
-			BlockPos pos = new BlockPos(x, y, z);
-			TileEntity tileentity = world.getTileEntity(pos);
+			TileEntity tileentity = world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity instanceof TileEntityTransportTerminal)
-				return new GuiTerminal(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
+				return new GuiConsole(player.inventory, (TileEntityTransportTerminal) tileentity, 0);
 		}
 
 		if (ID == GUI_ID_REMOTE)
@@ -125,15 +124,15 @@ public class CommonProxy implements IGuiHandler {
 		}
 
 		if (ID == GUI_ID_REMOTE_TERMINAL)
-			return new GuiTerminalShadow(player.inventory, player);
-		
+			return new GuiWirelessConsole(player.inventory, player);
+
 		if (ID == GUI_ID_SUMMONER) {
 			BlockPos pos = new BlockPos(x, y, z);
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntitySummoner)
 				return new GuiSummoner(player.inventory, (TileEntitySummoner) tileentity);
 		}
-		
+
 		return null;
 	}
 

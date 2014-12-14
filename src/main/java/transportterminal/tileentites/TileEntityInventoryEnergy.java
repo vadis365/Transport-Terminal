@@ -40,10 +40,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 	@Override
 	public int extractEnergy(EnumFacing facing, int maxExtract, boolean simulate) {
-		int energyExtracted = Math.min(energy, maxExtract);
-		if (!simulate)
-			energy -= energyExtracted;
-		return energyExtracted;
+		return 0;
 	}
 
 	@Override

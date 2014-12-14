@@ -1,6 +1,5 @@
 package transportterminal.network.handler;
 
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -23,8 +22,7 @@ public class ChipUtilsPacketHandler implements IMessageHandler<ChipUtilsMessage,
 
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				BlockPos pos = new BlockPos(message.tileX, message.tileY, message.tileZ);
-				TileEntityChipUtilities utilsTile = (TileEntityChipUtilities) world.getTileEntity(pos);
+				TileEntityChipUtilities utilsTile = (TileEntityChipUtilities) world.getTileEntity(message.tilePos);
 				if (utilsTile != null) {
 					if (message.funcID == COPY_CHIP)
 						utilsTile.copyChip();

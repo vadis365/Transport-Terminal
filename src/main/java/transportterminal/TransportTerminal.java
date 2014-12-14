@@ -26,17 +26,15 @@ import transportterminal.items.ItemTransportTerminalChip;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.items.ItemTransportTerminalRemote;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
+import transportterminal.network.handler.ConsolePacketHandler;
+import transportterminal.network.handler.ContainerPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
-import transportterminal.network.handler.PlayerChipPacketHandler;
 import transportterminal.network.handler.PlayerSummonPacketHandler;
-import transportterminal.network.handler.ShadowTeleportPacketHandler;
-import transportterminal.network.handler.TeleportEnergyPacketHandler;
-import transportterminal.network.handler.TeleportPacketHandler;
+import transportterminal.network.handler.RemotePacketHandler;
 import transportterminal.network.message.ButtonMessage;
 import transportterminal.network.message.ChipUtilsMessage;
-import transportterminal.network.message.EnergyMessage;
+import transportterminal.network.message.ContainerMessage;
 import transportterminal.network.message.NamingMessage;
-import transportterminal.network.message.PlayerChipMessage;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
@@ -93,13 +91,12 @@ public class TransportTerminal {
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
-		networkWrapper.registerMessage(TeleportPacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
+		networkWrapper.registerMessage(RemotePacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
 		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
-		networkWrapper.registerMessage(TeleportEnergyPacketHandler.class, EnergyMessage.class, 2, Side.SERVER);
-		networkWrapper.registerMessage(PlayerChipPacketHandler.class, PlayerChipMessage.class, 3, Side.SERVER);
-		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 4, Side.SERVER);
-		networkWrapper.registerMessage(ShadowTeleportPacketHandler.class, ButtonMessage.class, 5, Side.SERVER);
-		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 6, Side.SERVER);
+		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 2, Side.SERVER);
+		networkWrapper.registerMessage(ConsolePacketHandler.class, ButtonMessage.class, 3, Side.SERVER);
+		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 4, Side.SERVER);
+		networkWrapper.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.CLIENT);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 

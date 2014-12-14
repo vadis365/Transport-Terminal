@@ -2,11 +2,14 @@ package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import transportterminal.utils.PacketUtils;
 
 public class TeleportMessage implements IMessage {
 
-	public int dimension, entityID, chipDim, chipX, chipY, chipZ;
+	public int dimension, entityID, chipDim;
+	public BlockPos pos;
 
 	public TeleportMessage() {
 	}
@@ -15,9 +18,7 @@ public class TeleportMessage implements IMessage {
 		dimension = player.dimension;
 		entityID = player.getEntityId();
 		chipDim = newDim;
-		chipX = x;
-		chipY = y;
-		chipZ = z;
+		pos = new BlockPos(x, y, z);
 	}
 
 	@Override
@@ -25,9 +26,7 @@ public class TeleportMessage implements IMessage {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
 		buf.writeInt(chipDim);
-		buf.writeInt(chipX);
-		buf.writeInt(chipY);
-		buf.writeInt(chipZ);
+		PacketUtils.writeBlockPos(buf, pos);
 	}
 
 	@Override
@@ -35,8 +34,6 @@ public class TeleportMessage implements IMessage {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
 		chipDim = buf.readInt();
-		chipX = buf.readInt();
-		chipY = buf.readInt();
-		chipZ = buf.readInt();
+		pos = PacketUtils.readBlockPos(buf);
 	}
 }

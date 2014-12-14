@@ -8,6 +8,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -17,6 +19,7 @@ import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.tileentites.TileEntityChipUtilities;
 
+@SideOnly(Side.CLIENT)
 public class GuiUtilsNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
@@ -65,40 +68,26 @@ public class GuiUtilsNaming extends GuiContainer {
 	}
 
 	@Override
-	protected void keyTyped(char key, int keycode) {
+	protected void keyTyped(char key, int keycode) throws IOException {
 		textFieldName.textboxKeyTyped(key, keycode);
 		if (!(keycode != Keyboard.KEY_NONE && textFieldName.isFocused()))
-			try {
-				super.keyTyped(key, keycode);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			super.keyTyped(key, keycode);
 	}
 
 	@Override
-	public void mouseClicked(int i, int j, int k) {
-		try {
-			super.mouseClicked(i, j, k);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void mouseClicked(int i, int j, int k) throws IOException {
+		super.mouseClicked(i, j, k);
 		textFieldName.mouseClicked(20, 15, k);
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		int x = tile.getPos().getX();
-		int y = tile.getPos().getY();
-		int z = tile.getPos().getZ();
-
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, "Arch Stanton", x, y, z, NAME_PLAYER_CHIP));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, "Arch Stanton", tile.getPos(), NAME_PLAYER_CHIP));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, textFieldName.getText(), x, y, z, NAME_PLAYER_CHIP));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, textFieldName.getText(), tile.getPos(), NAME_PLAYER_CHIP));
 				playerSent.closeScreen();
 			}
 	}

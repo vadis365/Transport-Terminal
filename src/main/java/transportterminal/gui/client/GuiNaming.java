@@ -8,6 +8,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -16,6 +18,7 @@ import transportterminal.TransportTerminal;
 import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.network.message.NamingMessage;
 
+@SideOnly(Side.CLIENT)
 public class GuiNaming extends GuiContainer {
 
 	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
@@ -61,25 +64,15 @@ public class GuiNaming extends GuiContainer {
 	}
 
 	@Override
-	protected void keyTyped(char key, int keycode) {
+	protected void keyTyped(char key, int keycode) throws IOException {
 		textFieldName.textboxKeyTyped(key, keycode);
 		if (!(keycode != Keyboard.KEY_NONE && textFieldName.isFocused()))
-			try {
-				super.keyTyped(key, keycode);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			super.keyTyped(key, keycode);
 	}
 
 	@Override
-	public void mouseClicked(int i, int j, int k) {
-		try {
-			super.mouseClicked(i, j, k);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void mouseClicked(int i, int j, int k) throws IOException {
+		super.mouseClicked(i, j, k);
 		textFieldName.mouseClicked(20, 15, k);
 	}
 

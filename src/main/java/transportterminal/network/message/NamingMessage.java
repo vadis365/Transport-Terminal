@@ -2,13 +2,16 @@ package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import transportterminal.utils.PacketUtils;
 
 public class NamingMessage implements IMessage {
 
-	public int dimension, entityID, tileX, tileY, tileZ;
+	public int dimension, entityID;
 	public String name;
+	public BlockPos tilePos;
 
 	public NamingMessage() {
 	}
@@ -17,9 +20,10 @@ public class NamingMessage implements IMessage {
 		dimension = player.getCurrentEquippedItem().getTagCompound().getInteger("dim");
 		entityID = player.getEntityId();
 		name = string;
-		tileX = player.getCurrentEquippedItem().getTagCompound().getInteger("homeX");
-		tileY = player.getCurrentEquippedItem().getTagCompound().getInteger("homeY");
-		tileZ = player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ");
+		int x = player.getCurrentEquippedItem().getTagCompound().getInteger("homeX");
+		int y = player.getCurrentEquippedItem().getTagCompound().getInteger("homeY");
+		int z = player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ");
+		tilePos = new BlockPos(x, y, z);
 	}
 
 	@Override
@@ -27,9 +31,7 @@ public class NamingMessage implements IMessage {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
 		ByteBufUtils.writeUTF8String(buf, name);
-		buf.writeInt(tileX);
-		buf.writeInt(tileY);
-		buf.writeInt(tileZ);
+		PacketUtils.writeBlockPos(buf, tilePos);
 	}
 
 	@Override
@@ -37,9 +39,6 @@ public class NamingMessage implements IMessage {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
 		name = ByteBufUtils.readUTF8String(buf);
-		tileX = buf.readInt();
-		tileY = buf.readInt();
-		tileZ = buf.readInt();
+		tilePos = PacketUtils.readBlockPos(buf);
 	}
-
 }

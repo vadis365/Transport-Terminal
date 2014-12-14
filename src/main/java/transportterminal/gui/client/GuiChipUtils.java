@@ -5,6 +5,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,7 +46,7 @@ public class GuiChipUtils extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		//fontRendererObj.drawString(StatCollector.translateToLocal(tile.getInventoryName()), 8, 6, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getName()), 8, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
 	}
 
@@ -60,31 +61,29 @@ public class GuiChipUtils extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		int x = tile.getPos().getX();
-		int y = tile.getPos().getY();
-		int z = tile.getPos().getZ();
+		BlockPos pos = tile.getPos();
 
 		if (guibutton instanceof GuiButton) {
 			if (guibutton.id == 0) {
 				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()) && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBlankChip(tile.getStackInSlot(1)))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
 
 				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()) && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isBlankPlayerChip(tile.getStackInSlot(1)))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, COPY_CHIP));
+					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
 			}
 			if (guibutton.id == 1)
 				if (tile.getStackInSlot(1) == null) {
 					if (tile.getStackInSlot(0) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()))
-						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_CHIP));
+						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_CHIP));
 
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
-						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", x, y, z, ERASE_PLAYER_CHIP));
+						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_PLAYER_CHIP));
 				}
 
 			if (guibutton.id == 2)
 				if (tile.getStackInSlot(1) == null)
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
-						mc.thePlayer.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, x, y, z);
+						mc.thePlayer.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
 
@@ -103,5 +102,4 @@ public class GuiChipUtils extends GuiContainer {
 	public boolean isPlayerChipItem(Item item) {
 		return item != null && item == TransportTerminal.playerChip;
 	}
-
 }

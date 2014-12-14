@@ -1,4 +1,4 @@
-package transportterminal.blockutils;
+package transportterminal.utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.BlockPos;

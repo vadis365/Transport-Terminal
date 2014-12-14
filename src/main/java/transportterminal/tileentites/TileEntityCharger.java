@@ -1,7 +1,6 @@
 package transportterminal.tileentites;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import transportterminal.core.confighandler.ConfigHandler;
 import cofh.api.energy.IEnergyContainerItem;
 
@@ -16,10 +15,6 @@ public class TileEntityCharger extends TileEntityInventoryEnergy {
 		return stack.getItem() instanceof IEnergyContainerItem;
 	}
 
-	@Override
-	public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
-		return 0;
-	}
 	/*
 		@Override
 		public void updateContainingBlockInfo() {

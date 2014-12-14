@@ -2,24 +2,25 @@ package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import transportterminal.utils.PacketUtils;
 
 public class ChipUtilsMessage implements IMessage {
 
-	public int dimension, entityID, tileX, tileY, tileZ, funcID;
+	public int dimension, entityID, funcID;
 	public String name;
+	public BlockPos tilePos;
 
 	public ChipUtilsMessage() {
 	}
 
-	public ChipUtilsMessage(EntityPlayer player, String string, int x, int y, int z, int id) {
+	public ChipUtilsMessage(EntityPlayer player, String string, BlockPos pos, int id) {
 		dimension = player.dimension;
 		entityID = player.getEntityId();
 		name = string;
-		tileX = x;
-		tileY = y;
-		tileZ = z;
+		tilePos = pos;
 		funcID = id;
 	}
 
@@ -28,9 +29,7 @@ public class ChipUtilsMessage implements IMessage {
 		buf.writeInt(dimension);
 		buf.writeInt(entityID);
 		ByteBufUtils.writeUTF8String(buf, name);
-		buf.writeInt(tileX);
-		buf.writeInt(tileY);
-		buf.writeInt(tileZ);
+		PacketUtils.writeBlockPos(buf, tilePos);
 		buf.writeInt(funcID);
 	}
 
@@ -39,9 +38,7 @@ public class ChipUtilsMessage implements IMessage {
 		dimension = buf.readInt();
 		entityID = buf.readInt();
 		name = ByteBufUtils.readUTF8String(buf);
-		tileX = buf.readInt();
-		tileY = buf.readInt();
-		tileZ = buf.readInt();
+		tilePos = PacketUtils.readBlockPos(buf);
 		funcID = buf.readInt();
 	}
 }

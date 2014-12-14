@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
@@ -50,10 +49,5 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 
 	public boolean canTeleport() {
 		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT;
-	}
-
-	@Override
-	public int extractEnergy(EnumFacing facing, int maxExtract, boolean simulate) {
-		return 0;
 	}
 }
