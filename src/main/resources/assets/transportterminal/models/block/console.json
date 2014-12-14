@@ -1,71 +1,62 @@
- {
-"__comment": "An experiment to get this bitch to render like it should - AND IT DOES!",
-"ambientocclusion": true,
- "textures": {
- "particle": "transportterminal:blocks/console",
- "texture": "transportterminal:blocks/console"
- },
-"elements": [
- { 
- "__comment": "base",
- "from": [ 0, 0, 0 ],
- "to": [ 16, 1, 16 ],
- "shade":true,
- "faces": {
- "down": {"uv":[ 0, 0, 8, 8 ], "texture": "#texture"},
- "up": {"uv":[ 0, 0, 8, 8 ], "texture": "#texture"},
- "north": {"uv":[ 0, 1, 8, 2 ], "texture": "#texture"},
- "south": {"uv":[ 0, 1, 8, 2 ], "texture": "#texture"},
- "west": {"uv":[ 0, 1, 8, 2 ], "texture": "#texture"},
- "east": {"uv":[ 0, 1, 8, 2 ], "texture": "#texture"}
- } 
- },
-
-{ 
- "__comment": "pad",
- "from": [ 1, 1, 1 ],
- "to": [ 15, 2, 10 ],
- "shade":true,
- "faces": {
- "down": {"uv":[ 0, 11, 7, 16 ], "texture": "#texture"},
- "up": {"uv":[ 0, 11, 7, 16 ], "texture": "#texture"},
- "north": {"uv":[ 0, 0.5, 7, 1 ], "texture": "#texture"},
- "south": {"uv":[ 0, 0.5, 7, 1 ], "texture": "#texture"},
- "west": {"uv":[ 0, 0.5, 7, 1 ], "texture": "#texture"},
- "east": {"uv":[ 0, 0.5, 7, 1 ], "texture": "#texture"}
- }
- },
-
-{ 
- "__comment": "support",
- "from": [ 4, 1, 13 ],
- "to": [ 12, 12, 15 ],
- "shade":true,
- "faces": {
- "down": {"uv":[ 0, 0.5, 2.75, 1.5 ], "texture": "#texture"},
- "up": {"uv":[ 0, 0.5, 2.75, 1.5 ], "texture": "#texture"},
- "north": {"uv":[ 0, 0.5, 4, 6 ], "texture": "#texture"},
- "south": {"uv":[ 0, 0.5, 4, 6 ], "texture": "#texture"},
- "west": {"uv":[ 0, 0.5, 4, 6 ], "texture": "#texture"},
- "east": {"uv":[ 0, 0.5, 4, 6 ], "texture": "#texture"}
- }
- },
-
-{ 
- "__comment": "console",
- "from": [ 1, 10, 11 ],
- "to": [ 15, 15, 15 ],
- "rotation": { "origin": [ 8, 13, 12 ], "axis": "x", "angle": 45, "rescale": false },
- "shade":true,
- "faces": {
- "down": {"uv":[ 0, 0.5, 3.5, 2.5 ], "texture": "#texture"},
- "up": {"uv":[ 0, 0.5, 3.5, 2.5 ], "texture": "#texture"},
- "north": {"uv":[ 0, 8.25, 7, 10.75 ], "texture": "#texture"},
- "south": {"uv":[ 0, 0.25, 6, 3 ], "texture": "#texture"},
- "west": {"uv":[ 0, 0.5, 2.5, 2.5 ], "texture": "#texture"},
- "east": {"uv":[ 0, 0.5, 2.5, 2.5 ], "texture": "#texture"}
- }
- }
-
- ]
+{
+    "ambientocclusion": true,
+    "textures": {
+        "particle": "transportterminal:blocks/console",
+        "texture": "transportterminal:blocks/console"
+    },
+    "elements": [
+        {   "__comment": "base",
+            "from": [ 0, 0, 0 ],
+            "to":   [ 16, 1, 16 ],
+            "shade": true,
+            "faces": {
+                "down":  { "uv": [  0, 0, 8, 8 ], "texture": "#texture"},
+                "up":    { "uv": [  0, 0, 8, 8 ], "texture": "#texture"},
+                "north": { "uv": [  0, 1, 8, 2 ], "texture": "#texture"},
+                "south": { "uv": [  0, 1, 8, 2 ], "texture": "#texture"},
+                "west":  { "uv": [  0, 1, 8, 2 ], "texture": "#texture"},
+                "east":  { "uv": [  0, 1, 8, 2 ], "texture": "#texture"}
+            } 
+        },
+        {   "__comment": "pad",
+            "from": [ 1, 1, 1 ],
+            "to":   [ 15, 2, 10 ],
+            "shade": true,
+            "faces": {
+                "down":  { "uv": [  0, 11, 7, 16 ], "texture": "#texture"},
+                "up":    { "uv": [  0, 11, 7, 16 ], "texture": "#texture"},
+                "north": { "uv": [  0, 0.5, 7, 1 ], "texture": "#texture"},
+                "south": { "uv": [  0, 0.5, 7, 1 ], "texture": "#texture"},
+                "west":  { "uv": [  0, 0.5, 7, 1 ], "texture": "#texture"},
+                "east":  { "uv": [  0, 0.5, 7, 1 ], "texture": "#texture"}
+            }
+        },
+        {   "__comment": "support",
+            "from": [ 4, 1, 13 ],
+            "to":   [ 12, 12, 15 ],
+            "shade": true,
+            "faces": {
+                "down":  { "uv": [  0, 0.5, 2.75, 1.5 ], "texture": "#texture"},
+                "up":    { "uv": [  0, 0.5, 2.75, 1.5 ], "texture": "#texture"},
+                "north": { "uv": [  0, 0.5, 4, 6 ], "texture": "#texture"},
+                "south": { "uv": [  0, 0.5, 4, 6 ], "texture": "#texture"},
+                "west":  { "uv": [  0, 0.5, 4, 6 ], "texture": "#texture"},
+                "east":  { "uv": [  0, 0.5, 4, 6 ], "texture": "#texture"}
+            }
+        },
+        {   "__comment": "console",
+            "from": [ 1, 10, 11 ],
+            "to":   [ 15, 15, 15 ],
+            "rotation": { "origin": [ 8, 13, 12 ], "axis": "x", "angle": 45, "rescale": false },
+            "shade": true,
+            "faces": {
+                "down":  { "uv": [  0, 0.5, 3.5, 2.5 ], "texture": "#texture"},
+                "up":    { "uv": [  0, 0.5, 3.5, 2.5 ], "texture": "#texture"},
+                "north": { "uv": [  0, 8.25, 7, 10.75 ], "texture": "#texture"},
+                "south": { "uv": [  0, 0.25, 6, 3 ], "texture": "#texture"},
+                "west":  { "uv": [  0, 0.5, 2.5, 2.5 ], "texture": "#texture"},
+                "east":  { "uv": [  0, 0.5, 2.5, 2.5 ], "texture": "#texture"}
+            }
+        }
+    ]
 }
