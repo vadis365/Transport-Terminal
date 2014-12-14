@@ -15,7 +15,7 @@ import transportterminal.core.confighandler.ConfigHandler;
 import cofh.api.energy.IEnergyContainerItem;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI")
-public class ItemEnergy extends Item implements IEnergyContainerItem {
+public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
 
 	private final int capacity;
 
