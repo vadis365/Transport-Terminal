@@ -26,10 +26,10 @@ public abstract class BlockDirectional extends BlockContainer {
 	@Override
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 		if (!world.isRemote) {
-			Block block = world.getBlockState(pos.offsetNorth()).getBlock();
-			Block block1 = world.getBlockState(pos.offsetSouth()).getBlock();
-			Block block2 = world.getBlockState(pos.offsetWest()).getBlock();
-			Block block3 = world.getBlockState(pos.offsetEast()).getBlock();
+			Block block = world.getBlockState(pos.north()).getBlock();
+			Block block1 = world.getBlockState(pos.south()).getBlock();
+			Block block2 = world.getBlockState(pos.west()).getBlock();
+			Block block3 = world.getBlockState(pos.east()).getBlock();
 			EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
 
 			if (enumfacing == EnumFacing.NORTH && block.isFullBlock() && !block1.isFullBlock())
@@ -47,7 +47,7 @@ public abstract class BlockDirectional extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		world.setBlockState(pos, state.withProperty(FACING, placer.func_174811_aO().getOpposite()), 2);
+		world.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
 	}
 
 	@Override

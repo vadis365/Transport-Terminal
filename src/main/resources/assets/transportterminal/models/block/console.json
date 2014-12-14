@@ -1,5 +1,4 @@
 {
-    "ambientocclusion": true,
     "textures": {
         "particle": "transportterminal:blocks/console",
         "texture": "transportterminal:blocks/console"
@@ -8,7 +7,6 @@
         {   "__comment": "base",
             "from": [ 0, 0, 0 ],
             "to": [ 16, 1, 16 ],
-            "shade": true,
             "faces": {
                 "down":  { "uv": [  0, 0, 8, 8 ], "texture": "#texture"},
                 "up":    { "uv": [  0, 0, 8, 8 ], "texture": "#texture"},
@@ -21,7 +19,6 @@
         {   "__comment": "pad",
             "from": [ 1, 1, 1 ],
             "to": [ 15, 2, 10 ],
-            "shade": true,
             "faces": {
                 "down":  { "uv": [  0, 11, 7, 16 ], "texture": "#texture"},
                 "up":    { "uv": [  0, 11, 7, 16 ], "texture": "#texture"},
@@ -34,7 +31,6 @@
         {   "__comment": "support",
             "from": [ 4, 1, 13 ],
             "to": [ 12, 12, 15 ],
-            "shade": true,
             "faces": {
                 "down":  { "uv": [  0, 0.5, 2.75, 1.5 ], "texture": "#texture"},
                 "up":    { "uv": [  0, 0.5, 2.75, 1.5 ], "texture": "#texture"},
@@ -48,7 +44,6 @@
             "from": [ 1, 10, 11 ],
             "to": [ 15, 15, 15 ],
             "rotation": { "origin": [ 8, 13, 12 ], "axis": "x", "angle": 45, "rescale": false },
-            "shade": true,
             "faces": {
                 "down":  { "uv": [  0, 0.5, 3.5, 2.5 ], "texture": "#texture"},
                 "up":    { "uv": [  0, 0.5, 3.5, 2.5 ], "texture": "#texture"},

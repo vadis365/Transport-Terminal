@@ -183,7 +183,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public void clearInventory() {
+	public void clear() {
 		for (int i = 0; i < inventory.length; i++)
 			inventory[i] = null;
 	}
