@@ -62,7 +62,7 @@ public class TransportTerminal {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
+		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI|energy");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		remote = new ItemTransportTerminalRemote().setUnlocalizedName("transportTerminalRemote").setTextureName("transportterminal:transportTerminalRemote");
