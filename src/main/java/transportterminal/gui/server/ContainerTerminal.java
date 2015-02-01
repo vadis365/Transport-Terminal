@@ -63,6 +63,14 @@ public class ContainerTerminal extends ContainerEnergy {
 	}
 	
 	@Override
+	public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player) {
+		if(player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == TransportTerminal.remoteTerminal)
+			if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getCurrentEquippedItem())
+				return null;
+		return super.slotClick(slot, button, flag, player);
+	}
+	
+	@Override
 	public void detectAndSendChanges() {
 		if (idType == 0)
 			super.detectAndSendChanges();	
