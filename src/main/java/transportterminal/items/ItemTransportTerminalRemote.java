@@ -7,12 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.message.TeleportMessage;
@@ -25,7 +22,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI")
 public class ItemTransportTerminalRemote extends Item implements IEnergyContainerItem {
 
-	private Ticket ticket;
 	private final int capacity;
 
 	public ItemTransportTerminalRemote() {
@@ -85,7 +81,9 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			int homeX = stack.getTagCompound().getInteger("homeX");
 			int homeY = stack.getTagCompound().getInteger("homeY");
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
-
+			
+			TransportTerminal.proxy.forceChunkload(world2, homeX, homeY);
+			
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
@@ -132,14 +130,6 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && hasTag(stack) && player.isSneaking()) {
-			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
-
-			if (ticket == null)
-				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
-
-			if (ticket != null)
-				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-
 			if (foundFreeChip(player, stack)) {
 				world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 				player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, world, x, y, z);

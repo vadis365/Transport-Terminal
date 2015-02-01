@@ -7,11 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
@@ -70,20 +66,6 @@ public class ItemRemoteTerminal extends Item implements IEnergyContainerItem {
 				list.add("Right click to open");
 				list.add("your linked Terminal.");
 			}
-	}
-
-	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && hasTag(stack) && !player.isSneaking()) {
-			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
-
-			if (ticket == null)
-				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
-
-			if (ticket != null)
-				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-		}
-		return false;
 	}
 
 	@Override

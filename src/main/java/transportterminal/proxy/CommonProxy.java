@@ -3,9 +3,12 @@ package transportterminal.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import transportterminal.TransportTerminal;
 import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
@@ -29,7 +32,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CommonProxy implements IGuiHandler {
 
 	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 6;
-
+	private static Ticket ticket;
 	public void registerRenderInformation() {
 	}
 
@@ -75,8 +78,8 @@ public class CommonProxy implements IGuiHandler {
 		}
 
 		if (ID == GUI_ID_REMOTE_TERMINAL)
-			if (getTile(player, world, x, y, z) instanceof TileEntityTransportTerminal)
-				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) getTile(player, world, x, y, z), 0);
+			if (getTile(player, world) instanceof TileEntityTransportTerminal)
+				return new ContainerTerminal(player.inventory, (TileEntityTransportTerminal) getTile(player, world), 0);
 		
 		if (ID == GUI_ID_SUMMONER) {
 			TileEntity tileentity = world.getTileEntity(x, y, z);
@@ -127,17 +130,25 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
-	public TileEntity getTile(EntityPlayer player, World world, int x, int y, int z) {
-		TileEntity tileentity;
+	public TileEntity getTile(EntityPlayer player, World world) {
+		TileEntity tileentity = null;
 		ItemStack stack = player.getCurrentEquippedItem();
 		if (stack != null && stack.getItem() == TransportTerminal.remoteTerminal) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			int xx = stack.getTagCompound().getInteger("homeX");
 			int yy = stack.getTagCompound().getInteger("homeY");
 			int zz = stack.getTagCompound().getInteger("homeZ");
+			forceChunkload(world2, xx, zz);
 			tileentity = world2.getTileEntity(xx, yy, zz);
-		} else
-			tileentity = world.getTileEntity(x, y, z);
+		} 
 		return tileentity;
+	}
+
+	public static void forceChunkload(WorldServer world, int x, int z) {
+		if (ticket == null)
+			ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world, ForgeChunkManager.Type.NORMAL);
+
+		if (ticket != null)
+			ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(x, z));	
 	}
 }
