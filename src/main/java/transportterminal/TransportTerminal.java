@@ -39,7 +39,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "transportterminal", name = "Transport Terminals", version = "1.0b", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
+@Mod(modid = "transportterminal", name = "Transport Terminals", version = "1.0c", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
 public class TransportTerminal {
 
 	@Instance("transportterminal")
