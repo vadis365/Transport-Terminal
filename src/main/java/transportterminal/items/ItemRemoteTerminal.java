@@ -2,11 +2,13 @@ package transportterminal.items;
 
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import transportterminal.TransportTerminal;
@@ -21,7 +23,8 @@ public class ItemRemoteTerminal extends Item implements IEnergyContainerItem {
 
 	private Ticket ticket;
 	private final int capacity;
-
+	private String message = "Access to End Consoles from other dimensions has been disabled.";
+	
 	public ItemRemoteTerminal() {
 		capacity = ConfigHandler.REMOTE_TERMINAL_MAX_ENERGY;
 		setMaxStackSize(1);
@@ -71,11 +74,19 @@ public class ItemRemoteTerminal extends Item implements IEnergyContainerItem {
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (!player.isSneaking() && stack.stackTagCompound.hasKey("homeX"))
-			if (!world.isRemote)
+			if (!world.isRemote) {
+				if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1)
+					return stack;
 				if (canTeleport(stack)) {
 					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
 					world.playSoundEffect(player.posX, player.posY, player.posZ, "transportterminal:oksound", 1.0F, 1.0F);
 					player.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+				}
+			}
+		if (world.isRemote)
+			if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1) {
+				Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(message.toString()));
+				return stack;
 				}
 		return stack;
 	}
