@@ -82,7 +82,7 @@ public class ItemTransportTerminalRemote extends Item implements IEnergyContaine
 			int homeY = stack.getTagCompound().getInteger("homeY");
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
 			
-			TransportTerminal.proxy.forceChunkload(world2, homeX, homeY);
+			TransportTerminal.proxy.forceChunkload(world2, homeX, homeZ);
 			
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(homeX, homeY, homeZ);
 			if (tile != null)
