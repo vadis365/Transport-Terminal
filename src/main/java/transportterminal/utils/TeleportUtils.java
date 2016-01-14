@@ -72,6 +72,10 @@ public class TeleportUtils {
  	public static boolean isValidInterfacePlayerChip(TileEntityTransportTerminal tile, int buttonID) {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalPlayerChip;
 	}
+ 
+	public static boolean isValidSummonerPlayerChip(TileEntitySummoner tile, int buttonID) {
+		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalPlayerChip;
+	}
 
 	public static boolean isValidInterfaceStandardChip(TileEntityTransportTerminal tile, int buttonID) {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).stackTagCompound.hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalChip;
@@ -86,5 +90,7 @@ public class TeleportUtils {
 		if (TransportTerminal.IS_RF_PRESENT)
 			tile.setEnergy(tile.getEnergyStored(ForgeDirection.UNKNOWN) - ConfigHandler.ENERGY_PER_TELEPORT);
 	}
+
+
 
 }
