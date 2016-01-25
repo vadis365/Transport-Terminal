@@ -45,7 +45,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 			return null;
 	}
 
-	@Override
+	//@Override
 	public ItemStack getStackInSlotOnClosing(int slot) {
 		if (inventory[slot] != null) {
 			ItemStack is = inventory[slot];
@@ -186,5 +186,11 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	public void clear() {
 		for (int i = 0; i < inventory.length; i++)
 			inventory[i] = null;
+	}
+
+	@Override
+	public ItemStack removeStackFromSlot(int index) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

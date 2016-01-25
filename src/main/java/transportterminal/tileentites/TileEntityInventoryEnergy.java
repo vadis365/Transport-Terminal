@@ -87,7 +87,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 			return null;
 	}
 
-	@Override
+	//@Override
 	public ItemStack getStackInSlotOnClosing(int slot) {
 		if (inventory[slot] != null) {
 			ItemStack itemstack = inventory[slot];
