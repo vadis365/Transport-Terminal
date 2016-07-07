@@ -3,6 +3,7 @@ package transportterminal;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -49,7 +50,7 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy PROXY;
-	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP;
+	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM;;
 	public static Block TERMINAL, UTILS, CHARGER, SUMMONER;
 	public static SimpleNetworkWrapper NETWORK_WRAPPER;
 	public static SoundEvent OK_SOUND;
@@ -67,7 +68,7 @@ public class TransportTerminal {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI|energy");
+		IS_RF_PRESENT = false; //ModAPIManager.INSTANCE.hasAPI("CoFHAPI|energy");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		// Items
@@ -82,16 +83,28 @@ public class TransportTerminal {
 		CHARGER = new BlockCharger().setHardness(3.0F);
 		SUMMONER = new BlockSummoner().setHardness(3.0F);
 		
+		TERMINAL_ITEM = new ItemBlock(TERMINAL);
+		UTILS_ITEM = new ItemBlock(UTILS);
+		SUMMONER_ITEM = new ItemBlock(SUMMONER);
+		CHARGER_ITEM = new ItemBlock(CHARGER);
+		
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
 		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
-		GameRegistry.register(TERMINAL.setRegistryName("transportterminal", "console").setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(PLAYER_CHIP.setRegistryName("transportterminal", "playerChip").setUnlocalizedName("transportterminal.playerChip"));
+		
+		GameRegistry.register(TERMINAL.setRegistryName("transportterminal", "console").setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS.setRegistryName("transportterminal", "utils").setUnlocalizedName("transportterminal.utils"));
 		GameRegistry.register(SUMMONER.setRegistryName("transportterminal", "summoner").setUnlocalizedName("transportterminal.summoner"));
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
 			GameRegistry.register(CHARGER.setRegistryName("transportterminal", "charger").setUnlocalizedName("transportterminal.charger"));
-		
+
+		GameRegistry.register(TERMINAL_ITEM.setRegistryName(TERMINAL.getRegistryName()).setUnlocalizedName("transportterminal.console"));
+		GameRegistry.register(UTILS_ITEM.setRegistryName(UTILS.getRegistryName()).setUnlocalizedName("transportterminal.utils"));
+		GameRegistry.register(SUMMONER_ITEM.setRegistryName(SUMMONER.getRegistryName()).setUnlocalizedName("transportterminal.summoner"));
+		if (IS_RF_PRESENT) // No need for a charger if there's no RF
+			GameRegistry.register(CHARGER_ITEM.setRegistryName(CHARGER.getRegistryName()).setUnlocalizedName("transportterminal.charger"));
+
 		PROXY.registerTileEntities();
 		PROXY.registerRenderInformation();
 

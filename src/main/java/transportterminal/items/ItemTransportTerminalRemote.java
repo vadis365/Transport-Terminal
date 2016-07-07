@@ -123,7 +123,7 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 			if (!foundFreeChip(playerIn, stack))
 				worldIn.playSound(playerIn.posX, playerIn.posY, playerIn.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 		}
-	    return EnumActionResult.FAIL;
+	    return EnumActionResult.PASS;
 	}
 
 	@Override

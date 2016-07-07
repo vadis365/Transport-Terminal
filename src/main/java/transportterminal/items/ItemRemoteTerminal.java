@@ -57,7 +57,7 @@ public class ItemRemoteTerminal extends ItemEnergy {
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
 		}
-	    return EnumActionResult.FAIL;
+	    return EnumActionResult.PASS;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package transportterminal.utils;
 
-import net.minecraft.block.BlockDirectional;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -9,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import transportterminal.TransportTerminal;
+import transportterminal.blocks.BlockDirectional;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalChip;
@@ -42,7 +42,7 @@ public class TeleportUtils {
 	public static void teleportToConsole(World world, EntityPlayerMP player, BlockPos pos) {
 		EnumFacing face = (EnumFacing) world.getBlockState(pos).getValue(BlockDirectional.FACING);
 		if (world.isAirBlock(pos.offset(face)) && world.isAirBlock(pos.offset(face).add(0, 1, 0)))
-			teleportPlayer(player, pos.getX() + face.getFrontOffsetX() * 0.5, pos.getY() + face.getFrontOffsetY() * 0.5, pos.getZ() + face.getFrontOffsetZ() * 0.5, 0, player.rotationPitch);
+			teleportPlayer(player, pos.getX() + face.getFrontOffsetX() + 0.5, pos.getY() + face.getFrontOffsetY(), pos.getZ() + face.getFrontOffsetZ() + 0.5, face.getOpposite().getHorizontalAngle(), player.rotationPitch);
 	}
 
 	public static void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {

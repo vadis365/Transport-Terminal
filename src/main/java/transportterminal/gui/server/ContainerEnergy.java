@@ -10,12 +10,10 @@ import transportterminal.tileentites.TileEntityInventoryEnergy;
 public abstract class ContainerEnergy extends Container {
 
 	protected final TileEntityInventoryEnergy tile;
-	protected final EntityPlayer player;
 	private int lastEnergyAmount = -1;
 
-	protected ContainerEnergy(TileEntityInventoryEnergy tile, EntityPlayer player) {
+	protected ContainerEnergy(TileEntityInventoryEnergy tile) {
 		this.tile = tile;
-		this.player = player;
 	}
 
 	public TileEntityInventoryEnergy tile() {
@@ -30,8 +28,11 @@ public abstract class ContainerEnergy extends Container {
 		int currentEnergyAmount = tile.getEnergyStored(null);
 		if (currentEnergyAmount == lastEnergyAmount)
 			return;
+		 
+		for (Object obj : listeners)  
+			if (obj instanceof EntityPlayerMP)  
+				TransportTerminal.NETWORK_WRAPPER.sendTo(new ContainerMessage(windowId, currentEnergyAmount), (EntityPlayerMP) obj);  
 
-		TransportTerminal.NETWORK_WRAPPER.sendTo(new ContainerMessage(windowId, currentEnergyAmount), (EntityPlayerMP) player);
 		lastEnergyAmount = currentEnergyAmount;
 	}
 

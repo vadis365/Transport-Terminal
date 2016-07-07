@@ -17,9 +17,9 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE, 0, new ModelResourceLocation("transportterminal:remote", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE_TERMINAL, 0, new ModelResourceLocation("transportterminal:remoteTerminal", "inventory"));
 
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.UTILS), 0, new ModelResourceLocation("transportterminal:utils", "inventory"));
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.SUMMONER), 0, new ModelResourceLocation("transportterminal:summoner", "inventory"));
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.CHARGER), 0, new ModelResourceLocation("transportterminal:charger", "inventory"));
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.TERMINAL), 0, new ModelResourceLocation("transportterminal:console", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UTILS_ITEM, 0, new ModelResourceLocation("transportterminal:utils", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.SUMMONER_ITEM, 0, new ModelResourceLocation("transportterminal:summoner", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.CHARGER_ITEM, 0, new ModelResourceLocation("transportterminal:charger", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.TERMINAL_ITEM, 0, new ModelResourceLocation("transportterminal:console", "inventory"));
 	}
 }
