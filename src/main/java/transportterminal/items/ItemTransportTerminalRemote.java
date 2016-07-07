@@ -106,7 +106,6 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 	    if (!worldIn.isRemote && hasTag(stack) && playerIn.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
-	    	System.out.println("SNEAKING");
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 
 			if (ticket == null)
@@ -114,9 +113,8 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 
 			if (ticket != null)
 				ForgeChunkManager.forceChunk(ticket, new ChunkPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-			System.out.println("TICKET");
+
 			if (foundFreeChip(playerIn, stack)) {
-				System.out.println("SUCESS NOW OPEN GUI");
 				worldIn.playSound(playerIn.posX, playerIn.posY, playerIn.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 				playerIn.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_REMOTE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 				return EnumActionResult.SUCCESS;
@@ -125,7 +123,6 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 			if (!foundFreeChip(playerIn, stack))
 				worldIn.playSound(playerIn.posX, playerIn.posY, playerIn.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 		}
-	    System.out.println("PASSED");
 	    return EnumActionResult.FAIL;
 	}
 
