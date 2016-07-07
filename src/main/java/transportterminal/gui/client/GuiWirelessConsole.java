@@ -45,7 +45,7 @@ public class GuiWirelessConsole extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		ItemStack stack = playerSent.getActiveItemStack();
+		ItemStack stack = playerSent.getHeldItemMainhand();
 		int xx = stack.getTagCompound().getInteger("homeX");
 		int yy = stack.getTagCompound().getInteger("homeY");
 		int zz = stack.getTagCompound().getInteger("homeZ");
@@ -66,7 +66,7 @@ public class GuiWirelessConsole extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		ItemStack stack = playerSent.getActiveItemStack();
+		ItemStack stack = playerSent.getHeldItemMainhand();
 		int newDim = stack.getTagCompound().getInteger("dim");
 		int x = stack.getTagCompound().getInteger("homeX");
 		int y = stack.getTagCompound().getInteger("homeY");

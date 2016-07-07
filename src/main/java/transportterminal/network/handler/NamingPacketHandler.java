@@ -22,7 +22,7 @@ public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMess
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-				world = DimensionManager.getWorld(player.getActiveItemStack().getTagCompound().getInteger("dim"));
+				world = DimensionManager.getWorld(player.getHeldItemMainhand().getTagCompound().getInteger("dim"));
 				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world.getTileEntity(message.tilePos);
 				if (tile != null)
 					tile.setName(message.name);

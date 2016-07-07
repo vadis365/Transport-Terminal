@@ -3,6 +3,7 @@ package transportterminal.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -55,7 +56,7 @@ public class CommonProxy implements IGuiHandler {
 		}
 
 		if (ID == GUI_ID_REMOTE) {
-			ItemStack stack = player.getActiveItemStack();
+			ItemStack stack = player.getHeldItemMainhand();
 			world = DimensionManager.getWorld(player.dimension);
 			ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
 			return new ContainerTerminal(player, null, 1);
@@ -138,7 +139,7 @@ public class CommonProxy implements IGuiHandler {
 
 	public TileEntity getTile(EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity tileentity;
-		ItemStack stack = player.getActiveItemStack();
+		ItemStack stack = player.getHeldItemMainhand();
 		if (stack != null && stack.getItem() == TransportTerminal.REMOTE_TERMINAL) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			int xx = stack.getTagCompound().getInteger("homeX");

@@ -17,12 +17,12 @@ public class NamingMessage implements IMessage {
 	}
 
 	public NamingMessage(EntityPlayer player, String string) {
-		dimension = player.getActiveItemStack().getTagCompound().getInteger("dim");
+		dimension = player.getHeldItemMainhand().getTagCompound().getInteger("dim");
 		entityID = player.getEntityId();
 		name = string;
-		int x = player.getActiveItemStack().getTagCompound().getInteger("homeX");
-		int y = player.getActiveItemStack().getTagCompound().getInteger("homeY");
-		int z = player.getActiveItemStack().getTagCompound().getInteger("homeZ");
+		int x = player.getHeldItemMainhand().getTagCompound().getInteger("homeX");
+		int y = player.getHeldItemMainhand().getTagCompound().getInteger("homeY");
+		int z = player.getHeldItemMainhand().getTagCompound().getInteger("homeZ");
 		tilePos = new BlockPos(x, y, z);
 	}
 

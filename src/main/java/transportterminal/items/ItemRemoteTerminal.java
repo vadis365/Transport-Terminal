@@ -48,23 +48,22 @@ public class ItemRemoteTerminal extends ItemEnergy {
 
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-	    if (!worldIn.isRemote && hasTag(stack) && !playerIn.isSneaking()) {
-			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
-
-			if (ticket == null)
-				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
-
-			if (ticket != null)
-				ForgeChunkManager.forceChunk(ticket, new ChunkPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-		}
-	    return EnumActionResult.PASS;
+	    return EnumActionResult.FAIL;
 	}
 
 	@Override
 	 public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-		if (!player.isSneaking() && stack.getTagCompound().hasKey("homeX"))
+		if (stack.getTagCompound().hasKey("homeX") && hand.equals(EnumHand.MAIN_HAND))
 			if (!world.isRemote)
 				if (canTeleport(stack)) {
+					WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+
+					if (ticket == null)
+						ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
+
+					if (ticket != null)
+						ForgeChunkManager.forceChunk(ticket, new ChunkPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
+					
 					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
 					world.playSound(player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 					player.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
