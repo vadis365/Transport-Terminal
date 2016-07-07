@@ -72,15 +72,15 @@ public class TransportTerminal {
 
 		// Items
 		REMOTE = new ItemTransportTerminalRemote();
-		REMOTE_TERMINAL = new ItemRemoteTerminal().setUnlocalizedName("remoteTerminal");
-		CHIP = new ItemTransportTerminalChip().setUnlocalizedName("chip");
-		PLAYER_CHIP = new ItemTransportTerminalPlayerChip().setUnlocalizedName("playerChip");
+		REMOTE_TERMINAL = new ItemRemoteTerminal();
+		CHIP = new ItemTransportTerminalChip();
+		PLAYER_CHIP = new ItemTransportTerminalPlayerChip();
 
 		// Blocks
-		TERMINAL = new BlockTransportTerminal().setHardness(3.0F).setUnlocalizedName("console");
-		UTILS = new BlockChipUtilities().setHardness(3.0F).setUnlocalizedName("utils");
-		CHARGER = new BlockCharger().setHardness(3.0F).setUnlocalizedName("charger");
-		SUMMONER = new BlockSummoner().setHardness(3.0F).setUnlocalizedName("summoner");
+		TERMINAL = new BlockTransportTerminal().setHardness(3.0F);
+		UTILS = new BlockChipUtilities().setHardness(3.0F);
+		CHARGER = new BlockCharger().setHardness(3.0F);
+		SUMMONER = new BlockSummoner().setHardness(3.0F);
 		
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
