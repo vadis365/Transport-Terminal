@@ -3,8 +3,7 @@ package transportterminal.tileentites;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 
@@ -22,7 +21,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		inventory[slot] = is;
 		if (is != null && is.stackSize > getInventoryStackLimit())
 			is.stackSize = getInventoryStackLimit();
-		if (is != null && slot == 0 && is.getItem() == TransportTerminal.remote || is != null && slot == 0 && is.getItem() == TransportTerminal.remoteTerminal) {
+		if (is != null && slot == 0 && is.getItem() == TransportTerminal.REMOTE || is != null && slot == 0 && is.getItem() == TransportTerminal.REMOTE_TERMINAL) {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
@@ -41,15 +40,16 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("tempSlot", tempSlot);
 		nbt.setString("chipName", chipName);
+		return nbt;
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if (slot == 0 && is.getItem() == TransportTerminal.remote || slot == 0 && is.getItem() == TransportTerminal.remoteTerminal)
+		if (slot == 0 && is.getItem() == TransportTerminal.REMOTE || slot == 0 && is.getItem() == TransportTerminal.REMOTE_TERMINAL)
 			return true;
 		return false;
 	}
@@ -62,7 +62,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	public void setName(String text) {
 		chipName = text;
 		ItemStack is = getStackInSlot(getTempSlot());
-		if (is != null && is.getItem() == TransportTerminal.chip)
+		if (is != null && is.getItem() == TransportTerminal.CHIP)
 			is.getTagCompound().setString("description", chipName);
 	}
 
@@ -75,14 +75,14 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	}
 
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(pos, 1, tag);
+		return new SPacketUpdateTileEntity(pos, 1, tag);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 	}
 

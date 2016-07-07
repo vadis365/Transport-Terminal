@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,7 +26,7 @@ public class ItemTransportTerminalPlayerChip extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		if (hasTag(stack))
 			if (stack.getTagCompound() != null && stack.hasDisplayName())
-				list.add(EnumChatFormatting.GREEN + "Player: " + stack.getDisplayName());
+				list.add(TextFormatting.GREEN + "Player: " + stack.getDisplayName());
 			else
 				list.add("Empty Player Location Chip");
 	}

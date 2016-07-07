@@ -29,7 +29,7 @@ public class GuiUtilsNaming extends GuiContainer {
 	public final int NAME_PLAYER_CHIP = 3;
 
 	public GuiUtilsNaming(EntityPlayer player, TileEntityChipUtilities tile) {
-		super(new ContainerTerminal(player.inventory, null, 1));
+		super(new ContainerTerminal(player, null, 1));
 		xSize = 176;
 		ySize = 51;
 		playerSent = player;
@@ -85,9 +85,9 @@ public class GuiUtilsNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, "Arch Stanton", tile.getPos(), NAME_PLAYER_CHIP));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(playerSent, "Arch Stanton", tile.getPos(), NAME_PLAYER_CHIP));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(playerSent, textFieldName.getText(), tile.getPos(), NAME_PLAYER_CHIP));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(playerSent, textFieldName.getText(), tile.getPos(), NAME_PLAYER_CHIP));
 				playerSent.closeScreen();
 			}
 	}

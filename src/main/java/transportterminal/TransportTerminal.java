@@ -3,8 +3,10 @@ package transportterminal;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -46,15 +48,18 @@ public class TransportTerminal {
 	public static TransportTerminal instance;
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
-	public static CommonProxy proxy;
-	public static Item remote, remoteTerminal, chip, playerChip;
-	public static Block terminal, utils, charger, summoner;
-	public static SimpleNetworkWrapper networkWrapper;
-	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
+	public static CommonProxy PROXY;
+	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP;
+	public static Block TERMINAL, UTILS, CHARGER, SUMMONER;
+	public static SimpleNetworkWrapper NETWORK_WRAPPER;
+	public static SoundEvent OK_SOUND;
+	public static SoundEvent ERROR_SOUND;
+	public static SoundEvent TELEPORT_SOUND;
 
+	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
 		@Override
 		public Item getTabIconItem() {
-			return TransportTerminal.remote;
+			return TransportTerminal.REMOTE;
 		}
 	};
 
@@ -62,48 +67,55 @@ public class TransportTerminal {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI");
+		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI|energy");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		// Items
-		remote = new ItemTransportTerminalRemote().setUnlocalizedName("remote");
-		remoteTerminal = new ItemRemoteTerminal().setUnlocalizedName("remoteTerminal");
-		chip = new ItemTransportTerminalChip().setUnlocalizedName("chip");
-		playerChip = new ItemTransportTerminalPlayerChip().setUnlocalizedName("playerChip");
+		REMOTE = new ItemTransportTerminalRemote();
+		REMOTE_TERMINAL = new ItemRemoteTerminal().setUnlocalizedName("remoteTerminal");
+		CHIP = new ItemTransportTerminalChip().setUnlocalizedName("chip");
+		PLAYER_CHIP = new ItemTransportTerminalPlayerChip().setUnlocalizedName("playerChip");
 
 		// Blocks
-		terminal = new BlockTransportTerminal().setHardness(3.0F).setUnlocalizedName("console");
-		utils = new BlockChipUtilities().setHardness(3.0F).setUnlocalizedName("utils");
-		charger = new BlockCharger().setHardness(3.0F).setUnlocalizedName("charger");
-		summoner = new BlockSummoner().setHardness(3.0F).setUnlocalizedName("summoner");
-
-		GameRegistry.registerItem(remote, "remote");
-		GameRegistry.registerItem(remoteTerminal, "remoteTerminal");
-		GameRegistry.registerItem(chip, "chip");
-		GameRegistry.registerBlock(terminal, "console");
-		GameRegistry.registerItem(playerChip, "playerChip");
-		GameRegistry.registerBlock(utils, "utils");
-		GameRegistry.registerBlock(summoner, "summoner");
+		TERMINAL = new BlockTransportTerminal().setHardness(3.0F).setUnlocalizedName("console");
+		UTILS = new BlockChipUtilities().setHardness(3.0F).setUnlocalizedName("utils");
+		CHARGER = new BlockCharger().setHardness(3.0F).setUnlocalizedName("charger");
+		SUMMONER = new BlockSummoner().setHardness(3.0F).setUnlocalizedName("summoner");
+		
+		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
+		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
+		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
+		GameRegistry.register(TERMINAL.setRegistryName("transportterminal", "console").setUnlocalizedName("transportterminal.console"));
+		GameRegistry.register(PLAYER_CHIP.setRegistryName("transportterminal", "playerChip").setUnlocalizedName("transportterminal.playerChip"));
+		GameRegistry.register(UTILS.setRegistryName("transportterminal", "utils").setUnlocalizedName("transportterminal.utils"));
+		GameRegistry.register(SUMMONER.setRegistryName("transportterminal", "summoner").setUnlocalizedName("transportterminal.summoner"));
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
-			GameRegistry.registerBlock(charger, "charger");
+			GameRegistry.register(CHARGER.setRegistryName("transportterminal", "charger").setUnlocalizedName("transportterminal.charger"));
+		
+		PROXY.registerTileEntities();
+		PROXY.registerRenderInformation();
 
 		ModRecipes.addRecipes();
 
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
-		networkWrapper.registerMessage(RemotePacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
-		networkWrapper.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
-		networkWrapper.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 2, Side.SERVER);
-		networkWrapper.registerMessage(ConsolePacketHandler.class, ButtonMessage.class, 3, Side.SERVER);
-		networkWrapper.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 4, Side.SERVER);
-		networkWrapper.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.CLIENT);
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, PROXY);
+		NETWORK_WRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
+		NETWORK_WRAPPER.registerMessage(RemotePacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
+		NETWORK_WRAPPER.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
+		NETWORK_WRAPPER.registerMessage(ChipUtilsPacketHandler.class, ChipUtilsMessage.class, 2, Side.SERVER);
+		NETWORK_WRAPPER.registerMessage(ConsolePacketHandler.class, ButtonMessage.class, 3, Side.SERVER);
+		NETWORK_WRAPPER.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 4, Side.SERVER);
+		NETWORK_WRAPPER.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.CLIENT);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
 	}
 
 	@EventHandler
-	public void Init(FMLInitializationEvent event) {
-		proxy.registerTileEntities();
-		proxy.registerRenderInformation();
-		FMLCommonHandler.instance().bus().register(ConfigHandler.INSTANCE);
+	public void init(FMLInitializationEvent event) {
+		OK_SOUND = new SoundEvent(new ResourceLocation("transportterminal", "oksound")).setRegistryName("transportterminal", "oksound");
+		ERROR_SOUND = new SoundEvent(new ResourceLocation("transportterminal", "errorsound")).setRegistryName("transportterminal", "errorsound");
+		TELEPORT_SOUND = new SoundEvent(new ResourceLocation("transportterminal", "teleportsound")).setRegistryName("transportterminal", "teleportsound");
+		GameRegistry.register(OK_SOUND);
+		GameRegistry.register(ERROR_SOUND);
+		GameRegistry.register(TELEPORT_SOUND);
+		MinecraftForge.EVENT_BUS.register(ConfigHandler.INSTANCE);
 	}
 }

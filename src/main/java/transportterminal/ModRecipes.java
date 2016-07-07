@@ -11,23 +11,23 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public class ModRecipes {
 
 	public static void addRecipes() {
-		ItemStack nbtChip = new ItemStack(TransportTerminal.chip);
+		ItemStack nbtChip = new ItemStack(TransportTerminal.CHIP);
 		nbtChip.setTagCompound(new NBTTagCompound());
-		ItemStack nbtPlayerChip = new ItemStack(TransportTerminal.playerChip);
+		ItemStack nbtPlayerChip = new ItemStack(TransportTerminal.PLAYER_CHIP);
 		nbtPlayerChip.setTagCompound(new NBTTagCompound());
 
-		addShapelessRecipe(nbtChip, "cropPotato", Blocks.sand);
-		addShapelessRecipe(nbtChip, "ingotIron", Blocks.sand, "dustRedstone");
-		addShapelessRecipe(nbtPlayerChip, Items.name_tag, "gemDiamond", TransportTerminal.chip);
+		addShapelessRecipe(nbtChip, "cropPotato", Blocks.SAND);
+		addShapelessRecipe(nbtChip, "ingotIron", Blocks.SAND, "dustRedstone");
+		addShapelessRecipe(nbtPlayerChip, Items.NAME_TAG, "gemDiamond", TransportTerminal.CHIP);
 
-		addShapedRecipe(new ItemStack(TransportTerminal.remote), "RER", " C ", "IBI", 'R', "dustRedstone", 'E', Items.ender_pearl, 'C', TransportTerminal.chip, 'I', "ingotIron", 'B', Blocks.stone_button);
-		addShapedRecipe(new ItemStack(TransportTerminal.remoteTerminal), "IGI", "RXR", "ICI", 'R', "dustRedstone", 'G', "blockGlass", 'C', TransportTerminal.chip, 'I', "ingotIron", 'X', TransportTerminal.remote);
-		addShapedRecipe(new ItemStack(TransportTerminal.terminal), "EGE", "IRI", "SSS", 'E', Items.ender_eye, 'G', "blockGlass", 'I', "blockIron", 'R', "blockRedstone", 'S', Blocks.stone_slab);
-		addShapedRecipe(new ItemStack(TransportTerminal.utils), "CTC", "IRI", "xxx", 'C', TransportTerminal.chip, 'T', Items.name_tag, 'I', "blockIron", 'R', "blockRedstone", 'x', "ingotIron");
-		addShapedRecipe(new ItemStack(TransportTerminal.summoner), "P P", "ERE", "P P", 'P', TransportTerminal.playerChip, 'E', "gemEmerald", 'R', "blockRedstone");
+		addShapedRecipe(new ItemStack(TransportTerminal.REMOTE), "RER", " C ", "IBI", 'R', "dustRedstone", 'E', Items.ENDER_PEARL, 'C', TransportTerminal.CHIP, 'I', "ingotIron", 'B', Blocks.STONE_BUTTON);
+		addShapedRecipe(new ItemStack(TransportTerminal.REMOTE_TERMINAL), "IGI", "RXR", "ICI", 'R', "dustRedstone", 'G', "blockGlass", 'C', TransportTerminal.CHIP, 'I', "ingotIron", 'X', TransportTerminal.REMOTE);
+		addShapedRecipe(new ItemStack(TransportTerminal.TERMINAL), "EGE", "IRI", "SSS", 'E', Items.ENDER_EYE, 'G', "blockGlass", 'I', "blockIron", 'R', "blockRedstone", 'S', Blocks.STONE_SLAB);
+		addShapedRecipe(new ItemStack(TransportTerminal.UTILS), "CTC", "IRI", "xxx", 'C', TransportTerminal.CHIP, 'T', Items.NAME_TAG, 'I', "blockIron", 'R', "blockRedstone", 'x', "ingotIron");
+		addShapedRecipe(new ItemStack(TransportTerminal.SUMMONER), "P P", "ERE", "P P", 'P', TransportTerminal.PLAYER_CHIP, 'E', "gemEmerald", 'R', "blockRedstone");
 
 		if (TransportTerminal.IS_RF_PRESENT)
-			addShapedRecipe(new ItemStack(TransportTerminal.charger), "CRC", "GQG", "CLC", 'C', TransportTerminal.chip, 'G', "blockGold", 'Q', "blockQuartz", 'R', "blockRedstone", 'L', "blockLapis");
+			addShapedRecipe(new ItemStack(TransportTerminal.CHARGER), "CRC", "GQG", "CLC", 'C', TransportTerminal.CHIP, 'G', "blockGold", 'Q', "blockQuartz", 'R', "blockRedstone", 'L', "blockLapis");
 	}
 
 	private static void addShapelessRecipe(ItemStack output, Object... parameters) {

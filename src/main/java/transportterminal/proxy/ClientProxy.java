@@ -1,9 +1,8 @@
 package transportterminal.proxy;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
@@ -13,16 +12,14 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerRenderInformation() {
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.CHIP, 0, new ModelResourceLocation("transportterminal:chip", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.PLAYER_CHIP, 0, new ModelResourceLocation("transportterminal:playerChip", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE, 0, new ModelResourceLocation("transportterminal:remote", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE_TERMINAL, 0, new ModelResourceLocation("transportterminal:remoteTerminal", "inventory"));
 
-		ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-		mesher.register(TransportTerminal.chip, 0, new ModelResourceLocation("transportterminal:chip", "inventory"));
-		mesher.register(TransportTerminal.playerChip, 0, new ModelResourceLocation("transportterminal:playerChip", "inventory"));
-		mesher.register(TransportTerminal.remote, 0, new ModelResourceLocation("transportterminal:remote", "inventory"));
-		mesher.register(TransportTerminal.remoteTerminal, 0, new ModelResourceLocation("transportterminal:remoteTerminal", "inventory"));
-
-		mesher.register(Item.getItemFromBlock(TransportTerminal.utils), 0, new ModelResourceLocation("transportterminal:utils", "inventory"));
-		mesher.register(Item.getItemFromBlock(TransportTerminal.summoner), 0, new ModelResourceLocation("transportterminal:summoner", "inventory"));
-		mesher.register(Item.getItemFromBlock(TransportTerminal.charger), 0, new ModelResourceLocation("transportterminal:charger", "inventory"));
-		mesher.register(Item.getItemFromBlock(TransportTerminal.terminal), 0, new ModelResourceLocation("transportterminal:console", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.UTILS), 0, new ModelResourceLocation("transportterminal:utils", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.SUMMONER), 0, new ModelResourceLocation("transportterminal:summoner", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.CHARGER), 0, new ModelResourceLocation("transportterminal:charger", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(TransportTerminal.TERMINAL), 0, new ModelResourceLocation("transportterminal:console", "inventory"));
 	}
 }

@@ -14,8 +14,9 @@ public class ContainerTerminal extends ContainerEnergy {
 	private final int numRows = 2;
 	private int idType;
 
-	public ContainerTerminal(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
-		super(tile);
+	public ContainerTerminal(EntityPlayer player, TileEntityTransportTerminal tile, int id) {
+		super(tile, player);
+		InventoryPlayer playerInventory = player.inventory;
 		int i = (numRows - 4) * 18;
 		idType = id;
 
@@ -43,10 +44,10 @@ public class ContainerTerminal extends ContainerEnergy {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 15) {
-				if (stack1.getItem() == TransportTerminal.chip || stack1.getItem() == TransportTerminal.playerChip) {
+				if (stack1.getItem() == TransportTerminal.CHIP || stack1.getItem() == TransportTerminal.PLAYER_CHIP) {
 					if (!mergeItemStack(stack1, 2, 16, false))
 						return null;
-				} else if (stack1.getItem() == TransportTerminal.remote)
+				} else if (stack1.getItem() == TransportTerminal.REMOTE)
 					if (!mergeItemStack(stack1, 0, 1, true))
 						return null;
 			} else if (!mergeItemStack(stack1, 16, inventorySlots.size(), false))

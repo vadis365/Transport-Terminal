@@ -26,7 +26,7 @@ public class SlotRemote extends Slot {
 
 		if (stack != null && slotNumber == 1) {
 			inventory.setInventorySlotContents(0, null);
-			stack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
+			stack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionType().getName());
 			stack.getTagCompound().setInteger("dim", player.dimension);
 		}
 		super.onPickupFromSlot(player, stack);

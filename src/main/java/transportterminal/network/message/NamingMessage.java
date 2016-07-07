@@ -2,7 +2,7 @@ package transportterminal.network.message;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import transportterminal.utils.PacketUtils;
@@ -17,12 +17,12 @@ public class NamingMessage implements IMessage {
 	}
 
 	public NamingMessage(EntityPlayer player, String string) {
-		dimension = player.getCurrentEquippedItem().getTagCompound().getInteger("dim");
+		dimension = player.getActiveItemStack().getTagCompound().getInteger("dim");
 		entityID = player.getEntityId();
 		name = string;
-		int x = player.getCurrentEquippedItem().getTagCompound().getInteger("homeX");
-		int y = player.getCurrentEquippedItem().getTagCompound().getInteger("homeY");
-		int z = player.getCurrentEquippedItem().getTagCompound().getInteger("homeZ");
+		int x = player.getActiveItemStack().getTagCompound().getInteger("homeX");
+		int y = player.getActiveItemStack().getTagCompound().getInteger("homeY");
+		int z = player.getActiveItemStack().getTagCompound().getInteger("homeZ");
 		tilePos = new BlockPos(x, y, z);
 	}
 

@@ -2,10 +2,10 @@ package transportterminal.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,8 +22,8 @@ public class GuiSummoner extends GuiContainer {
 	private static final ResourceLocation GUI_SUMMONER = new ResourceLocation("transportterminal:textures/gui/transportSummonerGui.png");
 	private final TileEntitySummoner tile;
 
-	public GuiSummoner(InventoryPlayer playerInventory, TileEntitySummoner tile) {
-		super(new ContainerSummoner(playerInventory, tile));
+	public GuiSummoner(EntityPlayer player, TileEntitySummoner tile) {
+		super(new ContainerSummoner(player, tile));
 		this.tile = tile;
 		allowUserInput = false;
 		ySize = 168;
@@ -41,10 +41,10 @@ public class GuiSummoner extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getInventoryName()), xSize / 2 - fontRendererObj.getStringWidth(StatCollector.translateToLocal(tile.getInventoryName())) / 2, ySize - 136, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format(tile.getInventoryName()), xSize / 2 - fontRendererObj.getStringWidth(I18n.format(tile.getInventoryName())) / 2, ySize - 136, 4210752);
+		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
 		if (TransportTerminal.IS_RF_PRESENT)
-			fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
+			fontRendererObj.drawString(I18n.format("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class GuiSummoner extends GuiContainer {
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
-				TransportTerminal.networkWrapper.sendToServer(new PlayerSummonMessage(mc.thePlayer, guibutton.id, pos));
+				TransportTerminal.NETWORK_WRAPPER.sendToServer(new PlayerSummonMessage(mc.thePlayer, guibutton.id, pos));
 				mc.thePlayer.closeScreen();
 			}
 	}

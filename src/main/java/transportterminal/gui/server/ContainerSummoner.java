@@ -12,8 +12,9 @@ public class ContainerSummoner extends ContainerEnergy {
 
 	private final int numRows = 2;
 
-	public ContainerSummoner(InventoryPlayer playerInventory, TileEntitySummoner tile) {
-		super(tile);
+	public ContainerSummoner(EntityPlayer player, TileEntitySummoner tile) {
+		super(tile, player);
+		InventoryPlayer playerInventory = player.inventory;
 		int i = (numRows - 4) * 18;
 
 		addSlotToContainer(new SlotChip(tile, 0, 80, 9));
@@ -33,7 +34,7 @@ public class ContainerSummoner extends ContainerEnergy {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 0) {
-				if (stack1.getItem() == TransportTerminal.playerChip)
+				if (stack1.getItem() == TransportTerminal.PLAYER_CHIP)
 					if (!mergeItemStack(stack1, 0, 1, false))
 						return null;
 			} else if (!mergeItemStack(stack1, 1, inventorySlots.size(), false))

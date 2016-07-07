@@ -1,9 +1,10 @@
 package transportterminal.gui.client;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,17 +19,17 @@ public class GuiCharger extends GuiContainer {
 	private static final ResourceLocation GUI_CHARGER = new ResourceLocation("transportterminal:textures/gui/transportChargerGui.png");
 	private final TileEntityCharger tile;
 
-	public GuiCharger(InventoryPlayer playerInventory, TileEntityCharger tile) {
-		super(new ContainerCharger(playerInventory, tile));
+	public GuiCharger(EntityPlayer player, TileEntityCharger tile) {
+		super(new ContainerCharger(player, tile));
 		this.tile = tile;
 		ySize = 168;
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getName()), 8, 6, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format(tile.getName()), 8, 6, 4210752);
+		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override

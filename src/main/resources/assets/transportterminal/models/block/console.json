@@ -4,7 +4,7 @@
         "texture": "transportterminal:blocks/console"
     },
     "elements": [
-        {   "__comment": "base",
+        {   
             "from": [ 0, 0, 0 ],
             "to": [ 16, 1, 16 ],
             "faces": {
@@ -16,7 +16,7 @@
                 "east":  { "uv": [  0, 1, 8, 2 ], "texture": "#texture"}
             } 
         },
-        {   "__comment": "pad",
+        {   
             "from": [ 1, 1, 1 ],
             "to": [ 15, 2, 10 ],
             "faces": {
@@ -28,7 +28,7 @@
                 "east":  { "uv": [  0, 0.5, 7, 1 ], "texture": "#texture"}
             }
         },
-        {   "__comment": "support",
+        {  
             "from": [ 4, 1, 13 ],
             "to": [ 12, 12, 15 ],
             "faces": {
@@ -40,7 +40,7 @@
                 "east":  { "uv": [  0, 0.5, 4, 6 ], "texture": "#texture"}
             }
         },
-        {   "__comment": "console",
+        {   
             "from": [ 1, 10, 11 ],
             "to": [ 15, 15, 15 ],
             "rotation": { "origin": [ 8, 13, 12 ], "axis": "x", "angle": 45, "rescale": false },

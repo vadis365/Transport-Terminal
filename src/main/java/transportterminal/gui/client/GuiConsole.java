@@ -2,9 +2,9 @@ package transportterminal.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,8 +21,8 @@ public class GuiConsole extends GuiContainer {
 	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transportTerminalGui.png");
 	private final TileEntityTransportTerminal tile;
 
-	public GuiConsole(InventoryPlayer playerInventory, TileEntityTransportTerminal tile, int id) {
-		super(new ContainerTerminal(playerInventory, tile, id));
+	public GuiConsole(EntityPlayer player, TileEntityTransportTerminal tile, int id) {
+		super(new ContainerTerminal(player, tile, id));
 		this.tile = tile;
 		allowUserInput = false;
 		ySize = 168;
@@ -43,10 +43,10 @@ public class GuiConsole extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getName()), 8, 6, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format(tile.getName()), 8, 6, 4210752);
+		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
 		if (TransportTerminal.IS_RF_PRESENT)
-			fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
+			fontRendererObj.drawString(I18n.format("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class GuiConsole extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
 				int newDim = mc.thePlayer.dimension;
-				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, tile.getPos(), newDim));
+				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, tile.getPos(), newDim));
 				mc.thePlayer.closeScreen();
 			}
 	}

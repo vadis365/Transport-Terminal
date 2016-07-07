@@ -2,11 +2,12 @@ package transportterminal.utils;
 
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import transportterminal.TransportTerminal;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
@@ -20,21 +21,21 @@ public class TeleportUtils {
 
 	public static void dimensionTransfer(WorldServer worldserver, EntityPlayerMP player, int newDim) {
 		if (player.dimension != newDim && player.dimension != 1)
-			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
+			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 		if (player.dimension != newDim && player.dimension == 1) {
 			//this has to be done twice because of stupid vanilla hacks
-			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
-			player.mcServer.getConfigurationManager().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
+			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
+			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 		}
 	}
 
 	public static void dimensionTransfer(WorldServer worldserver, EntityPlayerMP player, EntityPlayerMP playerOnChip) {
 		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension != 1)
-			playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
+			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension == 1) {
 			//this has to be done twice because of stupid vanilla hacks
-			playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
-			playerOnChip.mcServer.getConfigurationManager().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
+			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
+			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 		}
 	}
 
@@ -45,8 +46,8 @@ public class TeleportUtils {
 	}
 
 	public static void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {
-		player.playerNetServerHandler.setPlayerLocation(x, y, z, yaw, pitch);
-		player.worldObj.playSoundEffect(x, y, z, "transportterminal:teleportsound", 1.0F, 1.0F);
+		player.connection.setPlayerLocation(x, y, z, yaw, pitch);
+		player.worldObj.playSound(player.posX, player.posY, player.posZ, TransportTerminal.TELEPORT_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 	}
 
 	public static boolean isConsole(World world, BlockPos pos) {
@@ -76,6 +77,6 @@ public class TeleportUtils {
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {
-		return MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(name);
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(name);
 	}
 }

@@ -1,7 +1,7 @@
 package transportterminal.utils;
 
 import net.minecraft.block.Block;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockPosUtils {

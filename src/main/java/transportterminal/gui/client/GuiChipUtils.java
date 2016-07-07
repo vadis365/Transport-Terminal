@@ -2,12 +2,12 @@ package transportterminal.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,8 +25,8 @@ public class GuiChipUtils extends GuiContainer {
 	private final TileEntityChipUtilities tile;
 	public final int COPY_CHIP = 0, ERASE_CHIP = 1, ERASE_PLAYER_CHIP = 2, NAME_PLAYER_CHIP = 3;
 
-	public GuiChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile) {
-		super(new ContainerChipUtils(playerInventory, tile));
+	public GuiChipUtils(EntityPlayer player, TileEntityChipUtilities tile) {
+		super(new ContainerChipUtils(player, tile));
 		this.tile = tile;
 		allowUserInput = false;
 		ySize = 168;
@@ -46,8 +46,8 @@ public class GuiChipUtils extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		fontRendererObj.drawString(StatCollector.translateToLocal(tile.getName()), 8, 6, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format(tile.getName()), 8, 6, 4210752);
+		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
 	}
 
 	@Override
@@ -66,24 +66,24 @@ public class GuiChipUtils extends GuiContainer {
 		if (guibutton instanceof GuiButton) {
 			if (guibutton.id == 0) {
 				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()) && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBlankChip(tile.getStackInSlot(1)))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
 
 				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()) && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isBlankPlayerChip(tile.getStackInSlot(1)))
-					TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
 			}
 			if (guibutton.id == 1)
 				if (tile.getStackInSlot(1) == null) {
 					if (tile.getStackInSlot(0) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()))
-						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_CHIP));
+						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_CHIP));
 
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
-						TransportTerminal.networkWrapper.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_PLAYER_CHIP));
+						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_PLAYER_CHIP));
 				}
 
 			if (guibutton.id == 2)
 				if (tile.getStackInSlot(1) == null)
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
-						mc.thePlayer.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, pos.getX(), pos.getY(), pos.getZ());
+						mc.thePlayer.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
 
@@ -96,10 +96,10 @@ public class GuiChipUtils extends GuiContainer {
 	}
 
 	public boolean isBasicChipItem(Item item) {
-		return item != null && item == TransportTerminal.chip;
+		return item != null && item == TransportTerminal.CHIP;
 	}
 
 	public boolean isPlayerChipItem(Item item) {
-		return item != null && item == TransportTerminal.playerChip;
+		return item != null && item == TransportTerminal.PLAYER_CHIP;
 	}
 }

@@ -4,9 +4,13 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
@@ -59,7 +63,7 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(pos);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
-					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.chip) {
+					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.CHIP) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.getTagCompound() != null && !chipStack.getTagCompound().hasKey("chipX"))
 							return true;
@@ -81,12 +85,12 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(pos);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
-					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.chip) {
+					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.CHIP) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.getTagCompound() != null && !chipStack.getTagCompound().hasKey("chipX")) {
 							if (!world2.isRemote) {
 								tile.setTempSlot(slot);
-								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionName());
+								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionType().getName());
 								chipStack.getTagCompound().setInteger("chipDim", player.dimension);
 								chipStack.getTagCompound().setInteger("chipX", x);
 								chipStack.getTagCompound().setInteger("chipY", y);
@@ -100,30 +104,30 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (!worldIn.isRemote && hasTag(stack) && playerIn.isSneaking()) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	    if (!worldIn.isRemote && hasTag(stack) && playerIn.isSneaking()) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 
 			if (ticket == null)
 				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
 			if (ticket != null)
-				ForgeChunkManager.forceChunk(ticket, new ChunkCoordIntPair(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
+				ForgeChunkManager.forceChunk(ticket, new ChunkPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
 
 			if (foundFreeChip(playerIn, stack)) {
-				worldIn.playSoundEffect(playerIn.posX, playerIn.posY, playerIn.posZ, "transportterminal:oksound", 1.0F, 1.0F);
-				playerIn.openGui(TransportTerminal.instance, TransportTerminal.proxy.GUI_ID_REMOTE, worldIn, pos.getX(), pos.getY(), pos.getZ());
-				return true;
+				worldIn.playSound(playerIn.posX, playerIn.posY, playerIn.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+				playerIn.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_REMOTE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+				return EnumActionResult.SUCCESS;
 			}
 
 			if (!foundFreeChip(playerIn, stack))
-				worldIn.playSoundEffect(playerIn.posX, playerIn.posY, playerIn.posZ, "transportterminal:errorsound", 1.0F, 1.0F);
+				worldIn.playSound(playerIn.posX, playerIn.posY, playerIn.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 		}
-		return false;
+	    return EnumActionResult.FAIL;
 	}
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+	 public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 		if (!player.isSneaking() && stack.getTagCompound().hasKey("homeX")) {
 			int x = stack.getTagCompound().getInteger("homeX");
 			int y = stack.getTagCompound().getInteger("homeY");
@@ -134,9 +138,9 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
 			if (world.isRemote)
 				if (canTeleport(stack))
-					TransportTerminal.networkWrapper.sendToServer(new TeleportMessage(player, x, y, z, newDim));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new TeleportMessage(player, x, y, z, newDim));
 		}
-		return stack;
+		return new ActionResult(EnumActionResult.PASS, stack);
 	}
 
 	@Override

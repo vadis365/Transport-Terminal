@@ -26,7 +26,7 @@ public class GuiNaming extends GuiContainer {
 	private EntityPlayer playerSent;
 
 	public GuiNaming(EntityPlayer player) {
-		super(new ContainerTerminal(player.inventory, null, 1));
+		super(new ContainerTerminal(player, null, 1));
 		xSize = 176;
 		ySize = 51;
 		playerSent = player;
@@ -81,9 +81,9 @@ public class GuiNaming extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
 				if (StringUtils.isNullOrEmpty(textFieldName.getText()))
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, "Un-named Location"));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new NamingMessage(playerSent, "Un-named Location"));
 				else
-					TransportTerminal.networkWrapper.sendToServer(new NamingMessage(playerSent, textFieldName.getText()));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new NamingMessage(playerSent, textFieldName.getText()));
 				playerSent.closeScreen();
 			}
 	}

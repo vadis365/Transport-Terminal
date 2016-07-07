@@ -1,7 +1,6 @@
 package transportterminal.tileentites;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import transportterminal.core.confighandler.ConfigHandler;
 import cofh.api.energy.IEnergyContainerItem;

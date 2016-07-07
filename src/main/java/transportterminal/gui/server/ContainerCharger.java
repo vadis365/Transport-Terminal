@@ -9,8 +9,9 @@ import cofh.api.energy.IEnergyContainerItem;
 
 public class ContainerCharger extends ContainerEnergy {
 
-	public ContainerCharger(InventoryPlayer playerInventory, TileEntityCharger tile) {
-		super(tile);
+	public ContainerCharger(EntityPlayer player, TileEntityCharger tile) {
+		super(tile, player);
+		InventoryPlayer playerInventory = player.inventory;
 		addSlotToContainer(new Slot(tile, 0, 62, 9));
 		addSlotToContainer(new Slot(tile, 1, 62, 31));
 		addSlotToContainer(new Slot(tile, 2, 62, 53));

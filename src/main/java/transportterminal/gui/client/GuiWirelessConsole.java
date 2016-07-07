@@ -2,11 +2,10 @@ package transportterminal.gui.client;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -24,8 +23,8 @@ public class GuiWirelessConsole extends GuiContainer {
 	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transportTerminalGui.png");
 	private EntityPlayer playerSent;
 
-	public GuiWirelessConsole(InventoryPlayer inventory, EntityPlayer player) {
-		super(new ContainerTerminal(inventory, new TileEntityTransportTerminal(), 0));
+	public GuiWirelessConsole(EntityPlayer player) {
+		super(new ContainerTerminal(player, new TileEntityTransportTerminal(), 0));
 		playerSent = player;
 		allowUserInput = false;
 		ySize = 168;
@@ -46,14 +45,14 @@ public class GuiWirelessConsole extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		ItemStack stack = playerSent.getCurrentEquippedItem();
+		ItemStack stack = playerSent.getActiveItemStack();
 		int xx = stack.getTagCompound().getInteger("homeX");
 		int yy = stack.getTagCompound().getInteger("homeY");
 		int zz = stack.getTagCompound().getInteger("homeZ");
-		fontRendererObj.drawString(StatCollector.translateToLocal("Location X: " + xx + " Y: " + yy + " Z: " + zz), 8, 6, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format("Location X: " + xx + " Y: " + yy + " Z: " + zz), 8, 6, 4210752);
+		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
 		if (TransportTerminal.IS_RF_PRESENT)
-			fontRendererObj.drawString(StatCollector.translateToLocal("RF: " + ((IEnergyContainerItem) stack.getItem()).getEnergyStored(stack)), 100, ySize - 96 + 2, 4210752);
+			fontRendererObj.drawString(I18n.format("RF: " + ((IEnergyContainerItem) stack.getItem()).getEnergyStored(stack)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class GuiWirelessConsole extends GuiContainer {
 
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
-		ItemStack stack = playerSent.getCurrentEquippedItem();
+		ItemStack stack = playerSent.getActiveItemStack();
 		int newDim = stack.getTagCompound().getInteger("dim");
 		int x = stack.getTagCompound().getInteger("homeX");
 		int y = stack.getTagCompound().getInteger("homeY");
@@ -75,7 +74,7 @@ public class GuiWirelessConsole extends GuiContainer {
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				TransportTerminal.networkWrapper.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, newDim));
+				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, newDim));
 				mc.thePlayer.closeScreen();
 			}
 	}

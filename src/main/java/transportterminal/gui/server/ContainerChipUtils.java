@@ -13,7 +13,8 @@ public class ContainerChipUtils extends Container {
 
 	public int numRows = 2;
 
-	public ContainerChipUtils(InventoryPlayer playerInventory, TileEntityChipUtilities tile) {
+	public ContainerChipUtils(EntityPlayer player, TileEntityChipUtilities tile) {
+		InventoryPlayer playerInventory = player.inventory;
 		int i = (numRows - 4) * 18;
 
 		addSlotToContainer(new SlotChip(tile, 0, 62, 9)); // Origin
@@ -39,10 +40,10 @@ public class ContainerChipUtils extends Container {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 1) {
-				if (stack1.getItem() == TransportTerminal.chip || stack1.getItem() == TransportTerminal.playerChip) {
+				if (stack1.getItem() == TransportTerminal.CHIP || stack1.getItem() == TransportTerminal.PLAYER_CHIP) {
 					if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
 						return null;
-				} else if (stack1.getItem() != TransportTerminal.chip || stack1.getItem() != TransportTerminal.playerChip)
+				} else if (stack1.getItem() != TransportTerminal.CHIP || stack1.getItem() != TransportTerminal.PLAYER_CHIP)
 					if (!mergeItemStack(stack1, 0, 1, true))
 						return null;
 			} else if (!mergeItemStack(stack1, 2, inventorySlots.size(), false))

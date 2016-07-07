@@ -6,10 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import transportterminal.TransportTerminal;
 
 public class TileEntityChipUtilities extends TileEntity implements IInventory {
@@ -84,7 +83,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		NBTTagList tags = new NBTTagList();
 
@@ -98,6 +97,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 
 		nbt.setTag("Items", tags);
 		nbt.setString("playerChipName", playerChipName);
+		return nbt;
 	}
 
 	@Override
@@ -111,14 +111,14 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(pos, 1, tag);
+		return new SPacketUpdateTileEntity(pos, 1, tag);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 	}
 
@@ -127,21 +127,21 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	public void eraseChip() {
-		ItemStack nbtChip = new ItemStack(TransportTerminal.chip);
+		ItemStack nbtChip = new ItemStack(TransportTerminal.CHIP);
 		nbtChip.setTagCompound(new NBTTagCompound());
 		setInventorySlotContents(1, nbtChip);
 		setInventorySlotContents(0, null);
 	}
 
 	public void erasePlayerChip() {
-		setInventorySlotContents(1, new ItemStack(TransportTerminal.playerChip));
+		setInventorySlotContents(1, new ItemStack(TransportTerminal.PLAYER_CHIP));
 		setInventorySlotContents(0, null);
 	}
 
 	public void setName(String text) {
 		playerChipName = text;
 		ItemStack stack = getStackInSlot(1);
-		if (stack != null && stack.getItem() == TransportTerminal.playerChip)
+		if (stack != null && stack.getItem() == TransportTerminal.PLAYER_CHIP)
 			stack.setStackDisplayName(playerChipName);
 	}
 
@@ -156,7 +156,7 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public IChatComponent getDisplayName() {
+	public ITextComponent getDisplayName() {
 		return null;
 	}
 

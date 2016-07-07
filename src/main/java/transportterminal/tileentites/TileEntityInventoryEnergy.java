@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.Optional;
 import cofh.api.energy.IEnergyHandler;
 
@@ -132,7 +132,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		NBTTagList tags = new NBTTagList();
 
@@ -146,6 +146,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 		nbt.setTag("Items", tags);
 		nbt.setInteger("energy", energy);
+		return nbt;
 	}
 
 	@Override
@@ -187,7 +188,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	}
 
 	@Override
-	public IChatComponent getDisplayName() {
+	public ITextComponent getDisplayName() {
 		return null;
 	}
 }
