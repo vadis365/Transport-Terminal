@@ -136,6 +136,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
 		NBTTagList tags = new NBTTagList();
 
 		for (int i = 0; i < inventory.length; i++)
@@ -148,7 +149,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 		nbt.setTag("Items", tags);
 		nbt.setInteger("energy", energy);
-		return super.writeToNBT(nbt);
+		return nbt;
 	}
 
 	@Override

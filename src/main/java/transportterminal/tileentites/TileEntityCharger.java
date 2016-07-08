@@ -1,8 +1,14 @@
 package transportterminal.tileentites;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.core.confighandler.ConfigHandler;
+import transportterminal.utils.TeleportUtils;
 import cofh.api.energy.IEnergyContainerItem;
 
 public class TileEntityCharger extends TileEntityInventoryEnergy implements ITickable {
@@ -18,28 +24,37 @@ public class TileEntityCharger extends TileEntityInventoryEnergy implements ITic
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
-		@Override
-		public void update() {
-			if (worldObj.isRemote)
+	@Override
+	public void update() {
+		if (worldObj.isRemote)
+			return;
+
+		int stored = getEnergyStored(null);
+		for (ItemStack stack : inventory) {
+			if (stored <= 0)
 				return;
-
-			int stored = getEnergyStored(null);
-			for (ItemStack stack : inventory) {
-				if (stored <= 0)
-					return;
-				if (stack != null && stack.getItem() instanceof IEnergyContainerItem && stack.stackSize == 1) {
-					IEnergyContainerItem item = (IEnergyContainerItem) stack.getItem();
-					int received = item.receiveEnergy(stack, stored, false);
-					extractEnergy(null, received, false);
-
-					stored = getEnergyStored(null);
-				}
+			if (stack != null && stack.getItem() instanceof IEnergyContainerItem && stack.stackSize == 1) {
+				IEnergyContainerItem item = (IEnergyContainerItem) stack.getItem();
+				int received = item.receiveEnergy(stack, stored, false);
+				extractEnergy(null, received, false);
+				TeleportUtils.consumeChargerEnergy(this, received);
+				stored = getEnergyStored(null);
 			}
 		}
-	 
+	}
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		NBTTagCompound tag = new NBTTagCompound();
+		writeToNBT(tag);
+		return new SPacketUpdateTileEntity(pos, 0, tag);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+		readFromNBT(packet.getNbtCompound());
+	}
 }

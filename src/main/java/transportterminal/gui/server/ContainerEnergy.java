@@ -30,9 +30,9 @@ public abstract class ContainerEnergy extends Container {
 		if (currentEnergyAmount == lastEnergyAmount)
 			return;
 		 
-		//for (Object obj : listeners)  
-			//if (obj instanceof EntityPlayerMP)  
-				TransportTerminal.NETWORK_WRAPPER.sendTo(new ContainerMessage(windowId, currentEnergyAmount), (EntityPlayerMP) player);  
+		for (Object obj : listeners)  
+			if (obj instanceof EntityPlayerMP)  
+				TransportTerminal.NETWORK_WRAPPER.sendTo(new ContainerMessage(windowId, currentEnergyAmount), (EntityPlayerMP) obj);  
 
 		lastEnergyAmount = currentEnergyAmount;
 	}

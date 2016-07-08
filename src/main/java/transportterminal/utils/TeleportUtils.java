@@ -14,6 +14,7 @@ import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemTransportTerminalChip;
 import transportterminal.items.ItemTransportTerminalPlayerChip;
 import transportterminal.network.TransportTerminalTeleporter;
+import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
@@ -74,6 +75,11 @@ public class TeleportUtils {
 	public static void consumeSummonerEnergy(TileEntitySummoner tile) {
 		if (TransportTerminal.IS_RF_PRESENT)
 			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
+	}
+
+	public static void consumeChargerEnergy(TileEntityCharger tile, int energyExtracted) {
+		if (TransportTerminal.IS_RF_PRESENT)
+			tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {

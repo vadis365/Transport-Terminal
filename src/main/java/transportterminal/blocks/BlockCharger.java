@@ -29,8 +29,10 @@ public class BlockCharger extends BlockDirectional {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
 			return true;
-		if (world.getTileEntity(pos) instanceof TileEntityCharger)
+		if (world.getTileEntity(pos) instanceof TileEntityCharger) {
+			world.notifyBlockUpdate(pos, state, state, 3);
 			player.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_CHARGER, world, pos.getX(), pos.getY(), pos.getZ());
+		}
 		return true;
 	}
 

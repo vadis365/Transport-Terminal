@@ -38,7 +38,7 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
-		return new SPacketUpdateTileEntity(pos, 1, tag);
+		return new SPacketUpdateTileEntity(pos, 0, tag);
 	}
 
 	@Override
@@ -52,7 +52,6 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
