@@ -8,11 +8,12 @@ import transportterminal.network.message.ContainerMessage;
 import transportterminal.tileentites.TileEntityInventoryEnergy;
 
 public abstract class ContainerEnergy extends Container {
-
+	protected final EntityPlayer player;
 	protected final TileEntityInventoryEnergy tile;
 	private int lastEnergyAmount = -1;
 
-	protected ContainerEnergy(TileEntityInventoryEnergy tile) {
+	protected ContainerEnergy(EntityPlayer player, TileEntityInventoryEnergy tile) {
+		this.player = player;
 		this.tile = tile;
 	}
 
@@ -29,9 +30,9 @@ public abstract class ContainerEnergy extends Container {
 		if (currentEnergyAmount == lastEnergyAmount)
 			return;
 		 
-		for (Object obj : listeners)  
-			if (obj instanceof EntityPlayerMP)  
-				TransportTerminal.NETWORK_WRAPPER.sendTo(new ContainerMessage(windowId, currentEnergyAmount), (EntityPlayerMP) obj);  
+		//for (Object obj : listeners)  
+			//if (obj instanceof EntityPlayerMP)  
+				TransportTerminal.NETWORK_WRAPPER.sendTo(new ContainerMessage(windowId, currentEnergyAmount), (EntityPlayerMP) player);  
 
 		lastEnergyAmount = currentEnergyAmount;
 	}

@@ -9,10 +9,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.Optional;
-import cofh.api.energy.IEnergyHandler;
+import net.minecraftforge.fml.common.Optional.Interface;
+import cofh.api.energy.IEnergyProvider;
+import cofh.api.energy.IEnergyReceiver;
 
-@Optional.Interface(iface = "cofh.api.energy.IEnergyHandler", modid = "CoFHAPI")
-public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyHandler {
+@Optional.InterfaceList( value = { @Interface (iface = "cofh.api.energy.IEnergyReceiver", modid = "CoFHAPI"), @Interface(iface = "cofh.api.energy.IEnergyProvider", modid = "CoFHAPI") })
+
+public abstract class TileEntityInventoryEnergy extends TileEntity implements IInventory, IEnergyReceiver, IEnergyProvider {
 
 	private final int capacity;
 	private int energy;
@@ -133,7 +136,6 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
 		NBTTagList tags = new NBTTagList();
 
 		for (int i = 0; i < inventory.length; i++)
@@ -146,7 +148,7 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 
 		nbt.setTag("Items", tags);
 		nbt.setInteger("energy", energy);
-		return nbt;
+		return super.writeToNBT(nbt);
 	}
 
 	@Override

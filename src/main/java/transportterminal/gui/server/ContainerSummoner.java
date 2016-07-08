@@ -13,7 +13,7 @@ public class ContainerSummoner extends ContainerEnergy {
 	private final int numRows = 2;
 
 	public ContainerSummoner(EntityPlayer player, TileEntitySummoner tile) {
-		super(tile);
+		super(player, tile);
 		InventoryPlayer playerInventory = player.inventory;
 		int i = (numRows - 4) * 18;
 

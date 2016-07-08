@@ -68,7 +68,7 @@ public class TransportTerminal {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		IS_RF_PRESENT = false; //ModAPIManager.INSTANCE.hasAPI("CoFHAPI|energy");
+		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI|energy");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		// Items

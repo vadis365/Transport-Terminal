@@ -15,7 +15,7 @@ public class ContainerTerminal extends ContainerEnergy {
 	private int idType;
 
 	public ContainerTerminal(EntityPlayer player, TileEntityTransportTerminal tile, int id) {
-		super(tile);
+		super(player, tile);
 		InventoryPlayer playerInventory = player.inventory;
 		int i = (numRows - 4) * 18;
 		idType = id;
