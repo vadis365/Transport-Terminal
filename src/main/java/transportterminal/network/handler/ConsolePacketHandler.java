@@ -26,6 +26,7 @@ public class ConsolePacketHandler implements IMessageHandler<ButtonMessage, IMes
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				DimensionManager.initDimension(message.newDimension);
 				WorldServer world2 = DimensionManager.getWorld(message.newDimension);
 				WorldServer worldserver = (WorldServer) world;
 				TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(message.tilePos);

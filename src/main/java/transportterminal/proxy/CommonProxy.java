@@ -78,9 +78,10 @@ public class CommonProxy implements IGuiHandler {
 				return new ContainerCharger(player, (TileEntityCharger) tileentity);
 		}
 
-		if (ID == GUI_ID_REMOTE_TERMINAL)
-			if (getTile(player, world, x, y, z) instanceof TileEntityTransportTerminal)
-				return new ContainerTerminal(player, (TileEntityTransportTerminal) getTile(player, world, x, y, z), 0);
+		if (ID == GUI_ID_REMOTE_TERMINAL) {
+			if (getTile(player, world, x, y, z, true) instanceof TileEntityTransportTerminal)
+				return new ContainerTerminal(player, (TileEntityTransportTerminal) getTile(player, world, x, y, z, false), 0);
+		}
 
 		if (ID == GUI_ID_SUMMONER) {
 			BlockPos pos = new BlockPos(x, y, z);
@@ -136,10 +137,12 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
-	public TileEntity getTile(EntityPlayer player, World world, int x, int y, int z) {
+	public TileEntity getTile(EntityPlayer player, World world, int x, int y, int z, boolean loadDimension) {
 		TileEntity tileentity;
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack != null && stack.getItem() == TransportTerminal.REMOTE_TERMINAL) {
+			if(loadDimension)
+				DimensionManager.initDimension(stack.getTagCompound().getInteger("dim"));
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			int xx = stack.getTagCompound().getInteger("homeX");
 			int yy = stack.getTagCompound().getInteger("homeY");
