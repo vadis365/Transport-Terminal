@@ -15,27 +15,32 @@ import transportterminal.utils.TeleportUtils;
 public class PlayerSummonPacketHandler implements IMessageHandler<PlayerSummonMessage, IMessage> {
 
 	@Override
-	public IMessage onMessage(PlayerSummonMessage message, MessageContext ctx) {
+	public IMessage onMessage(final PlayerSummonMessage message, MessageContext ctx) {
 
-		World world = DimensionManager.getWorld(message.dimension);
+		final World world = DimensionManager.getWorld(message.dimension);
 
 		if (world == null)
 			return null;
 
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				TileEntitySummoner tile = (TileEntitySummoner) world.getTileEntity(message.tilePos);
-				if (tile != null && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).hasDisplayName()) {
-					EntityPlayerMP playerOnChip = TeleportUtils.getPlayerByUsername(tile.getStackInSlot(message.buttonID).getDisplayName());
-					EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-					WorldServer worldserver = (WorldServer) world;
-					if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_SUMMON_PLAYER)
-						if (player != playerOnChip && playerOnChip != null) {
-							TeleportUtils.dimensionTransfer(worldserver, player, playerOnChip);
-							TeleportUtils.teleportPlayer(playerOnChip, message.tilePos.getX() + 0.5D, message.tilePos.getY(), message.tilePos.getZ() + 0.5D, playerOnChip.rotationYaw, playerOnChip.rotationPitch);
-							TeleportUtils.consumeSummonerEnergy(tile);
+				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				player.getServer().addScheduledTask(new Runnable() {
+					public void run() {
+						TileEntitySummoner tile = (TileEntitySummoner) world.getTileEntity(message.tilePos);
+						if (tile != null && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).hasDisplayName()) {
+							EntityPlayerMP playerOnChip = TeleportUtils.getPlayerByUsername(tile.getStackInSlot(message.buttonID).getDisplayName());
+					
+							WorldServer worldserver = (WorldServer) world;
+							if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_SUMMON_PLAYER)
+								if (player != playerOnChip && playerOnChip != null) {
+									TeleportUtils.dimensionTransfer(worldserver, player, playerOnChip);
+									TeleportUtils.teleportPlayer(playerOnChip, message.tilePos.getX() + 0.5D, message.tilePos.getY(), message.tilePos.getZ() + 0.5D, playerOnChip.rotationYaw, playerOnChip.rotationPitch);
+									TeleportUtils.consumeSummonerEnergy(tile);
+								}
 						}
-				}
+					}
+				});
 			}
 		return null;
 	}

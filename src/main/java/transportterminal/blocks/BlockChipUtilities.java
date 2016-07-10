@@ -30,7 +30,7 @@ public class BlockChipUtilities extends BlockDirectional {
         if (world.isRemote)
 			return true;
 		if (world.getTileEntity(pos) instanceof TileEntityChipUtilities)
-			player.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS, world, pos.getX(), pos.getY(), pos.getZ());
+			player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 

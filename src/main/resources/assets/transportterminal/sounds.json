@@ -1,5 +1,20 @@
 {
-"teleportsound": {"category": "block","sounds":["transportterminal:teleportsound"]},
-"oksound": {"category": "player","sounds":["transportterminal:oksound"]},
-"errorsound": {"category": "player","sounds":["transportterminal:errorsound"]}
+    "teleportsound": {
+        "category": "block",
+        "sounds": [
+        "transportterminal:teleportsound"
+        ]
+    },
+    "oksound": {
+        "category": "player",
+        "sounds": [
+        "transportterminal:oksound"
+        ]
+    },
+    "errorsound": {
+        "category": "player",
+        "sounds": [
+        "transportterminal:errorsound"
+        ]
+    }
 }

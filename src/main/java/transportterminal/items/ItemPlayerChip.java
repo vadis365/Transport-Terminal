@@ -12,27 +12,23 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 
-public class ItemTransportTerminalChip extends Item {
+public class ItemPlayerChip extends Item {
 
-	public ItemTransportTerminalChip() {
+	public ItemPlayerChip() {
 		super();
 		setMaxStackSize(1);
 		setCreativeTab(TransportTerminal.tab);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 		if (hasTag(stack))
-			if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("chipDim")) {
-				list.add(TextFormatting.GREEN + stack.getTagCompound().getString("description"));
-				list.add("Dimension: " + stack.getTagCompound().getInteger("chipDim") + " " + stack.getTagCompound().getString("dimName"));
-				list.add("Target X: " + stack.getTagCompound().getInteger("chipX"));
-				list.add("Target Y: " + stack.getTagCompound().getInteger("chipY"));
-				list.add("Target Z: " + stack.getTagCompound().getInteger("chipZ"));
-			} else
-				list.add("Empty Transport Chip");
+			if (stack.getTagCompound() != null && stack.hasDisplayName())
+				list.add(TextFormatting.GREEN + "Player: " + stack.getDisplayName());
+			else
+				list.add("Empty Player Location Chip");
 	}
 
 	@Override
@@ -52,7 +48,7 @@ public class ItemTransportTerminalChip extends Item {
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		if (hasTag(stack))
-			if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("chipDim"))
+			if (stack.getTagCompound() != null && stack.hasDisplayName())
 				return true;
 		return false;
 	}

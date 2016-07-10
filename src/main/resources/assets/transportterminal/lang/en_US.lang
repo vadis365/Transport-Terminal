@@ -7,4 +7,4 @@ tile.utils.name=Transport Chip Utilities
 tile.charger.name=RF Item Charger
 tile.summoner.name=Player Summoner
 
-itemGroup.TransportTerminals=Transport Terminals
+itemGroup.transportterminal=Transport Terminals

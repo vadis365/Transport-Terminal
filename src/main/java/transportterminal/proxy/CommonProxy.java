@@ -21,7 +21,7 @@ import transportterminal.gui.server.ContainerCharger;
 import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.gui.server.ContainerSummoner;
 import transportterminal.gui.server.ContainerTerminal;
-import transportterminal.items.ItemTransportTerminalRemote;
+import transportterminal.items.ItemRemote;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityChipUtilities;
 import transportterminal.tileentites.TileEntitySummoner;
@@ -57,7 +57,7 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == GUI_ID_REMOTE) {
 			ItemStack stack = player.getHeldItemMainhand();
 			world = DimensionManager.getWorld(player.dimension);
-			ItemTransportTerminalRemote.getTile(player, stack, x, y, z);
+			ItemRemote.getTile(player, stack, x, y, z);
 			return new ContainerTerminal(player, null, 1);
 		}
 
@@ -141,8 +141,6 @@ public class CommonProxy implements IGuiHandler {
 		TileEntity tileentity;
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack != null && stack.getItem() == TransportTerminal.REMOTE_TERMINAL) {
-			if(loadDimension)
-				DimensionManager.initDimension(stack.getTagCompound().getInteger("dim"));
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			int xx = stack.getTagCompound().getInteger("homeX");
 			int yy = stack.getTagCompound().getInteger("homeY");

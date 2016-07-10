@@ -17,7 +17,7 @@ public class NamingMessage implements IMessage {
 	}
 
 	public NamingMessage(EntityPlayer player, String string) {
-		dimension = player.getHeldItemMainhand().getTagCompound().getInteger("dim");
+		dimension = player.dimension;
 		entityID = player.getEntityId();
 		name = string;
 		int x = player.getHeldItemMainhand().getTagCompound().getInteger("homeX");

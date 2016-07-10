@@ -10,20 +10,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
+import transportterminal.utils.DimensionUtils;
 
 public class ItemRemoteTerminal extends ItemEnergy {
-
-	private Ticket ticket;
 
 	public ItemRemoteTerminal() {
 		super(ConfigHandler.REMOTE_TERMINAL_MAX_ENERGY);
@@ -49,26 +43,30 @@ public class ItemRemoteTerminal extends ItemEnergy {
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote && hasTag(stack) && !playerIn.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
-			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
-		//	DimensionManager.initDimension(stack.getTagCompound().getInteger("dim"));
-			if (ticket == null && !world2.isAreaLoaded(new BlockPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeY"), stack.getTagCompound().getInteger("homeZ")) , 2))
-				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
 
-			if (ticket != null && !world2.isAreaLoaded(new BlockPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeY"), stack.getTagCompound().getInteger("homeZ")) , 2))
-				ForgeChunkManager.forceChunk(ticket, new ChunkPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
 		}
 		return EnumActionResult.FAIL;
 	}
 
 	@Override
 	 public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-		if (stack.getTagCompound().hasKey("homeX") && hand.equals(EnumHand.MAIN_HAND))
+		if (stack.getTagCompound().hasKey("homeX") && hand.equals(EnumHand.MAIN_HAND)) {
 			if (!world.isRemote)
 				if (canTeleport(stack)) {
+					int dimensionID = stack.getTagCompound().getInteger("dim");
+					int homeX = stack.getTagCompound().getInteger("homeX");
+					int homeY = stack.getTagCompound().getInteger("homeY");
+					int homeZ = stack.getTagCompound().getInteger("homeZ");
+
+					if(dimensionID != player.dimension)
+						DimensionUtils.loadDimension(dimensionID);
+
+					DimensionUtils.forceChunkloading(dimensionID, homeX, homeY, homeZ);
 					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
-					world.playSound(player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
-					player.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+					world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+					player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 				}
+		}
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}
 

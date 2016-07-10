@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +18,7 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 
 @SideOnly(Side.CLIENT)
 public class GuiConsole extends GuiContainer {
-
+	EntityPlayer player;
 	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transportTerminalGui.png");
 	private final TileEntityTransportTerminal tile;
 
@@ -26,6 +27,7 @@ public class GuiConsole extends GuiContainer {
 		this.tile = tile;
 		allowUserInput = false;
 		ySize = 168;
+		this.player = player;
 	}
 
 	@Override
@@ -62,7 +64,11 @@ public class GuiConsole extends GuiContainer {
 	protected void actionPerformed(GuiButton guibutton) {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				int newDim = mc.thePlayer.dimension;
+				int newDim = player.dimension;
+				ItemStack stack = tile.getStackInSlot(guibutton.id);
+				if(stack != null && stack.hasTagCompound() && stack.getTagCompound().hasKey("chipDim"))
+					newDim = stack.getTagCompound().getInteger("chipDim");
+				System.out.println("Chip dim is: "+ newDim + "Player dim is: " + player.dimension);
 				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, tile.getPos(), newDim));
 				mc.thePlayer.closeScreen();
 			}

@@ -82,7 +82,7 @@ public class GuiChipUtils extends GuiContainer {
 			if (guibutton.id == 2)
 				if (tile.getStackInSlot(1) == null)
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
-						mc.thePlayer.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, pos.getX(), pos.getY(), pos.getZ());
+						mc.thePlayer.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
 

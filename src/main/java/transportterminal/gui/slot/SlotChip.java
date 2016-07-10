@@ -3,8 +3,8 @@ package transportterminal.gui.slot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import transportterminal.items.ItemTransportTerminalChip;
-import transportterminal.items.ItemTransportTerminalPlayerChip;
+import transportterminal.items.ItemChip;
+import transportterminal.items.ItemPlayerChip;
 
 public class SlotChip extends Slot {
 
@@ -14,6 +14,6 @@ public class SlotChip extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return stack.getItem() instanceof ItemTransportTerminalChip || stack.getItem() instanceof ItemTransportTerminalPlayerChip;
+		return stack.getItem() instanceof ItemChip || stack.getItem() instanceof ItemPlayerChip;
 	}
 }

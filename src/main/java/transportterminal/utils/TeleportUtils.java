@@ -11,8 +11,8 @@ import transportterminal.TransportTerminal;
 import transportterminal.blocks.BlockDirectional;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
-import transportterminal.items.ItemTransportTerminalChip;
-import transportterminal.items.ItemTransportTerminalPlayerChip;
+import transportterminal.items.ItemChip;
+import transportterminal.items.ItemPlayerChip;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntitySummoner;
@@ -48,7 +48,7 @@ public class TeleportUtils {
 
 	public static void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {
 		player.connection.setPlayerLocation(x, y, z, yaw, pitch);
-		player.worldObj.playSound(player.posX, player.posY, player.posZ, TransportTerminal.TELEPORT_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+		player.worldObj.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.TELEPORT_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 	}
 
 	public static boolean isConsole(World world, BlockPos pos) {
@@ -60,11 +60,11 @@ public class TeleportUtils {
 	}
 
 	public static boolean isValidInterfacePlayerChip(TileEntityTransportTerminal tile, int buttonID) {
-		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalPlayerChip;
+		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemPlayerChip;
 	}
 
 	public static boolean isValidInterfaceStandardChip(TileEntityTransportTerminal tile, int buttonID) {
-		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).getTagCompound().hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemTransportTerminalChip;
+		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).getTagCompound().hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemChip;
 	}
 
 	public static void consumeConsoleEnergy(TileEntityTransportTerminal tile) {

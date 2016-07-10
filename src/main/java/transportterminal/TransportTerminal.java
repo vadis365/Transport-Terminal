@@ -25,9 +25,9 @@ import transportterminal.blocks.BlockSummoner;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemRemoteTerminal;
-import transportterminal.items.ItemTransportTerminalChip;
-import transportterminal.items.ItemTransportTerminalPlayerChip;
-import transportterminal.items.ItemTransportTerminalRemote;
+import transportterminal.items.ItemChip;
+import transportterminal.items.ItemPlayerChip;
+import transportterminal.items.ItemRemote;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.ConsolePacketHandler;
 import transportterminal.network.handler.ContainerPacketHandler;
@@ -42,11 +42,11 @@ import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
 
-@Mod(modid = "transportterminal", name = "Transport Terminals", version = "1.0b", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
+@Mod(modid = "transportterminal", name = "transportterminal", version = "1.0b", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
 public class TransportTerminal {
 
 	@Instance("transportterminal")
-	public static TransportTerminal instance;
+	public static TransportTerminal INSTANCE;
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy PROXY;
@@ -57,7 +57,7 @@ public class TransportTerminal {
 	public static SoundEvent ERROR_SOUND;
 	public static SoundEvent TELEPORT_SOUND;
 
-	public static CreativeTabs tab = new CreativeTabs("TransportTerminals") {
+	public static CreativeTabs tab = new CreativeTabs("transportterminal") {
 		@Override
 		public Item getTabIconItem() {
 			return TransportTerminal.REMOTE;
@@ -72,10 +72,10 @@ public class TransportTerminal {
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		// Items
-		REMOTE = new ItemTransportTerminalRemote();
+		REMOTE = new ItemRemote();
 		REMOTE_TERMINAL = new ItemRemoteTerminal();
-		CHIP = new ItemTransportTerminalChip();
-		PLAYER_CHIP = new ItemTransportTerminalPlayerChip();
+		CHIP = new ItemChip();
+		PLAYER_CHIP = new ItemPlayerChip();
 
 		// Blocks
 		TERMINAL = new BlockTransportTerminal().setHardness(3.0F);
@@ -110,7 +110,7 @@ public class TransportTerminal {
 
 		ModRecipes.addRecipes();
 
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, PROXY);
+		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, PROXY);
 		NETWORK_WRAPPER = NetworkRegistry.INSTANCE.newSimpleChannel("transportterminal");
 		NETWORK_WRAPPER.registerMessage(RemotePacketHandler.class, TeleportMessage.class, 0, Side.SERVER);
 		NETWORK_WRAPPER.registerMessage(NamingPacketHandler.class, NamingMessage.class, 1, Side.SERVER);
@@ -118,7 +118,7 @@ public class TransportTerminal {
 		NETWORK_WRAPPER.registerMessage(ConsolePacketHandler.class, ButtonMessage.class, 3, Side.SERVER);
 		NETWORK_WRAPPER.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 4, Side.SERVER);
 		NETWORK_WRAPPER.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.CLIENT);
-		ForgeChunkManager.setForcedChunkLoadingCallback(instance, null);
+		ForgeChunkManager.setForcedChunkLoadingCallback(INSTANCE, null);
 	}
 
 	@EventHandler

@@ -13,20 +13,25 @@ import transportterminal.utils.TeleportUtils;
 public class RemotePacketHandler implements IMessageHandler<TeleportMessage, IMessage> {
 
 	@Override
-	public IMessage onMessage(TeleportMessage message, MessageContext ctx) {
-		World world = DimensionManager.getWorld(message.dimension);
+	public IMessage onMessage(final TeleportMessage message, MessageContext ctx) {
+		final World world = DimensionManager.getWorld(message.dimension);
 
 		if (world == null)
 			return null;
 
 		else if (!world.isRemote)
 			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-				WorldServer worldserver = (WorldServer) world;
-				TeleportUtils.dimensionTransfer(worldserver, player, message.chipDim);
-				World world2 = DimensionManager.getWorld(message.chipDim);
-				if (TeleportUtils.isConsole(world2, message.pos))
-					TeleportUtils.teleportToConsole(world2, player, message.pos);
+				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				player.getServer().addScheduledTask(new Runnable() {
+					public void run() {
+						WorldServer worldserver = (WorldServer) world;
+						TeleportUtils.dimensionTransfer(worldserver, player, message.chipDim);
+						WorldServer world2 = DimensionManager.getWorld(message.chipDim);
+						if (TeleportUtils.isConsole(world2, message.pos)) {
+							TeleportUtils.teleportToConsole(world2, player, message.pos);
+						}
+					}
+				});
 			}
 		return null;
 	}

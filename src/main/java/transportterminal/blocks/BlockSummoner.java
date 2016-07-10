@@ -43,7 +43,7 @@ public class BlockSummoner extends BlockDirectional {
 			return true;
 		if (world.getTileEntity(pos) instanceof TileEntitySummoner) {
 			world.notifyBlockUpdate(pos, state, state, 3);
-			player.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_SUMMONER, world, pos.getX(), pos.getY(), pos.getZ());
+			player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_SUMMONER, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return true;
 	}

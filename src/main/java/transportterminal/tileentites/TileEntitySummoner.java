@@ -6,7 +6,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
-import transportterminal.items.ItemTransportTerminalPlayerChip;
+import transportterminal.items.ItemPlayerChip;
 
 public class TileEntitySummoner extends TileEntityInventoryEnergy {
 
@@ -29,7 +29,7 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 	}
 
 	public String getInventoryName() {
-		if (getStackInSlot(0) != null && getStackInSlot(0).hasDisplayName() && getStackInSlot(0).getItem() instanceof ItemTransportTerminalPlayerChip)
+		if (getStackInSlot(0) != null && getStackInSlot(0).hasDisplayName() && getStackInSlot(0).getItem() instanceof ItemPlayerChip)
 			return getStackInSlot(0).getDisplayName();
 		return "Empty";
 	}

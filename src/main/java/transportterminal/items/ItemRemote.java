@@ -10,24 +10,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
+import transportterminal.utils.DimensionUtils;
 
-public class ItemTransportTerminalRemote extends ItemEnergy {
+public class ItemRemote extends ItemEnergy {
 
-	private Ticket ticket;
-
-	public ItemTransportTerminalRemote() {
+	public ItemRemote() {
 		super(ConfigHandler.REMOTE_MAX_ENERGY);
 	}
 
@@ -83,6 +79,7 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 			int homeZ = stack.getTagCompound().getInteger("homeZ");
 			BlockPos pos = new BlockPos(homeX, homeY, homeZ);
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(pos);
+
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
 					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.CHIP) {
@@ -104,24 +101,25 @@ public class ItemTransportTerminalRemote extends ItemEnergy {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-	    if (!worldIn.isRemote && hasTag(stack) && playerIn.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
-			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	    if (!world.isRemote && hasTag(stack) && player.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
+	    	int dimensionID = stack.getTagCompound().getInteger("dim");
+			int homeX = stack.getTagCompound().getInteger("homeX");
+			int homeY = stack.getTagCompound().getInteger("homeY");
+			int homeZ = stack.getTagCompound().getInteger("homeZ");
 
-			if (ticket == null)
-				ticket = ForgeChunkManager.requestTicket(TransportTerminal.instance, world2, ForgeChunkManager.Type.NORMAL);
-
-			if (ticket != null)
-				ForgeChunkManager.forceChunk(ticket, new ChunkPos(stack.getTagCompound().getInteger("homeX"), stack.getTagCompound().getInteger("homeZ")));
-
-			if (foundFreeChip(playerIn, stack)) {
-				worldIn.playSound(playerIn.posX, playerIn.posY, playerIn.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
-				playerIn.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_REMOTE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			if(dimensionID != player.dimension)
+				DimensionUtils.loadDimension(dimensionID);
+			DimensionUtils.forceChunkloading(dimensionID, homeX, homeY, homeZ);
+			
+			if (foundFreeChip(player, stack)) {
+				world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE, world, pos.getX(), pos.getY(), pos.getZ());
 				return EnumActionResult.SUCCESS;
 			}
 
-			if (!foundFreeChip(playerIn, stack))
-				worldIn.playSound(playerIn.posX, playerIn.posY, playerIn.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+			if (!foundFreeChip(player, stack))
+				world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		}
 	    return EnumActionResult.FAIL;
 	}

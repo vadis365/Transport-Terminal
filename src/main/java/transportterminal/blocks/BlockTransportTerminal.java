@@ -31,7 +31,7 @@ public class BlockTransportTerminal extends BlockDirectional {
 			return true;
 		if (world.getTileEntity(pos) != null) {
 			world.notifyBlockUpdate(pos, state, state, 3);
-			player.openGui(TransportTerminal.instance, TransportTerminal.PROXY.GUI_ID_TERMINAL, world, pos.getX(), pos.getY(), pos.getZ());
+			player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_TERMINAL, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 			return true;
 	}
