@@ -42,7 +42,7 @@ import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
 
-@Mod(modid = "transportterminal", name = "transportterminal", version = "1.0b", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
+@Mod(modid = "transportterminal", name = "transportterminal", version = "1.0.1", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
 public class TransportTerminal {
 
 	@Instance("transportterminal")

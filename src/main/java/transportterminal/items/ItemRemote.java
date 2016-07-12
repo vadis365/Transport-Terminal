@@ -3,6 +3,7 @@ package transportterminal.items;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -10,6 +11,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
@@ -102,25 +105,31 @@ public class ItemRemote extends ItemEnergy {
 
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-	    if (!world.isRemote && hasTag(stack) && player.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
-	    	int dimensionID = stack.getTagCompound().getInteger("dim");
-			int homeX = stack.getTagCompound().getInteger("homeX");
-			int homeY = stack.getTagCompound().getInteger("homeY");
-			int homeZ = stack.getTagCompound().getInteger("homeZ");
-
-			if(dimensionID != player.dimension)
-				DimensionUtils.loadDimension(dimensionID);
-			DimensionUtils.forceChunkloading(dimensionID, homeX, homeY, homeZ);
+	    if (hasTag(stack) && player.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
+	    	if(!world.isRemote){
+	    		if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1) {
+	    			world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+	    			return EnumActionResult.FAIL;
+	    		}
+	    		int dimensionID = stack.getTagCompound().getInteger("dim");
+	    		int homeX = stack.getTagCompound().getInteger("homeX");
+	    		int homeY = stack.getTagCompound().getInteger("homeY");
+	    		int homeZ = stack.getTagCompound().getInteger("homeZ");
+	    		DimensionUtils.forceChunkloading((EntityPlayerMP) player, dimensionID, homeX, homeY, homeZ);
 			
-			if (foundFreeChip(player, stack)) {
-				world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
-				player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE, world, pos.getX(), pos.getY(), pos.getZ());
-				return EnumActionResult.SUCCESS;
-			}
+	    		if (foundFreeChip(player, stack)) {
+	    			world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+	    			player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE, world, pos.getX(), pos.getY(), pos.getZ());
+	    			return EnumActionResult.SUCCESS;
+	    		}
 
-			if (!foundFreeChip(player, stack))
-				world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
-		}
+	    		if (!foundFreeChip(player, stack))
+	    			world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+	    	}
+	    	if (world.isRemote)
+	    		if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1)
+	    			player.addChatMessage(new TextComponentTranslation("chat.end_disabled_message"));
+	    }
 	    return EnumActionResult.FAIL;
 	}
 

@@ -4,7 +4,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -65,10 +64,6 @@ public class GuiConsole extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
 				int newDim = player.dimension;
-				ItemStack stack = tile.getStackInSlot(guibutton.id);
-				if(stack != null && stack.hasTagCompound() && stack.getTagCompound().hasKey("chipDim"))
-					newDim = stack.getTagCompound().getInteger("chipDim");
-				System.out.println("Chip dim is: "+ newDim + "Player dim is: " + player.dimension);
 				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, tile.getPos(), newDim));
 				mc.thePlayer.closeScreen();
 			}

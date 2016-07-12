@@ -28,9 +28,8 @@ public class PlayerSummonPacketHandler implements IMessageHandler<PlayerSummonMe
 				player.getServer().addScheduledTask(new Runnable() {
 					public void run() {
 						TileEntitySummoner tile = (TileEntitySummoner) world.getTileEntity(message.tilePos);
-						if (tile != null && tile.getStackInSlot(message.buttonID) != null && tile.getStackInSlot(message.buttonID).hasDisplayName()) {
+						if (tile != null && TeleportUtils.isValidSummonerPlayerChip(tile, message.buttonID)) {
 							EntityPlayerMP playerOnChip = TeleportUtils.getPlayerByUsername(tile.getStackInSlot(message.buttonID).getDisplayName());
-					
 							WorldServer worldserver = (WorldServer) world;
 							if (tile.canTeleport() && ConfigHandler.ALLOW_TELEPORT_SUMMON_PLAYER)
 								if (player != playerOnChip && playerOnChip != null) {

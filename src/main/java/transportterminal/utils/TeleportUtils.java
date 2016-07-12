@@ -63,6 +63,10 @@ public class TeleportUtils {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemPlayerChip;
 	}
 
+	public static boolean isValidSummonerPlayerChip(TileEntitySummoner tile, int buttonID) {
+		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemPlayerChip;
+	}
+
 	public static boolean isValidInterfaceStandardChip(TileEntityTransportTerminal tile, int buttonID) {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).getTagCompound().hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemChip;
 	}

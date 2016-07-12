@@ -26,8 +26,6 @@ public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMess
 				final int newDim = player.getHeldItemMainhand().getTagCompound().getInteger("dim");
 				player.getServer().addScheduledTask(new Runnable() {
 					public void run() {
-						DimensionUtils.loadDimension(newDim);
-						DimensionUtils.forceChunkloading(newDim, message.tilePos.getX(), message.tilePos.getY(), message.tilePos.getZ());
 						World world = DimensionManager.getWorld(newDim);
 						TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world.getTileEntity(message.tilePos);
 						if (tile != null)

@@ -2,6 +2,7 @@ package transportterminal.gui.server;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import transportterminal.TransportTerminal;
@@ -62,6 +63,14 @@ public class ContainerTerminal extends ContainerEnergy {
 				return null;
 		}
 		return stack;
+	}
+
+	@Override
+	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == TransportTerminal.REMOTE_TERMINAL)
+			if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItemMainhand())
+				return null;
+		return super.slotClick(slot, dragType, clickTypeIn, player);
 	}
 
 	@Override

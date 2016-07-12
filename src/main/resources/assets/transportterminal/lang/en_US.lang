@@ -1,10 +1,10 @@
-item.remote.name=Transport Terminal Remote
-item.remoteTerminal.name=Wireless Console Interface
-item.chip.name=Transport Chip
-item.playerChip.name=Player Location Chip
-tile.console.name=Transport Terminal Console
-tile.utils.name=Transport Chip Utilities
-tile.charger.name=RF Item Charger
-tile.summoner.name=Player Summoner
-
+item.transportterminal.remote.name=Transport Terminal Remote
+item.transportterminal.remoteTerminal.name=Wireless Console Interface
+item.transportterminal.chip.name=Transport Chip
+item.transportterminal.playerChip.name=Player Location Chip
+tile.transportterminal.console.name=Transport Terminal Console
+tile.transportterminal.utils.name=Transport Chip Utilities
+tile.transportterminal.charger.name=RF Item Charger
+tile.transportterminal.summoner.name=Player Summoner
 itemGroup.transportterminal=Transport Terminals
+chat.end_disabled_message=End Consoles are not accessible from other dimensions
