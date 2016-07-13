@@ -4,14 +4,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.utils.TeleportUtils;
 import cofh.api.energy.IEnergyContainerItem;
-import cofh.api.energy.IEnergyHandler;
-import cofh.api.energy.IEnergyReceiver;
 
 public class TileEntityCharger extends TileEntityInventoryEnergy implements ITickable {
 
@@ -46,7 +42,7 @@ public class TileEntityCharger extends TileEntityInventoryEnergy implements ITic
 				stored = getEnergyStored(null);
 			}
 		}
-		
+		/*
 		if ((stored > 0)) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				TileEntity tile = worldObj.getTileEntity(pos.offset(facing));
@@ -56,7 +52,7 @@ public class TileEntityCharger extends TileEntityInventoryEnergy implements ITic
 					TeleportUtils.consumeChargerEnergy(this, received);
 				}
 			}
-		}
+		}*/
 	}
 
 	@Override
