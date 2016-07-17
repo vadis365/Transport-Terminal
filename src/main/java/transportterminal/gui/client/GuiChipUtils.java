@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
+import transportterminal.gui.button.GuiLargeButton;
 import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.tileentites.TileEntityChipUtilities;
@@ -39,9 +40,9 @@ public class GuiChipUtils extends GuiContainer {
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
-		buttonList.add(new GuiButton(0, xOffSet + 61, yOffSet + 30, 54, 12, "Copy"));
-		buttonList.add(new GuiButton(1, xOffSet + 61, yOffSet + 44, 54, 12, "Erase"));
-		buttonList.add(new GuiButton(2, xOffSet + 61, yOffSet + 58, 54, 12, "Name"));
+		buttonList.add(new GuiLargeButton(0, xOffSet + 61, yOffSet + 30, 0, 27, "Copy"));
+		buttonList.add(new GuiLargeButton(1, xOffSet + 61, yOffSet + 44, 0, 27, "Erase"));
+		buttonList.add(new GuiLargeButton(2, xOffSet + 61, yOffSet + 58, 0, 27, "Name"));
 	}
 
 	@Override

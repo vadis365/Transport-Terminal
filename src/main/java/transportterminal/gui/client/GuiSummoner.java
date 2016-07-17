@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
+import transportterminal.gui.button.GuiLargeButton;
 import transportterminal.gui.server.ContainerSummoner;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.tileentites.TileEntitySummoner;
@@ -36,7 +37,7 @@ public class GuiSummoner extends GuiContainer {
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
-		buttonList.add(new GuiButton(0, xOffSet + 61, yOffSet + 48, 54, 12, "Teleport"));
+		buttonList.add(new GuiLargeButton(0, xOffSet + 61, yOffSet + 48, 0, 27, "Teleport"));
 	}
 
 	@Override

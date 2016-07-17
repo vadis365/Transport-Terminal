@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
+import transportterminal.gui.button.GuiLargeButton;
 import transportterminal.gui.server.ContainerEnergyCube;
 import transportterminal.network.message.EnergyCubeMessage;
 import transportterminal.tileentites.TileEntityEnergyCube;
@@ -37,12 +38,12 @@ public class GuiEnergyCube extends GuiContainer {
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
-		buttonList.add(new GuiButton(0, xOffSet + 25, yOffSet + 32, 54, 12, "Bottom"));
-		buttonList.add(new GuiButton(1, xOffSet + 25, yOffSet + 52, 54, 12, "Top"));
-		buttonList.add(new GuiButton(2, xOffSet + 25, yOffSet + 72, 54, 12, "North"));
-		buttonList.add(new GuiButton(3, xOffSet + 25, yOffSet + 92, 54, 12, "South"));
-		buttonList.add(new GuiButton(4, xOffSet + 25, yOffSet + 112, 54, 12, "West"));
-		buttonList.add(new GuiButton(5, xOffSet + 25, yOffSet + 132, 54, 12, "East"));
+		buttonList.add(new GuiLargeButton(0, xOffSet + 25, yOffSet + 32, 0, 27, "Bottom"));
+		buttonList.add(new GuiLargeButton(1, xOffSet + 25, yOffSet + 52, 0, 27, "Top"));
+		buttonList.add(new GuiLargeButton(2, xOffSet + 25, yOffSet + 72, 0, 27, "North"));
+		buttonList.add(new GuiLargeButton(3, xOffSet + 25, yOffSet + 92, 0, 27, "South"));
+		buttonList.add(new GuiLargeButton(4, xOffSet + 25, yOffSet + 112, 0, 27, "West"));
+		buttonList.add(new GuiLargeButton(5, xOffSet + 25, yOffSet + 132, 0, 27, "East"));
 	}
 
 	@Override

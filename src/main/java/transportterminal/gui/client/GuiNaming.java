@@ -15,6 +15,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import transportterminal.TransportTerminal;
+import transportterminal.gui.button.GuiNamingButton;
 import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.network.message.NamingMessage;
 
@@ -50,7 +51,7 @@ public class GuiNaming extends GuiContainer {
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
-		buttonList.add(new GuiButton(0, xOffSet, yOffSet - 16, 32, 16, "Save"));
+		buttonList.add(new GuiNamingButton(0, xOffSet, yOffSet - 16, 0, 9, "Save"));
 	}
 
 	@Override
