@@ -1,7 +1,7 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "top": "transportterminal:blocks/sides",
+        "top": "transportterminal:blocks/top",
         "front": "transportterminal:blocks/utils",
         "side": "transportterminal:blocks/sides"
     }
