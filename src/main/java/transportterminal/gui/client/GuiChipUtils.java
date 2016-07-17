@@ -39,9 +39,9 @@ public class GuiChipUtils extends GuiContainer {
 		buttonList.clear();
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
-		buttonList.add(new GuiButton(0, xOffSet + 61, yOffSet + 30, 54, 12, "copy"));
-		buttonList.add(new GuiButton(1, xOffSet + 61, yOffSet + 44, 54, 12, "erase"));
-		buttonList.add(new GuiButton(2, xOffSet + 61, yOffSet + 58, 54, 12, "name"));
+		buttonList.add(new GuiButton(0, xOffSet + 61, yOffSet + 30, 54, 12, "Copy"));
+		buttonList.add(new GuiButton(1, xOffSet + 61, yOffSet + 44, 54, 12, "Erase"));
+		buttonList.add(new GuiButton(2, xOffSet + 61, yOffSet + 58, 54, 12, "Name"));
 	}
 
 	@Override

@@ -42,17 +42,6 @@ public class TileEntityCharger extends TileEntityInventoryEnergy implements ITic
 				stored = getEnergyStored(null);
 			}
 		}
-		/*
-		if ((stored > 0)) {
-			for (EnumFacing facing : EnumFacing.VALUES) {
-				TileEntity tile = worldObj.getTileEntity(pos.offset(facing));
-				if (tile != null && tile instanceof IEnergyHandler) {
-					int received = ((IEnergyReceiver)tile).receiveEnergy(facing.getOpposite(), stored, false);
-					extractEnergy(facing, received, false);
-					TeleportUtils.consumeChargerEnergy(this, received);
-				}
-			}
-		}*/
 	}
 
 	@Override

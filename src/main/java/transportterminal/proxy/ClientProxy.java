@@ -1,7 +1,6 @@
 package transportterminal.proxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,5 +20,6 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.SUMMONER_ITEM, 0, new ModelResourceLocation("transportterminal:summoner", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.CHARGER_ITEM, 0, new ModelResourceLocation("transportterminal:charger", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.TERMINAL_ITEM, 0, new ModelResourceLocation("transportterminal:console", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.ENERGY_CUBE_ITEM, 0, new ModelResourceLocation("transportterminal:energy_cube", "inventory"));
 	}
 }

@@ -1,0 +1,46 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "transportterminal:energy_cube",
+    "custom": { "flip-v": true },
+    "textures": {
+      "particle": "transportterminal:blocks/energy_cube",
+      "side": "transportterminal:blocks/energy_cube"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "down": {
+      "none": { "submodel": "transportterminal:energy_cube_blank", "x": 180 },
+      "input": { "submodel": "transportterminal:energy_cube_in", "x": 180 },
+      "output": { "submodel": "transportterminal:energy_cube_out", "x": 180 }
+    },
+    "east": {
+      "none": { "submodel": "transportterminal:energy_cube_blank", "x": 90, "y": 90 },
+      "input": { "submodel": "transportterminal:energy_cube_in", "x": 90, "y": 90 },
+      "output": { "submodel": "transportterminal:energy_cube_out", "x": 90, "y": 90 }
+    },
+    "north": {
+      "none": { "submodel": "transportterminal:energy_cube_blank", "x": 90 },
+      "input": { "submodel": "transportterminal:energy_cube_in", "x": 90 },
+      "output": { "submodel": "transportterminal:energy_cube_out", "x": 90 }
+    },
+    "south": {
+      "none": { "submodel": "transportterminal:energy_cube_blank", "x": 90, "y": 180 },
+      "input": { "submodel": "transportterminal:energy_cube_in", "x": 90, "y": 180 },
+      "output": { "submodel": "transportterminal:energy_cube_out", "x": 90, "y": 180 }
+    },
+    "up": {
+      "none": { "submodel": "transportterminal:energy_cube_blank" },
+      "input": { "submodel": "transportterminal:energy_cube_in" },
+      "output": { "submodel": "transportterminal:energy_cube_out" }
+    },
+    "west": {
+      "none": { "submodel": "transportterminal:energy_cube_blank", "x": 90, "y": 270 },
+      "input": { "submodel": "transportterminal:energy_cube_in", "x": 90, "y": 270 },
+      "output": { "submodel": "transportterminal:energy_cube_out", "x": 90, "y": 270 }
+    }
+  }
+}

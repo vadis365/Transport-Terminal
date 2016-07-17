@@ -15,6 +15,7 @@ public class ConfigHandler {
 	public static int TERMINAL_MAX_ENERGY;
 	public static int CHARGER_MAX_ENERGY;
 	public static int SUMMONER_MAX_ENERGY;
+	public static int ENERGY_CUBE_MAX_ENERGY;
 	public static boolean ALLOW_TELEPORT_TO_PLAYER;
 	public static boolean ALLOW_TELEPORT_SUMMON_PLAYER;
 	public final String[] usedCategories = { "RF Energy Settings", "Game Settings" };
@@ -32,6 +33,7 @@ public class ConfigHandler {
 		TERMINAL_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Consoles", 320000).getInt(320000);
 		CHARGER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Charger", 320000).getInt(320000);
 		SUMMONER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Player Summoner", 320000).getInt(320000);
+		ENERGY_CUBE_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Energy Cube", 1280000).getInt(1280000);
 		
 		ALLOW_TELEPORT_TO_PLAYER = config.get("Game Settings", "Enable Player Location Chips", true).getBoolean(true);
 		ALLOW_TELEPORT_SUMMON_PLAYER = config.get("Game Settings", "Enable Player Summoning Block", true).getBoolean(true);
