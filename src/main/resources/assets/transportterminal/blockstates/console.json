@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "transportterminal:console" },
-        "facing=south": { "model": "transportterminal:console", "y": 180 },
-        "facing=west":  { "model": "transportterminal:console", "y": 270 },
-        "facing=east":  { "model": "transportterminal:console", "y": 90 }
+        "facing=north": { "model": "transportterminal:console", "y": 180 },
+        "facing=south": { "model": "transportterminal:console" },
+        "facing=west":  { "model": "transportterminal:console", "y": 90 },
+        "facing=east":  { "model": "transportterminal:console", "y": 270 }
     }
 }
