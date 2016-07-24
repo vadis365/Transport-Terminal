@@ -45,6 +45,12 @@ public class TileEntityCharger extends TileEntityInventoryEnergy implements ITic
 	}
 
 	@Override
+    public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = new NBTTagCompound();
+        return writeToNBT(tag);
+    }
+
+	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		writeToNBT(tag);
