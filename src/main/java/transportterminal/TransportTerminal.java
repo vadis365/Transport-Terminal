@@ -22,6 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockEnergyCube;
+import transportterminal.blocks.BlockGenerator;
 import transportterminal.blocks.BlockSummoner;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
@@ -53,8 +54,8 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy PROXY;
-	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM;
-	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE;
+	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM;
+	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR;
 	public static SimpleNetworkWrapper NETWORK_WRAPPER;
 	public static SoundEvent OK_SOUND;
 	public static SoundEvent ERROR_SOUND;
@@ -86,12 +87,14 @@ public class TransportTerminal {
 		CHARGER = new BlockCharger().setHardness(3.0F);
 		SUMMONER = new BlockSummoner().setHardness(3.0F);
 		ENERGY_CUBE = new BlockEnergyCube().setHardness(3.0F);
+		GENERATOR = new BlockGenerator().setHardness(3.0F);
 		
 		TERMINAL_ITEM = new ItemBlock(TERMINAL);
 		UTILS_ITEM = new ItemBlock(UTILS);
 		SUMMONER_ITEM = new ItemBlock(SUMMONER);
 		CHARGER_ITEM = new ItemBlock(CHARGER);
 		ENERGY_CUBE_ITEM = new ItemBlock(ENERGY_CUBE);
+		GENERATOR_ITEM = new ItemBlock(GENERATOR);
 		
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
@@ -104,14 +107,15 @@ public class TransportTerminal {
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
 			GameRegistry.register(CHARGER.setRegistryName("transportterminal", "charger").setUnlocalizedName("transportterminal.charger"));
 		GameRegistry.register(ENERGY_CUBE.setRegistryName("transportterminal", "energy_cube").setUnlocalizedName("transportterminal.energy_cube"));
+		GameRegistry.register(GENERATOR.setRegistryName("transportterminal", "generator").setUnlocalizedName("transportterminal.generator"));
 
-		
 		GameRegistry.register(TERMINAL_ITEM.setRegistryName(TERMINAL.getRegistryName()).setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS_ITEM.setRegistryName(UTILS.getRegistryName()).setUnlocalizedName("transportterminal.utils"));
 		GameRegistry.register(SUMMONER_ITEM.setRegistryName(SUMMONER.getRegistryName()).setUnlocalizedName("transportterminal.summoner"));
 		if (IS_RF_PRESENT) // No need for a charger if there's no RF
 			GameRegistry.register(CHARGER_ITEM.setRegistryName(CHARGER.getRegistryName()).setUnlocalizedName("transportterminal.charger"));
 		GameRegistry.register(ENERGY_CUBE_ITEM.setRegistryName(ENERGY_CUBE.getRegistryName()).setUnlocalizedName("transportterminal.energy_cube"));
+		GameRegistry.register(GENERATOR_ITEM.setRegistryName(GENERATOR.getRegistryName()).setUnlocalizedName("transportterminal.generator"));
 
 		PROXY.registerTileEntities();
 		PROXY.registerRenderInformation();

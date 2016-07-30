@@ -21,5 +21,6 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.CHARGER_ITEM, 0, new ModelResourceLocation("transportterminal:charger", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.TERMINAL_ITEM, 0, new ModelResourceLocation("transportterminal:console", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.ENERGY_CUBE_ITEM, 0, new ModelResourceLocation("transportterminal:energy_cube", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.GENERATOR_ITEM, 0, new ModelResourceLocation("transportterminal:generator", "inventory"));
 	}
 }

@@ -6,5 +6,6 @@ tile.transportterminal.console.name=Transport Terminal Console
 tile.transportterminal.utils.name=Transport Chip Utilities
 tile.transportterminal.charger.name=RF Item Charger
 tile.transportterminal.summoner.name=Player Summoner
+tile.transportterminal.generator.name=RF Generator
 itemGroup.transportterminal=Transport Terminals
 chat.end_disabled_message=End Consoles are not accessible from other dimensions
