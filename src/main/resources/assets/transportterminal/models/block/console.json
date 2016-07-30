@@ -2,7 +2,7 @@
     "parent": "block/cube",
     "textures": {
         "0": "transportterminal:blocks/console_sides",
-        "1": "transportterminal:blocks/console_screen",
+        "1": "transportterminal:blocks/console_and_charger_screen",
         "particle": "transportterminal:blocks/console_sides"
     },
     "elements": [
@@ -95,7 +95,7 @@
             "faces": {
                 "north": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
                 "east": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "rotation": 90 },
-                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 14.0, 8.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 8.0 ] },
                 "west": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "rotation": 90 },
                 "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
                 "down": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] }

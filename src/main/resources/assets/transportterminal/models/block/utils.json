@@ -2,7 +2,7 @@
     "parent": "block/cube",
     "textures": {
         "0": "transportterminal:blocks/console_sides",
-        "1": "transportterminal:blocks/item_charger_screen",
+        "1": "transportterminal:blocks/utils_screen",
         "2": "transportterminal:items/chip",
         "particle": "transportterminal:blocks/console_sides"
     },
@@ -95,14 +95,14 @@
                 "east": { "texture": "#0", "uv": [ 12.0, 4.0, 14.0, 16.0 ] },
                 "south": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 6.0 ] },
                 "west": { "texture": "#0", "uv": [ 12.0, 4.0, 14.0, 16.0 ] },
-                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 14.0, 8.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
                 "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "down" }
             }
         },
         {
             "name": "chip_main",
-            "from": [ 6.0, 10.0, 5.0 ], 
-            "to": [ 10.0, 11.0, 12.0 ], 
+            "from": [ 6.0, 10.0, 3.0 ], 
+            "to": [ 10.0, 11.0, 10.0 ], 
             "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
             "faces": {
                 "north": { "texture": "#2", "uv": [ 3.0, 1.0, 13.0, 3.0 ] },
@@ -115,6 +115,34 @@
         },
         {
             "name": "chip_east_1",
+            "from": [ 10.0, 10.0, 3.0 ], 
+            "to": [ 11.0, 11.0, 4.0 ], 
+            "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "west" },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "down" }
+            }
+        },
+        {
+            "name": "chip_west_1",
+            "from": [ 5.0, 10.0, 3.0 ], 
+            "to": [ 6.0, 11.0, 4.0 ], 
+            "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "east" },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "cullface": "west" },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "down" }
+            }
+        },
+        {
+            "name": "chip_east_2",
             "from": [ 10.0, 10.0, 5.0 ], 
             "to": [ 11.0, 11.0, 6.0 ], 
             "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
@@ -128,21 +156,7 @@
             }
         },
         {
-            "name": "chip_west_1",
-            "from": [ 5.0, 10.0, 5.0 ], 
-            "to": [ 6.0, 11.0, 6.0 ], 
-            "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "east" },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "cullface": "west" },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "down" }
-            }
-        },
-        {
-            "name": "chip_east_2",
+            "name": "chip_east_3",
             "from": [ 10.0, 10.0, 7.0 ], 
             "to": [ 11.0, 11.0, 8.0 ], 
             "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
@@ -156,7 +170,7 @@
             }
         },
         {
-            "name": "chip_east_3",
+            "name": "chip_east_4",
             "from": [ 10.0, 10.0, 9.0 ], 
             "to": [ 11.0, 11.0, 10.0 ], 
             "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
@@ -170,21 +184,21 @@
             }
         },
         {
-            "name": "chip_east_4",
-            "from": [ 10.0, 10.0, 11.0 ], 
-            "to": [ 11.0, 11.0, 12.0 ], 
+            "name": "chip_west_2",
+            "from": [ 5.0, 10.0, 5.0 ], 
+            "to": [ 6.0, 11.0, 6.0 ], 
             "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
             "faces": {
                 "north": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "east" },
                 "south": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "west" },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "cullface": "west" },
                 "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
                 "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "down" }
             }
         },
         {
-            "name": "chip_west_2",
+            "name": "chip_west_3",
             "from": [ 5.0, 10.0, 7.0 ], 
             "to": [ 6.0, 11.0, 8.0 ], 
             "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
@@ -198,23 +212,9 @@
             }
         },
         {
-            "name": "chip_west_3",
+            "name": "chip_west_4",
             "from": [ 5.0, 10.0, 9.0 ], 
             "to": [ 6.0, 11.0, 10.0 ], 
-            "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "east" },
-                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "cullface": "west" },
-                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
-                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.0, 0.0 ], "cullface": "down" }
-            }
-        },
-        {
-            "name": "chip_west_4",
-            "from": [ 5.0, 10.0, 11.0 ], 
-            "to": [ 6.0, 11.0, 12.0 ], 
             "rotation": { "origin": [ 8.0, 10.0, 16.0 ], "axis": "x", "angle": 22.5 },
             "faces": {
                 "north": { "texture": "#0", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
