@@ -14,6 +14,7 @@ import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
 import transportterminal.gui.client.GuiConsole;
 import transportterminal.gui.client.GuiEnergyCube;
+import transportterminal.gui.client.GuiGenerator;
 import transportterminal.gui.client.GuiNaming;
 import transportterminal.gui.client.GuiSummoner;
 import transportterminal.gui.client.GuiUtilsNaming;
@@ -21,18 +22,20 @@ import transportterminal.gui.client.GuiWirelessConsole;
 import transportterminal.gui.server.ContainerCharger;
 import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.gui.server.ContainerEnergyCube;
+import transportterminal.gui.server.ContainerGenerator;
 import transportterminal.gui.server.ContainerSummoner;
 import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.items.ItemRemote;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityChipUtilities;
 import transportterminal.tileentites.TileEntityEnergyCube;
+import transportterminal.tileentites.TileEntityGenerator;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
 public class CommonProxy implements IGuiHandler {
 
-	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 6, GUI_ID_ENERGY_CUBE = 7;
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 6, GUI_ID_ENERGY_CUBE = 7, GUI_ID_GENERATOR = 8;
 
 	public void registerRenderInformation() {
 	}
@@ -43,6 +46,7 @@ public class CommonProxy implements IGuiHandler {
 		registerTileEntity(TileEntityCharger.class, "charger");
 		registerTileEntity(TileEntitySummoner.class, "summoner");
 		registerTileEntity(TileEntityEnergyCube.class, "energy_cube");
+		registerTileEntity(TileEntityGenerator.class, "generator");
 	}
 
 	private void registerTileEntity(Class<? extends TileEntity> cls, String baseName) {
@@ -100,6 +104,13 @@ public class CommonProxy implements IGuiHandler {
 			if (tileentity instanceof TileEntityEnergyCube)
 				return new ContainerEnergyCube(player, (TileEntityEnergyCube) tileentity);
 		}
+
+		if (ID == GUI_ID_GENERATOR) {
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityGenerator)
+				return new ContainerGenerator(player, (TileEntityGenerator) tileentity);
+		}
 		return null;
 	}
 
@@ -152,6 +163,12 @@ public class CommonProxy implements IGuiHandler {
 				return new GuiEnergyCube(player, (TileEntityEnergyCube) tileentity);
 		}
 
+		if (ID == GUI_ID_GENERATOR) {
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityGenerator)
+				return new GuiGenerator(player, (TileEntityGenerator) tileentity);
+		}
 		return null;
 	}
 

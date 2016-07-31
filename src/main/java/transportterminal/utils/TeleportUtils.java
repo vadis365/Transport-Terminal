@@ -16,6 +16,7 @@ import transportterminal.items.ItemPlayerChip;
 import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityEnergyCube;
+import transportterminal.tileentites.TileEntityGenerator;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
@@ -88,6 +89,11 @@ public class TeleportUtils {
 	}
 
 	public static void consumeEnergyCubeEnergy(TileEntityEnergyCube tile, int energyExtracted) {
+		if (TransportTerminal.IS_RF_PRESENT)
+			tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
+	}
+
+	public static void consumeGeneratorEnergy(TileEntityGenerator tile, int energyExtracted) {
 		if (TransportTerminal.IS_RF_PRESENT)
 			tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
 	}

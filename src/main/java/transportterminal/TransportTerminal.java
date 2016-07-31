@@ -1,9 +1,13 @@
 package transportterminal;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -19,6 +23,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockEnergyCube;
@@ -34,6 +39,7 @@ import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.ConsolePacketHandler;
 import transportterminal.network.handler.ContainerPacketHandler;
 import transportterminal.network.handler.EnergyCubePacketHandler;
+import transportterminal.network.handler.GeneratorPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
 import transportterminal.network.handler.PlayerSummonPacketHandler;
 import transportterminal.network.handler.RemotePacketHandler;
@@ -41,6 +47,7 @@ import transportterminal.network.message.ButtonMessage;
 import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.network.message.ContainerMessage;
 import transportterminal.network.message.EnergyCubeMessage;
+import transportterminal.network.message.GeneratorMessage;
 import transportterminal.network.message.NamingMessage;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
@@ -88,14 +95,61 @@ public class TransportTerminal {
 		SUMMONER = new BlockSummoner().setHardness(3.0F);
 		ENERGY_CUBE = new BlockEnergyCube().setHardness(3.0F);
 		GENERATOR = new BlockGenerator().setHardness(3.0F);
-		
-		TERMINAL_ITEM = new ItemBlock(TERMINAL);
-		UTILS_ITEM = new ItemBlock(UTILS);
-		SUMMONER_ITEM = new ItemBlock(SUMMONER);
-		CHARGER_ITEM = new ItemBlock(CHARGER);
-		ENERGY_CUBE_ITEM = new ItemBlock(ENERGY_CUBE);
-		GENERATOR_ITEM = new ItemBlock(GENERATOR);
-		
+
+		TERMINAL_ITEM = new ItemBlock(TERMINAL) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Used to teleport to locations stored on chips.");
+				list.add("Can teleport to other players.");
+			}
+		};
+
+		UTILS_ITEM = new ItemBlock(UTILS) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Used to copy, erase and name chips.");
+				list.add("Requires no RF to run.");
+			}
+		};
+
+		SUMMONER_ITEM = new ItemBlock(SUMMONER) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Used to summon players to it's location.");
+				list.add("Must contain a named player location chip to work.");
+			}
+		};
+
+		CHARGER_ITEM = new ItemBlock(CHARGER) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Can charge up to 6 RF items at a time.");
+			}
+		};
+
+		ENERGY_CUBE_ITEM = new ItemBlock(ENERGY_CUBE) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Stores and outputs RF.");
+				list.add("All sides configurable.");
+				list.add("Right Click to open configuration gui or");
+				list.add("Sneak + Right Click to toggle side's state.");
+			}
+		};
+
+		GENERATOR_ITEM = new ItemBlock(GENERATOR) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Uses redstone to provide RF.");
+			}
+		};
+
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
 		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
@@ -131,6 +185,7 @@ public class TransportTerminal {
 		NETWORK_WRAPPER.registerMessage(PlayerSummonPacketHandler.class, PlayerSummonMessage.class, 4, Side.SERVER);
 		NETWORK_WRAPPER.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.CLIENT);
 		NETWORK_WRAPPER.registerMessage(EnergyCubePacketHandler.class, EnergyCubeMessage.class, 6, Side.SERVER);
+		NETWORK_WRAPPER.registerMessage(GeneratorPacketHandler.class, GeneratorMessage.class, 7, Side.SERVER);
 
 		ForgeChunkManager.setForcedChunkLoadingCallback(INSTANCE, null);
 	}
