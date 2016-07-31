@@ -3,6 +3,9 @@ package transportterminal.tileentites;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -15,7 +18,8 @@ import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.utils.TeleportUtils;
 
 public class TileEntityGenerator extends TileEntityInventoryEnergy implements ITickable {
-
+	public int time = 0;
+	private static final int MAX_TIME = 20;
 	public TileEntityGenerator() {
 		super(ConfigHandler.ENERGY_CUBE_MAX_ENERGY, 1);
 	}
@@ -73,6 +77,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 		status[3] = EnumStatus.values()[tagCompound.getByte("south")];
 		status[4] = EnumStatus.values()[tagCompound.getByte("west")];
 		status[5] = EnumStatus.values()[tagCompound.getByte("east")];
+		time = tagCompound.getInteger("progress");
 	}
 
 	@Override
@@ -84,6 +89,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 		tagCompound.setByte("south", (byte) status[3].ordinal());
 		tagCompound.setByte("west", (byte) status[4].ordinal());
 		tagCompound.setByte("east", (byte) status[5].ordinal());
+		tagCompound.setInteger("progress", time);
 		return tagCompound;
 	}
 
@@ -122,6 +128,28 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 				}
 			}
 		}
+
+		if (hasFuel() && getEnergyStored(null) < ConfigHandler.ENERGY_CUBE_MAX_ENERGY) {
+			time++;
+			if (time >= MAX_TIME) { // * getFuelTypeModifier()
+				if (inventory[0] != null)
+					if (--inventory[0].stackSize <= 0)
+						inventory[0] = null;
+				time = 0;
+				setEnergy(getEnergyStored(null) + getFuelTypeModifier() * 100);
+			}
+		}
+		if (inventory[0] == null || getEnergyStored(null) == ConfigHandler.ENERGY_CUBE_MAX_ENERGY) {
+			time = 0;
+		}
+	}
+	
+	private int getFuelTypeModifier() {
+		return inventory[0] != null && inventory[0].getItem() == Items.REDSTONE ? 10 : inventory[0] != null && inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK) ? 90 : 0;
+	}
+
+	public boolean hasFuel() {
+		return inventory[0] != null && (inventory[0].getItem() == Items.REDSTONE || inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK)) && inventory[0].stackSize >= 1;
 	}
 
 	@Override
