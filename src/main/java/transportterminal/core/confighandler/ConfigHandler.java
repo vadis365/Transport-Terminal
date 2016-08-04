@@ -16,6 +16,9 @@ public class ConfigHandler {
 	public static int CHARGER_MAX_ENERGY;
 	public static int SUMMONER_MAX_ENERGY;
 	public static int ENERGY_CUBE_MAX_ENERGY;
+	public static int GENERATOR_MAX_ENERGY;
+	public static int GENERATOR_PROCESSING_TIME;
+	public static int GENERATOR_MAX_EXTRACT_PER_TICK;
 	public static boolean ALLOW_TELEPORT_TO_PLAYER;
 	public static boolean ALLOW_TELEPORT_SUMMON_PLAYER;
 	public final String[] usedCategories = { "RF Energy Settings", "Game Settings" };
@@ -34,7 +37,9 @@ public class ConfigHandler {
 		CHARGER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Charger", 320000).getInt(320000);
 		SUMMONER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Player Summoner", 320000).getInt(320000);
 		ENERGY_CUBE_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Energy Cube", 1280000).getInt(1280000);
-		
+		GENERATOR_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Generator", 1280000).getInt(1280000);
+		GENERATOR_PROCESSING_TIME = config.get("RF Energy Settings", "Generator Redstone to RF processing time (in ticks)", 40).getInt(40);
+		GENERATOR_MAX_EXTRACT_PER_TICK = config.get("RF Energy Settings", "Generator Max RF Extract per tick", 100).getInt(100);
 		ALLOW_TELEPORT_TO_PLAYER = config.get("Game Settings", "Enable Player Location Chips", true).getBoolean(true);
 		ALLOW_TELEPORT_SUMMON_PLAYER = config.get("Game Settings", "Enable Player Summoning Block", true).getBoolean(true);
 		

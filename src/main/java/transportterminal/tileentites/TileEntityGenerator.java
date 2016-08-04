@@ -19,9 +19,10 @@ import transportterminal.utils.TeleportUtils;
 
 public class TileEntityGenerator extends TileEntityInventoryEnergy implements ITickable {
 	public int time = 0;
-	private static final int MAX_TIME = 20;
+	public int MAX_TIME = ConfigHandler.GENERATOR_PROCESSING_TIME;
+	public int MAX_EXTRACT_PER_TICK = ConfigHandler.GENERATOR_MAX_EXTRACT_PER_TICK;
 	public TileEntityGenerator() {
-		super(ConfigHandler.ENERGY_CUBE_MAX_ENERGY, 1);
+		super(ConfigHandler.GENERATOR_MAX_ENERGY, 1);
 	}
 
 	public enum EnumStatus implements IStringSerializable {
@@ -113,14 +114,14 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 	public void update() {
 		if (worldObj.isRemote)
 			return;
-
 		int stored = getEnergyStored(null);
+		
 		if ((stored > 0)) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (status[facing.ordinal()] == EnumStatus.STATUS_OUTPUT) {
 					TileEntity tile = worldObj.getTileEntity(pos.offset(facing));
 					if (tile != null && tile instanceof IEnergyHandler) {
-						int received = ((IEnergyReceiver) tile).receiveEnergy(facing.getOpposite(), stored, false);
+						int received = ((IEnergyReceiver) tile).receiveEnergy(facing.getOpposite(), stored >= MAX_EXTRACT_PER_TICK ? MAX_EXTRACT_PER_TICK : 0, false);
 						extractEnergy(facing, received, false);
 						TeleportUtils.consumeGeneratorEnergy(this, received);
 						stored = getEnergyStored(null);
@@ -129,23 +130,23 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 			}
 		}
 
-		if (hasFuel() && getEnergyStored(null) < ConfigHandler.ENERGY_CUBE_MAX_ENERGY) {
+		if (hasFuel() && getEnergyStored(null) <= ConfigHandler.GENERATOR_MAX_ENERGY - getFuelTypeModifier()) {
 			time++;
-			if (time >= MAX_TIME) { // * getFuelTypeModifier()
+			if (time >= MAX_TIME) {
+				time = 0;
+				setEnergy(getEnergyStored(null) + getFuelTypeModifier());
 				if (inventory[0] != null)
 					if (--inventory[0].stackSize <= 0)
 						inventory[0] = null;
-				time = 0;
-				setEnergy(getEnergyStored(null) + getFuelTypeModifier() * 100);
 			}
 		}
-		if (inventory[0] == null || getEnergyStored(null) == ConfigHandler.ENERGY_CUBE_MAX_ENERGY) {
+		if (inventory[0] == null || getEnergyStored(null) == ConfigHandler.GENERATOR_MAX_ENERGY) {
 			time = 0;
 		}
 	}
 	
 	private int getFuelTypeModifier() {
-		return inventory[0] != null && inventory[0].getItem() == Items.REDSTONE ? 10 : inventory[0] != null && inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK) ? 90 : 0;
+		return inventory[0] != null && inventory[0].getItem() == Items.REDSTONE ? 2000 : inventory[0] != null && inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK) ? 18000 : 0;
 	}
 
 	public boolean hasFuel() {
