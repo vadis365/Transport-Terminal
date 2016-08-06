@@ -55,12 +55,11 @@ public class GuiGenerator extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float partialTickTime, int x, int y) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.getTextureManager().bindTexture(GUI_GENERATOR);
-		int k = (width - xSize) / 2;
-		int l = (height - ySize) / 2;
-		drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
-
 		int xOffSet = (width - xSize) / 2;
 		int yOffSet = (height - ySize) / 2;
+		int process = tile.getProcessTime(16);
+		drawTexturedModalRect(xOffSet, yOffSet, 0, 0, xSize, ySize);
+        drawTexturedModalRect(xOffSet + 116, yOffSet + 69 - process, 178, 16 - process, 16, process);
 
 		EnumStatus DOWN = tile.getSideStatus(EnumFacing.DOWN);
 		EnumStatus UP = tile.getSideStatus(EnumFacing.UP);

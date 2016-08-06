@@ -38,7 +38,7 @@ public class ConfigHandler {
 		SUMMONER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Player Summoner", 320000).getInt(320000);
 		ENERGY_CUBE_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Energy Cube", 1280000).getInt(1280000);
 		GENERATOR_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Generator", 1280000).getInt(1280000);
-		GENERATOR_PROCESSING_TIME = config.get("RF Energy Settings", "Generator Redstone to RF processing time (in ticks)", 40).getInt(40);
+		GENERATOR_PROCESSING_TIME = config.get("RF Energy Settings", "Generator Redstone to RF processing time (in ticks)", 80).getInt(80);
 		GENERATOR_MAX_EXTRACT_PER_TICK = config.get("RF Energy Settings", "Generator Max RF Extract per tick", 100).getInt(100);
 		ALLOW_TELEPORT_TO_PLAYER = config.get("Game Settings", "Enable Player Location Chips", true).getBoolean(true);
 		ALLOW_TELEPORT_SUMMON_PLAYER = config.get("Game Settings", "Enable Player Summoning Block", true).getBoolean(true);

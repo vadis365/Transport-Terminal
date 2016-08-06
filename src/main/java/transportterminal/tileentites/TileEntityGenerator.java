@@ -5,6 +5,7 @@ import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +15,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ITickable;
+import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
+import transportterminal.gui.server.ContainerGenerator;
 import transportterminal.utils.TeleportUtils;
 
 public class TileEntityGenerator extends TileEntityInventoryEnergy implements ITickable {
@@ -22,7 +25,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 	public int MAX_TIME = ConfigHandler.GENERATOR_PROCESSING_TIME;
 	public int MAX_EXTRACT_PER_TICK = ConfigHandler.GENERATOR_MAX_EXTRACT_PER_TICK;
 	public TileEntityGenerator() {
-		super(ConfigHandler.GENERATOR_MAX_ENERGY, 1);
+		super(ConfigHandler.GENERATOR_MAX_ENERGY, 2);
 	}
 
 	public enum EnumStatus implements IStringSerializable {
@@ -115,7 +118,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 		if (worldObj.isRemote)
 			return;
 		int stored = getEnergyStored(null);
-		
+
 		if ((stored > 0)) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (status[facing.ordinal()] == EnumStatus.STATUS_OUTPUT) {
@@ -131,7 +134,10 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 		}
 
 		if (hasFuel() && getEnergyStored(null) <= ConfigHandler.GENERATOR_MAX_ENERGY - getFuelTypeModifier()) {
-			time++;
+			if(hasSpeedUpgrade())
+				time += inventory[1].getMetadata() + 2;
+			else
+				time++;
 			if (time >= MAX_TIME) {
 				time = 0;
 				setEnergy(getEnergyStored(null) + getFuelTypeModifier());
@@ -140,17 +146,38 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 						inventory[0] = null;
 			}
 		}
-		if (inventory[0] == null || getEnergyStored(null) == ConfigHandler.GENERATOR_MAX_ENERGY) {
+		
+		if (inventory[0] == null || getEnergyStored(null) == ConfigHandler.GENERATOR_MAX_ENERGY)
 			time = 0;
-		}
+
 	}
-	
+
+	public int getProcessTime(int scale) {
+		return hasFuel() ? (int) ((float) time / (float) MAX_TIME * scale) : 0;
+	}
+
+	private boolean hasSpeedUpgrade() {
+		return inventory[1] != null && inventory[1].getItem() == TransportTerminal.UPGRADE_CHIP;
+	}
+
 	private int getFuelTypeModifier() {
 		return inventory[0] != null && inventory[0].getItem() == Items.REDSTONE ? 2000 : inventory[0] != null && inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK) ? 18000 : 0;
 	}
 
 	public boolean hasFuel() {
 		return inventory[0] != null && (inventory[0].getItem() == Items.REDSTONE || inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK)) && inventory[0].stackSize >= 1;
+	}
+
+	public void getGUIData(int id, int value) {
+		switch (id) {
+		case 0:
+			time = value;
+			break;
+		}
+	}
+
+	public void sendGUIData(ContainerGenerator generator, IContainerListener craft) {
+		craft.sendProgressBarUpdate(generator, 0, time);
 	}
 
 	@Override

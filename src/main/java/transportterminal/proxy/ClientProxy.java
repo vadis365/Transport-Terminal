@@ -15,6 +15,9 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.PLAYER_CHIP, 0, new ModelResourceLocation("transportterminal:playerChip", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE, 0, new ModelResourceLocation("transportterminal:remote", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE_TERMINAL, 0, new ModelResourceLocation("transportterminal:remoteTerminal", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UPGRADE_CHIP, 0, new ModelResourceLocation("transportterminal:upgrade_chip_red", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UPGRADE_CHIP, 1, new ModelResourceLocation("transportterminal:upgrade_chip_green", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UPGRADE_CHIP, 2, new ModelResourceLocation("transportterminal:upgrade_chip_blue", "inventory"));
 
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UTILS_ITEM, 0, new ModelResourceLocation("transportterminal:utils", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.SUMMONER_ITEM, 0, new ModelResourceLocation("transportterminal:summoner", "inventory"));

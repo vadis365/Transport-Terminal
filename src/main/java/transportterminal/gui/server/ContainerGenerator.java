@@ -4,20 +4,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import transportterminal.TransportTerminal;
+import transportterminal.gui.slot.SlotUpgradeChip;
 import transportterminal.tileentites.TileEntityGenerator;
 
 public class ContainerGenerator extends ContainerEnergy {
 	private final int numRows = 2;
-
+	TileEntityGenerator generator;
 	public ContainerGenerator(EntityPlayer player, TileEntityGenerator tileentity) {
 		super(player, tileentity);
 		InventoryPlayer playerInventory = player.inventory;
+		generator = tileentity;
 		int i = (numRows - 4) * 18;
 		
 		addSlotToContainer(new Slot(tile, 0, 80, 53));
+		addSlotToContainer(new SlotUpgradeChip(tile, 1, 44, 53));
 
 		for (int j = 0; j < 3; j++)
 			for (int k = 0; k < 9; k++)
@@ -33,11 +38,14 @@ public class ContainerGenerator extends ContainerEnergy {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
-			if (slotIndex > 0) {
+			if (slotIndex > 1) {
 				if (stack1.getItem() == Items.REDSTONE || stack1.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK))
 					if (!mergeItemStack(stack1, 0, 1, false))
 						return null;
-			} else if (!mergeItemStack(stack1, 1, inventorySlots.size(), false))
+				if (stack1.getItem() == TransportTerminal.UPGRADE_CHIP)
+					if (!mergeItemStack(stack1, 1, 2, false))
+						return null;
+			} else if (!mergeItemStack(stack1, 2, inventorySlots.size(), false))
 				return null;
 			if (stack1.stackSize == 0)
 				slot.putStack(null);
@@ -49,5 +57,24 @@ public class ContainerGenerator extends ContainerEnergy {
 				return null;
 		}
 		return stack;
+	}
+	
+	@Override
+	public void addListener(IContainerListener listener) {
+		super.addListener(listener);
+		generator.sendGUIData(this, listener);
+	}
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		for (IContainerListener listener : listeners) {
+			generator.sendGUIData(this, listener);
+		}
+	}
+
+	@Override
+	public void updateProgressBar(int id, int value) {
+		generator.getGUIData(id, value);
 	}
 }

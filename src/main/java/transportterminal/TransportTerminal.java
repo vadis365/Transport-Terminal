@@ -35,6 +35,7 @@ import transportterminal.items.ItemChip;
 import transportterminal.items.ItemPlayerChip;
 import transportterminal.items.ItemRemote;
 import transportterminal.items.ItemRemoteTerminal;
+import transportterminal.items.ItemSpeedUpgradeChip;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
 import transportterminal.network.handler.ConsolePacketHandler;
 import transportterminal.network.handler.ContainerPacketHandler;
@@ -61,7 +62,7 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy PROXY;
-	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM;
+	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM, UPGRADE_CHIP;
 	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR;
 	public static SimpleNetworkWrapper NETWORK_WRAPPER;
 	public static SoundEvent OK_SOUND;
@@ -87,6 +88,7 @@ public class TransportTerminal {
 		REMOTE_TERMINAL = new ItemRemoteTerminal();
 		CHIP = new ItemChip();
 		PLAYER_CHIP = new ItemPlayerChip();
+		UPGRADE_CHIP = new ItemSpeedUpgradeChip();
 
 		// Blocks
 		TERMINAL = new BlockTransportTerminal().setHardness(3.0F);
@@ -153,7 +155,8 @@ public class TransportTerminal {
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
 		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
-		GameRegistry.register(PLAYER_CHIP.setRegistryName("transportterminal", "playerChip").setUnlocalizedName("transportterminal.playerChip"));
+		GameRegistry.register(PLAYER_CHIP.setRegistryName("transportterminal", "player_chip").setUnlocalizedName("transportterminal.player_chip"));
+		GameRegistry.register(UPGRADE_CHIP.setRegistryName("transportterminal", "upgrade_chip").setUnlocalizedName("transportterminal.upgrade_chip"));
 		
 		GameRegistry.register(TERMINAL.setRegistryName("transportterminal", "console").setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS.setRegistryName("transportterminal", "utils").setUnlocalizedName("transportterminal.utils"));
