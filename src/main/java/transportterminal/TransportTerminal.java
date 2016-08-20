@@ -28,6 +28,7 @@ import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockEnergyCube;
 import transportterminal.blocks.BlockGenerator;
+import transportterminal.blocks.BlockMetalCrate;
 import transportterminal.blocks.BlockSummoner;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
@@ -62,8 +63,8 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy PROXY;
-	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM, UPGRADE_CHIP;
-	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR;
+	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM, UPGRADE_CHIP, METAL_CRATE_ITEM;
+	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR, METAL_CRATE;
 	public static SimpleNetworkWrapper NETWORK_WRAPPER;
 	public static SoundEvent OK_SOUND;
 	public static SoundEvent ERROR_SOUND;
@@ -97,6 +98,7 @@ public class TransportTerminal {
 		SUMMONER = new BlockSummoner().setHardness(3.0F);
 		ENERGY_CUBE = new BlockEnergyCube().setHardness(3.0F);
 		GENERATOR = new BlockGenerator().setHardness(3.0F);
+		METAL_CRATE = new BlockMetalCrate().setHardness(3.0F);
 
 		TERMINAL_ITEM = new ItemBlock(TERMINAL) {
 			@Override
@@ -152,6 +154,14 @@ public class TransportTerminal {
 			}
 		};
 
+		METAL_CRATE_ITEM = new ItemBlock(METAL_CRATE) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Has 104 Slots.");
+			}
+		};
+
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
 		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
@@ -165,6 +175,7 @@ public class TransportTerminal {
 			GameRegistry.register(CHARGER.setRegistryName("transportterminal", "charger").setUnlocalizedName("transportterminal.charger"));
 		GameRegistry.register(ENERGY_CUBE.setRegistryName("transportterminal", "energy_cube").setUnlocalizedName("transportterminal.energy_cube"));
 		GameRegistry.register(GENERATOR.setRegistryName("transportterminal", "generator").setUnlocalizedName("transportterminal.generator"));
+		GameRegistry.register(METAL_CRATE.setRegistryName("transportterminal", "metal_crate").setUnlocalizedName("transportterminal.metal_crate"));
 
 		GameRegistry.register(TERMINAL_ITEM.setRegistryName(TERMINAL.getRegistryName()).setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS_ITEM.setRegistryName(UTILS.getRegistryName()).setUnlocalizedName("transportterminal.utils"));
@@ -173,6 +184,7 @@ public class TransportTerminal {
 			GameRegistry.register(CHARGER_ITEM.setRegistryName(CHARGER.getRegistryName()).setUnlocalizedName("transportterminal.charger"));
 		GameRegistry.register(ENERGY_CUBE_ITEM.setRegistryName(ENERGY_CUBE.getRegistryName()).setUnlocalizedName("transportterminal.energy_cube"));
 		GameRegistry.register(GENERATOR_ITEM.setRegistryName(GENERATOR.getRegistryName()).setUnlocalizedName("transportterminal.generator"));
+		GameRegistry.register(METAL_CRATE_ITEM.setRegistryName(METAL_CRATE.getRegistryName()).setUnlocalizedName("transportterminal.metal_crate"));
 
 		PROXY.registerTileEntities();
 		PROXY.registerRenderInformation();
