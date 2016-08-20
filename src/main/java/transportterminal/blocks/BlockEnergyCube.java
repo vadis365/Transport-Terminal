@@ -1,12 +1,20 @@
 package transportterminal.blocks;
 
+import java.util.Random;
+
+import com.sun.istack.internal.Nullable;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -19,6 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityEnergyCube;
+import transportterminal.tileentites.TileEntityInventoryEnergy;
 
 public class BlockEnergyCube extends BlockContainer {
 
@@ -105,6 +114,41 @@ public class BlockEnergyCube extends BlockContainer {
                 .withProperty(UP, TileEntityEnergyCube.EnumStatus.STATUS_NONE)
                 .withProperty(DOWN, TileEntityEnergyCube.EnumStatus.STATUS_NONE);
     }
+
+	@Nullable
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return null;
+	}
+
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		if(!world.isRemote && world.getGameRules().getBoolean("doTileDrops")) {
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityEnergyCube) {
+				NBTTagCompound nbt = new NBTTagCompound();
+				tileentity.writeToNBT(nbt);
+				ItemStack stack = new ItemStack(Item.getItemFromBlock(this), 1, 0);
+				if(((TileEntityEnergyCube) tileentity).getEnergyStored(null) > 0)
+					stack.setTagCompound(nbt);
+				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+				world.removeTileEntity(pos);
+			}
+		}
+	}
+
+	@Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
+		if(!world.isRemote) {
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityEnergyCube && stack.hasTagCompound() && stack.getTagCompound().hasKey("energy")) {
+				int energy = stack.getTagCompound().getInteger("energy");
+				((TileEntityInventoryEnergy) tileentity).setEnergy(energy);
+			}
+			world.notifyBlockUpdate(pos, state, state, 3);
+		}
+	}
 
 	@Override
 	protected BlockStateContainer createBlockState() {

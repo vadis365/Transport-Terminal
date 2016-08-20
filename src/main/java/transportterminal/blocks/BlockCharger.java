@@ -66,7 +66,7 @@ public class BlockCharger extends BlockDirectional {
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		if(!world.isRemote) {
+		if(!world.isRemote && world.getGameRules().getBoolean("doTileDrops")) {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityCharger) {
 				InventoryHelper.dropInventoryItems(world, pos, (TileEntityCharger) tileentity);
@@ -80,7 +80,8 @@ public class BlockCharger extends BlockDirectional {
 				NBTTagCompound nbt = new NBTTagCompound();
 				tileentity.writeToNBT(nbt);
 				ItemStack stack = new ItemStack(Item.getItemFromBlock(this), 1, 0);
-				stack.setTagCompound(nbt);
+				if(((TileEntityCharger) tileentity).getEnergyStored(null) > 0)
+					stack.setTagCompound(nbt);
 				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 				world.removeTileEntity(pos);
 			}
@@ -90,10 +91,12 @@ public class BlockCharger extends BlockDirectional {
 	@Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
-		if(!world.isRemote) {
+		if(!world.isRemote && stack.hasTagCompound() && stack.getTagCompound().hasKey("energy")) {
 			TileEntity tileentity = world.getTileEntity(pos);
-			if (tileentity instanceof TileEntityCharger)
-				tileentity.readFromNBT(stack.getTagCompound());
+			if (tileentity instanceof TileEntityCharger) {
+				int energy = stack.getTagCompound().getInteger("energy");
+				((TileEntityInventoryEnergy) tileentity).setEnergy(energy);
+			}
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}

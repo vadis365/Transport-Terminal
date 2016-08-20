@@ -1,9 +1,17 @@
 package transportterminal.blocks;
 
+import java.util.Random;
+
+import com.sun.istack.internal.Nullable;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -14,6 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityGenerator;
+import transportterminal.tileentites.TileEntityInventoryEnergy;
 
 public class BlockGenerator extends BlockDirectional {
 
@@ -48,7 +57,7 @@ public class BlockGenerator extends BlockDirectional {
 		}
 		return true;
 	}
-/*
+
 	@Nullable
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
@@ -57,7 +66,7 @@ public class BlockGenerator extends BlockDirectional {
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		if(!world.isRemote) {
+		if(!world.isRemote && world.getGameRules().getBoolean("doTileDrops")) {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityGenerator) {
 				InventoryHelper.dropInventoryItems(world, pos, (TileEntityGenerator) tileentity);
@@ -71,7 +80,8 @@ public class BlockGenerator extends BlockDirectional {
 				NBTTagCompound nbt = new NBTTagCompound();
 				tileentity.writeToNBT(nbt);
 				ItemStack stack = new ItemStack(Item.getItemFromBlock(this), 1, 0);
-				stack.setTagCompound(nbt);
+				if(((TileEntityGenerator) tileentity).getEnergyStored(null) > 0)
+					stack.setTagCompound(nbt);
 				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 				world.removeTileEntity(pos);
 			}
@@ -83,10 +93,11 @@ public class BlockGenerator extends BlockDirectional {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
 		if(!world.isRemote) {
 			TileEntity tileentity = world.getTileEntity(pos);
-			if (tileentity instanceof TileEntityGenerator)
-				tileentity.readFromNBT(stack.getTagCompound());
+			if (tileentity instanceof TileEntityGenerator && stack.hasTagCompound() && stack.getTagCompound().hasKey("energy")) {
+				int energy = stack.getTagCompound().getInteger("energy");
+				((TileEntityInventoryEnergy) tileentity).setEnergy(energy);
+			}
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
-*/
 }
