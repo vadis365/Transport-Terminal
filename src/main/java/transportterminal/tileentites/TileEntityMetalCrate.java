@@ -13,7 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityMetalCrate extends TileEntity implements IInventory {
 
-	private ItemStack[] inventory = new ItemStack[108];
+	private ItemStack[] inventory = new ItemStack[104];
 
 	public TileEntityMetalCrate() {
 		super();

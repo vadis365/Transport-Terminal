@@ -9,7 +9,7 @@ import transportterminal.tileentites.TileEntityMetalCrate;
 
 public class ContainerMetalCrate extends Container {
 
-	public int numRows = 9;
+	public int numRows = 8;
 
 	public ContainerMetalCrate(EntityPlayer player, TileEntityMetalCrate tile) {
 		InventoryPlayer playerInventory = player.inventory;
@@ -19,15 +19,15 @@ public class ContainerMetalCrate extends Container {
 		int k;
 
 		for (j = 0; j < numRows; ++j)
-			for (k = 0; k < 12; ++k)
-				addSlotToContainer(new Slot(tile, k + j * 12, 13 + k * 18, 8 + j * 18));
+			for (k = 0; k < 13; ++k)
+				addSlotToContainer(new Slot(tile, k + j * 12, 12 + k * 18, 15 + j * 18));
 
 		for (j = 0; j < 3; ++j)
 			for (k = 0; k < 9; ++k)
-				addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 48 + k * 18, 102 + j * 18 + i));
+				addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 48 + k * 18, 99 + j * 18 + i));
 
 		for (j = 0; j < 9; ++j)
-			addSlotToContainer(new Slot(playerInventory, j, 48 + j * 18, 160 + i));
+			addSlotToContainer(new Slot(playerInventory, j, 48 + j * 18, 157 + i));
 	}
 
 	@Override
