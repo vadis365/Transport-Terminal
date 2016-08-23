@@ -20,7 +20,7 @@ public class ContainerMetalCrate extends Container {
 
 		for (j = 0; j < numRows; ++j)
 			for (k = 0; k < 13; ++k)
-				addSlotToContainer(new Slot(tile, k + j * 12, 12 + k * 18, 15 + j * 18));
+				addSlotToContainer(new Slot(tile, k + j * 13, 12 + k * 18, 15 + j * 18));
 
 		for (j = 0; j < 3; ++j)
 			for (k = 0; k < 9; ++k)
@@ -44,10 +44,10 @@ public class ContainerMetalCrate extends Container {
 			ItemStack is1 = slot.getStack();
 			is = is1.copy();
 
-			if (par2 < numRows * 12) {
-				if (!mergeItemStack(is1, numRows * 12, inventorySlots.size(), true))
+			if (par2 < numRows * 13) {
+				if (!mergeItemStack(is1, numRows * 13, inventorySlots.size(), true))
 					return null;
-			} else if (!mergeItemStack(is1, 0, numRows * 12, false))
+			} else if (!mergeItemStack(is1, 0, numRows * 13, false))
 				return null;
 
 			if (is1.stackSize == 0)

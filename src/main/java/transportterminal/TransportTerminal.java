@@ -3,13 +3,17 @@ package transportterminal;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.GuiControls;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -158,7 +162,25 @@ public class TransportTerminal {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
-				list.add("Has 104 Slots.");
+
+				if(stack.hasTagCompound() && stack.getTagCompound().getTagList("Items", 10) != null) {
+					NBTTagList tags = stack.getTagCompound().getTagList("Items", 10);
+
+					for (int i = 0; i < tags.tagCount(); i++) {
+						NBTTagCompound data = tags.getCompoundTagAt(i);
+						int j = data.getByte("Slot") & 255;
+
+						if (i >= 0 && i <= 51 && !GuiControls.isShiftKeyDown()) {
+							list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+
+							if (i == 51)
+								list.add("Hold Shift for more." );
+						}
+						else
+							if(i > 51 && i <= 103 && GuiControls.isShiftKeyDown())
+								list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+					}
+				}
 			}
 		};
 
