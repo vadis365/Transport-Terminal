@@ -9,6 +9,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -80,7 +81,16 @@ public class BlockMetalCrate extends BlockContainer {
 		if(!world.isRemote && stack.hasTagCompound() && stack.getTagCompound().hasKey("Items")) {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityMetalCrate) {
-				tileentity.readFromNBT(stack.getTagCompound());
+				NBTTagList tags = stack.getTagCompound().getTagList("Items", 10);
+				((TileEntityMetalCrate) tileentity).inventory = new ItemStack[((TileEntityMetalCrate) tileentity).getSizeInventory()];
+
+				for (int i = 0; i < tags.tagCount(); i++) {
+					NBTTagCompound data = tags.getCompoundTagAt(i);
+					int j = data.getByte("Slot") & 255;
+
+					if (j >= 0 && j < ((TileEntityMetalCrate) tileentity).inventory.length)
+						((TileEntityMetalCrate) tileentity).inventory[j] = ItemStack.loadItemStackFromNBT(data);
+				}
 			}
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
