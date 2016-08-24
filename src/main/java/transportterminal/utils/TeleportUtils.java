@@ -17,6 +17,7 @@ import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityEnergyCube;
 import transportterminal.tileentites.TileEntityGenerator;
+import transportterminal.tileentites.TileEntityQuantumCrate;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
@@ -96,6 +97,11 @@ public class TeleportUtils {
 	public static void consumeGeneratorEnergy(TileEntityGenerator tile, int energyExtracted) {
 		if (TransportTerminal.IS_RF_PRESENT)
 			tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
+	}
+	
+	public static void consumeQuantumCrateEnergy(TileEntityQuantumCrate tile) {
+		if (TransportTerminal.IS_RF_PRESENT)
+			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {

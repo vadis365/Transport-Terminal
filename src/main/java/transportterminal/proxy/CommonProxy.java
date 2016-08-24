@@ -17,6 +17,8 @@ import transportterminal.gui.client.GuiEnergyCube;
 import transportterminal.gui.client.GuiGenerator;
 import transportterminal.gui.client.GuiMetalCrate;
 import transportterminal.gui.client.GuiNaming;
+import transportterminal.gui.client.GuiQuantumCrate;
+import transportterminal.gui.client.GuiRemoteQuantumCrate;
 import transportterminal.gui.client.GuiSummoner;
 import transportterminal.gui.client.GuiUtilsNaming;
 import transportterminal.gui.client.GuiWirelessConsole;
@@ -25,6 +27,7 @@ import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.gui.server.ContainerEnergyCube;
 import transportterminal.gui.server.ContainerGenerator;
 import transportterminal.gui.server.ContainerMetalCrate;
+import transportterminal.gui.server.ContainerQuantumCrate;
 import transportterminal.gui.server.ContainerSummoner;
 import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.items.ItemRemote;
@@ -33,12 +36,13 @@ import transportterminal.tileentites.TileEntityChipUtilities;
 import transportterminal.tileentites.TileEntityEnergyCube;
 import transportterminal.tileentites.TileEntityGenerator;
 import transportterminal.tileentites.TileEntityMetalCrate;
+import transportterminal.tileentites.TileEntityQuantumCrate;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
 public class CommonProxy implements IGuiHandler {
 
-	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 6, GUI_ID_ENERGY_CUBE = 7, GUI_ID_GENERATOR = 8, GUI_ID_METAL_CRATE = 9;
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 6, GUI_ID_ENERGY_CUBE = 7, GUI_ID_GENERATOR = 8, GUI_ID_METAL_CRATE = 9, GUI_ID_QUANTUM_CRATE = 10, GUI_ID_REMOTE_QUANTUM_CRATE = 11;
 
 	public void registerRenderInformation() {
 	}
@@ -51,6 +55,7 @@ public class CommonProxy implements IGuiHandler {
 		registerTileEntity(TileEntityEnergyCube.class, "energy_cube");
 		registerTileEntity(TileEntityGenerator.class, "generator");
 		registerTileEntity(TileEntityMetalCrate.class, "metal_crate");
+		registerTileEntity(TileEntityQuantumCrate.class, "quantum_crate");
 	}
 
 	private void registerTileEntity(Class<? extends TileEntity> cls, String baseName) {
@@ -122,6 +127,18 @@ public class CommonProxy implements IGuiHandler {
 			if (tileentity instanceof TileEntityMetalCrate)
 				return new ContainerMetalCrate(player, (TileEntityMetalCrate) tileentity);
 		}
+
+		if (ID == GUI_ID_QUANTUM_CRATE) {
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityQuantumCrate)
+				return new ContainerQuantumCrate(player, (TileEntityQuantumCrate) tileentity);
+		}
+
+		if (ID == GUI_ID_REMOTE_QUANTUM_CRATE) {
+			if (getTile(player, world, x, y, z, true) instanceof TileEntityQuantumCrate)
+				return new ContainerQuantumCrate(player, (TileEntityQuantumCrate) getTile(player, world, x, y, z, false));
+		}
 		return null;
 	}
 
@@ -187,13 +204,23 @@ public class CommonProxy implements IGuiHandler {
 			if (tileentity instanceof TileEntityMetalCrate)
 				return new GuiMetalCrate(player, (TileEntityMetalCrate) tileentity);
 		}
+
+		if (ID == GUI_ID_QUANTUM_CRATE) {
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityQuantumCrate)
+				return new GuiQuantumCrate(player, (TileEntityQuantumCrate) tileentity);
+		}
+
+		if (ID == GUI_ID_REMOTE_QUANTUM_CRATE)
+			return new GuiRemoteQuantumCrate(player);
 		return null;
 	}
 
 	public TileEntity getTile(EntityPlayer player, World world, int x, int y, int z, boolean loadDimension) {
 		TileEntity tileentity;
 		ItemStack stack = player.getHeldItemMainhand();
-		if (stack != null && stack.getItem() == TransportTerminal.REMOTE_TERMINAL) {
+		if (stack != null && (stack.getItem() == TransportTerminal.REMOTE_TERMINAL || stack.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE)) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			int xx = stack.getTagCompound().getInteger("homeX");
 			int yy = stack.getTagCompound().getInteger("homeY");

@@ -18,6 +18,7 @@ public class TileEntityMetalCrate extends TileEntity implements IInventory {
 	public TileEntityMetalCrate() {
 		super();
 	}
+
 	@Override
 	public int getSizeInventory() {
 		return inventory.length;

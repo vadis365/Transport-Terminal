@@ -33,12 +33,14 @@ import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockEnergyCube;
 import transportterminal.blocks.BlockGenerator;
 import transportterminal.blocks.BlockMetalCrate;
+import transportterminal.blocks.BlockQuantumCrate;
 import transportterminal.blocks.BlockSummoner;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemChip;
 import transportterminal.items.ItemPlayerChip;
 import transportterminal.items.ItemRemote;
+import transportterminal.items.ItemRemoteQuantumCrate;
 import transportterminal.items.ItemRemoteTerminal;
 import transportterminal.items.ItemSpeedUpgradeChip;
 import transportterminal.network.handler.ChipUtilsPacketHandler;
@@ -67,8 +69,8 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy PROXY;
-	public static Item REMOTE, REMOTE_TERMINAL, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM, UPGRADE_CHIP, METAL_CRATE_ITEM;
-	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR, METAL_CRATE;
+	public static Item REMOTE, REMOTE_TERMINAL, REMOTE_QUANTUM_CRATE, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM, UPGRADE_CHIP, METAL_CRATE_ITEM, QUANTUM_CRATE_ITEM;
+	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR, METAL_CRATE, QUANTUM_CRATE;
 	public static SimpleNetworkWrapper NETWORK_WRAPPER;
 	public static SoundEvent OK_SOUND;
 	public static SoundEvent ERROR_SOUND;
@@ -91,6 +93,7 @@ public class TransportTerminal {
 		// Items
 		REMOTE = new ItemRemote();
 		REMOTE_TERMINAL = new ItemRemoteTerminal();
+		REMOTE_QUANTUM_CRATE = new ItemRemoteQuantumCrate();
 		CHIP = new ItemChip();
 		PLAYER_CHIP = new ItemPlayerChip();
 		UPGRADE_CHIP = new ItemSpeedUpgradeChip();
@@ -103,6 +106,7 @@ public class TransportTerminal {
 		ENERGY_CUBE = new BlockEnergyCube().setHardness(3.0F);
 		GENERATOR = new BlockGenerator().setHardness(3.0F);
 		METAL_CRATE = new BlockMetalCrate().setHardness(3.0F);
+		QUANTUM_CRATE = new BlockQuantumCrate().setHardness(3.0F);
 
 		TERMINAL_ITEM = new ItemBlock(TERMINAL) {
 			@Override
@@ -184,8 +188,35 @@ public class TransportTerminal {
 			}
 		};
 
+		QUANTUM_CRATE_ITEM = new ItemBlock(QUANTUM_CRATE) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+
+				if(stack.hasTagCompound() && stack.getTagCompound().getTagList("Items", 10) != null) {
+					NBTTagList tags = stack.getTagCompound().getTagList("Items", 10);
+
+					for (int i = 0; i < tags.tagCount(); i++) {
+						NBTTagCompound data = tags.getCompoundTagAt(i);
+						int j = data.getByte("Slot") & 255;
+
+						if (i >= 0 && i <= 51 && !GuiControls.isShiftKeyDown()) {
+							list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+
+							if (i == 51)
+								list.add("Hold Shift for more." );
+						}
+						else
+							if(i > 51 && i <= 105 && GuiControls.isShiftKeyDown())
+								list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+					}
+				}
+			}
+		};
+
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
+		GameRegistry.register(REMOTE_QUANTUM_CRATE.setRegistryName("transportterminal", "remote_quantum_crate").setUnlocalizedName("transportterminal.remote_quantum_crate"));
 		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
 		GameRegistry.register(PLAYER_CHIP.setRegistryName("transportterminal", "player_chip").setUnlocalizedName("transportterminal.player_chip"));
 		GameRegistry.register(UPGRADE_CHIP.setRegistryName("transportterminal", "upgrade_chip").setUnlocalizedName("transportterminal.upgrade_chip"));
@@ -198,6 +229,7 @@ public class TransportTerminal {
 		GameRegistry.register(ENERGY_CUBE.setRegistryName("transportterminal", "energy_cube").setUnlocalizedName("transportterminal.energy_cube"));
 		GameRegistry.register(GENERATOR.setRegistryName("transportterminal", "generator").setUnlocalizedName("transportterminal.generator"));
 		GameRegistry.register(METAL_CRATE.setRegistryName("transportterminal", "metal_crate").setUnlocalizedName("transportterminal.metal_crate"));
+		GameRegistry.register(QUANTUM_CRATE.setRegistryName("transportterminal", "quantum_crate").setUnlocalizedName("transportterminal.quantum_crate"));
 
 		GameRegistry.register(TERMINAL_ITEM.setRegistryName(TERMINAL.getRegistryName()).setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS_ITEM.setRegistryName(UTILS.getRegistryName()).setUnlocalizedName("transportterminal.utils"));
@@ -207,6 +239,7 @@ public class TransportTerminal {
 		GameRegistry.register(ENERGY_CUBE_ITEM.setRegistryName(ENERGY_CUBE.getRegistryName()).setUnlocalizedName("transportterminal.energy_cube"));
 		GameRegistry.register(GENERATOR_ITEM.setRegistryName(GENERATOR.getRegistryName()).setUnlocalizedName("transportterminal.generator"));
 		GameRegistry.register(METAL_CRATE_ITEM.setRegistryName(METAL_CRATE.getRegistryName()).setUnlocalizedName("transportterminal.metal_crate"));
+		GameRegistry.register(QUANTUM_CRATE_ITEM.setRegistryName(QUANTUM_CRATE.getRegistryName()).setUnlocalizedName("transportterminal.quantum_crate"));
 
 		PROXY.registerTileEntities();
 		PROXY.registerRenderInformation();
