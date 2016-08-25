@@ -10,23 +10,21 @@ public class SlotRemoteCrate extends Slot {
 
 	public SlotRemoteCrate(IInventory inventory, int slotIndex, int x, int y) {
 		super(inventory, slotIndex, x, y);
-		slotNumber = slotIndex;
+		this.slotNumber = slotIndex;
 	}
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return stack.getItem() instanceof ItemRemoteQuantumCrate;
+		return slotNumber == 0 && stack.getItem() instanceof ItemRemoteQuantumCrate;
 	}
 
 	@Override
 	public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
-		System.out.println("PICKED UP Here" +slotNumber);
-		if (stack != null && slotNumber == 0)
-			inventory.setInventorySlotContents(1, null);
+		if (stack != null && this.slotNumber == 0)
+			inventory.setInventorySlotContents(105, null);
 
-		if (stack != null && slotNumber == 1) {
-			inventory.setInventorySlotContents(0, null);
-			System.out.println("PICKED UP");
+		if (stack != null && this.slotNumber == 1) {
+			inventory.setInventorySlotContents(104, null);
 			stack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionType().getName());
 			stack.getTagCompound().setInteger("dim", player.dimension);
 		}

@@ -50,13 +50,10 @@ public class ContainerQuantumCrate extends ContainerEnergy {
 			ItemStack is1 = slot.getStack();
 			is = is1.copy();
 
-			if (slotIndex < numRows * 13) {
-				if (!mergeItemStack(is1, numRows * 13, inventorySlots.size(), true))
+			if (slotIndex < (numRows * 13) + 2) {
+				if (!mergeItemStack(is1, (numRows * 13) + 2, inventorySlots.size(), true))
 					return null;
-				else if (is1.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE)
-					if (!mergeItemStack(is1, 104, 105, true))
-						return null;
-			} else if (!mergeItemStack(is1, 0, numRows * 13, false))
+			} else if (!mergeItemStack(is1, 0, (numRows * 13) + 2, false))
 				return null;
 
 			if (is1.stackSize == 0)

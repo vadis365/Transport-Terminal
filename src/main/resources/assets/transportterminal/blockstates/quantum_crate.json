@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "transportterminal:quantum_crate", "y": 180 },
+        "facing=south": { "model": "transportterminal:quantum_crate" },
+        "facing=west":  { "model": "transportterminal:quantum_crate", "y": 90 },
+        "facing=east":  { "model": "transportterminal:quantum_crate", "y": 270 }
+    }
+}
