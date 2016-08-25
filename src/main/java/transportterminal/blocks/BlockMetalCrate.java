@@ -1,5 +1,9 @@
 package transportterminal.blocks;
 
+import java.util.Random;
+
+import com.sun.istack.internal.Nullable;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -50,6 +54,12 @@ public class BlockMetalCrate extends BlockContainer {
         return EnumBlockRenderType.MODEL;
     }
 
+	@Nullable
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return null;
+	}
+
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
@@ -60,8 +70,8 @@ public class BlockMetalCrate extends BlockContainer {
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		if(!world.isRemote && world.getGameRules().getBoolean("doTileDrops")) {
+	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		if (!world.isRemote && !player.capabilities.isCreativeMode) {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityMetalCrate) {
 				NBTTagCompound nbt = new NBTTagCompound();
