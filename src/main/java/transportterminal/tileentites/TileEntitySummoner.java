@@ -42,6 +42,12 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 	}
 
 	@Override
+    public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = new NBTTagCompound();
+        return writeToNBT(tag);
+    }
+
+	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 	}

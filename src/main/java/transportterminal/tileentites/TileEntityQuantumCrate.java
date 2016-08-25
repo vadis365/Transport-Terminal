@@ -56,6 +56,9 @@ public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
 		if (slot == 104 && is.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE || slot == 105 && is.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE)
 			return true;
+		else
+			if (slot < 104)
+				return true;
 		return false;
 	}
 }

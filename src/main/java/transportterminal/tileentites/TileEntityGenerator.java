@@ -1,6 +1,5 @@
 package transportterminal.tileentites;
 
-import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.init.Blocks;
@@ -186,8 +185,8 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return stack.getItem() instanceof IEnergyContainerItem;
+	public boolean isItemValidForSlot(int slot, ItemStack is) {
+		return slot == 0 && (is.getItem() == Items.REDSTONE || is.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK));
 	}
 
 	@Override

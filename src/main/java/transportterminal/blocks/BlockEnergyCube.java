@@ -122,8 +122,8 @@ public class BlockEnergyCube extends BlockContainer {
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		if(!world.isRemote && world.getGameRules().getBoolean("doTileDrops")) {
+	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		if (!world.isRemote && !player.capabilities.isCreativeMode) {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityEnergyCube) {
 				NBTTagCompound nbt = new NBTTagCompound();

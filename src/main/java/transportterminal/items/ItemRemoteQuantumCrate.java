@@ -14,11 +14,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
+import transportterminal.tileentites.TileEntityInventoryEnergy;
 import transportterminal.tileentites.TileEntityQuantumCrate;
 import transportterminal.utils.DimensionUtils;
 import transportterminal.utils.TeleportUtils;
@@ -60,15 +60,20 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 					int homeY = stack.getTagCompound().getInteger("homeY");
 					int homeZ = stack.getTagCompound().getInteger("homeZ");
 					DimensionUtils.forceChunkloading((EntityPlayerMP) player, dimensionID, homeX, homeY, homeZ);
-					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
-					world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
-					player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE_QUANTUM_CRATE, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-				
-					WorldServer world2 = DimensionManager.getWorld(dimensionID);
-					BlockPos pos = new BlockPos(homeX, homeY, homeZ);
-					TileEntity tile = world2.getTileEntity(pos);
-					if(tile instanceof TileEntityQuantumCrate)
-						TeleportUtils.consumeQuantumCrateEnergy((TileEntityQuantumCrate) tile);
+					WorldServer world2 = DimensionUtils.getWorldFromDimID(dimensionID);
+					TileEntity tile = world2.getTileEntity(new BlockPos(homeX, homeY, homeZ));
+					if (tile instanceof TileEntityInventoryEnergy) {
+						if(((TileEntityInventoryEnergy) tile).getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT) {
+							TeleportUtils.consumeQuantumCrateEnergy((TileEntityQuantumCrate) tile);
+							extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
+							world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+							player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE_QUANTUM_CRATE, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+						}
+						else {
+							world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+							return new ActionResult(EnumActionResult.FAIL, stack);
+						}
+					}
 				}
 			}
 			if (world.isRemote)

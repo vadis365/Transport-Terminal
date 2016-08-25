@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameType;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -65,22 +66,20 @@ public class BlockCharger extends BlockDirectional {
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		if(!world.isRemote && world.getGameRules().getBoolean("doTileDrops")) {
+	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		if (!world.isRemote && !player.capabilities.isCreativeMode) {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityCharger) {
 				InventoryHelper.dropInventoryItems(world, pos, (TileEntityCharger) tileentity);
-
 				for (int i = 0; i < ((TileEntityInventoryEnergy) tileentity).getSizeInventory(); ++i) {
 					ItemStack itemstack = ((TileEntityInventoryEnergy) tileentity).getStackInSlot(i);
 					if (itemstack != null)
 						((TileEntityCharger) tileentity).setInventorySlotContents(i, null);
 				}
-
 				NBTTagCompound nbt = new NBTTagCompound();
 				tileentity.writeToNBT(nbt);
 				ItemStack stack = new ItemStack(Item.getItemFromBlock(this), 1, 0);
-				if(((TileEntityCharger) tileentity).getEnergyStored(null) > 0)
+				if (((TileEntityCharger) tileentity).getEnergyStored(null) > 0)
 					stack.setTagCompound(nbt);
 				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 				world.removeTileEntity(pos);

@@ -108,7 +108,7 @@ public class TileEntityMetalCrate extends TileEntity implements IInventory {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		return false;
+		return true;
 	}
 
 	@Override
