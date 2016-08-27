@@ -65,7 +65,7 @@ public class ItemRemoteTerminal extends ItemEnergy {
 					if (tile instanceof TileEntityInventoryEnergy) {
 						if(((TileEntityInventoryEnergy) tile).getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT) {
 							TeleportUtils.consumeConsoleEnergy((TileEntityTransportTerminal) tile);
-							extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
+							extractEnergy(stack, ConfigHandler.ENERGY_PER_REMOTE_USE, false);
 							world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 							player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 						}

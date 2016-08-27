@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "transportterminal:items/remote_quantum_crate"
+    }
+}

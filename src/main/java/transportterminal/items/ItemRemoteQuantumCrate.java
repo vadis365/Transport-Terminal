@@ -26,7 +26,7 @@ import transportterminal.utils.TeleportUtils;
 public class ItemRemoteQuantumCrate extends ItemEnergy {
 
 	public ItemRemoteQuantumCrate() {
-		super(ConfigHandler.REMOTE_TERMINAL_MAX_ENERGY);
+		super(ConfigHandler.REMOTE_QUANTUM_CRATE_MAX_ENERGY);
 	}
 
 	@Override
@@ -63,9 +63,9 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 					WorldServer world2 = DimensionUtils.getWorldFromDimID(dimensionID);
 					TileEntity tile = world2.getTileEntity(new BlockPos(homeX, homeY, homeZ));
 					if (tile instanceof TileEntityInventoryEnergy) {
-						if(((TileEntityInventoryEnergy) tile).getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT) {
+						if(((TileEntityInventoryEnergy) tile).getEnergyStored(null) >= ConfigHandler.ENERGY_PER_CRATE) {
 							TeleportUtils.consumeQuantumCrateEnergy((TileEntityQuantumCrate) tile);
-							extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
+							extractEnergy(stack, ConfigHandler.ENERGY_PER_REMOTE_USE, false);
 							world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 							player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE_QUANTUM_CRATE, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 						}
@@ -78,7 +78,7 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 			}
 			if (world.isRemote)
 				if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1)
-					player.addChatMessage(new TextComponentTranslation("chat.end_disabled_message"));
+					player.addChatMessage(new TextComponentTranslation("chat.end_crate_disabled_message"));
 		}
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}

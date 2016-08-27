@@ -108,6 +108,6 @@ public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
 	}
 
 	protected boolean canTeleport(ItemStack stack) {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(stack) >= ConfigHandler.ENERGY_PER_TELEPORT;
+		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(stack) >= ConfigHandler.ENERGY_PER_REMOTE_USE;
 	}
 }

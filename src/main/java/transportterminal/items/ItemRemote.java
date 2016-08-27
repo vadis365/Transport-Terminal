@@ -142,7 +142,7 @@ public class ItemRemote extends ItemEnergy {
 			int newDim = stack.getTagCompound().getInteger("dim");
 			if (!world.isRemote)
 				if (canTeleport(stack))
-					extractEnergy(stack, ConfigHandler.ENERGY_PER_TELEPORT, false);
+					extractEnergy(stack, ConfigHandler.ENERGY_PER_REMOTE_USE, false);
 			if (world.isRemote)
 				if (canTeleport(stack))
 					TransportTerminal.NETWORK_WRAPPER.sendToServer(new TeleportMessage(player, x, y, z, newDim));

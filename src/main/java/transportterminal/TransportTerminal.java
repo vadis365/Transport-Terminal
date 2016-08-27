@@ -215,7 +215,7 @@ public class TransportTerminal {
 		};
 
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
-		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remoteTerminal").setUnlocalizedName("transportterminal.remoteTerminal"));
+		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remote_terminal").setUnlocalizedName("transportterminal.remote_terminal"));
 		GameRegistry.register(REMOTE_QUANTUM_CRATE.setRegistryName("transportterminal", "remote_quantum_crate").setUnlocalizedName("transportterminal.remote_quantum_crate"));
 		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
 		GameRegistry.register(PLAYER_CHIP.setRegistryName("transportterminal", "player_chip").setUnlocalizedName("transportterminal.player_chip"));

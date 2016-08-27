@@ -168,7 +168,6 @@ public class TileEntityMetalCrate extends TileEntity implements IInventory {
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

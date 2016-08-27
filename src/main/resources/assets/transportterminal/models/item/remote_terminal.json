@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "transportterminal:items/playerChip"
+        "layer0": "transportterminal:items/remote_terminal"
     }
 }

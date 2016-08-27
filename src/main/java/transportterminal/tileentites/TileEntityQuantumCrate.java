@@ -10,7 +10,7 @@ import transportterminal.core.confighandler.ConfigHandler;
 public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
 
 	public TileEntityQuantumCrate() {
-		super(ConfigHandler.ENERGY_CUBE_MAX_ENERGY, 106);
+		super(ConfigHandler.QUANTUM_CRATE_MAX_ENERGY, 106);
 	}
 
 	@Override
@@ -48,7 +48,6 @@ public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -15,9 +15,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderInformation() {
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.CHIP, 0, new ModelResourceLocation("transportterminal:chip", "inventory"));
-		ModelLoader.setCustomModelResourceLocation(TransportTerminal.PLAYER_CHIP, 0, new ModelResourceLocation("transportterminal:playerChip", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.PLAYER_CHIP, 0, new ModelResourceLocation("transportterminal:player_chip", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE, 0, new ModelResourceLocation("transportterminal:remote", "inventory"));
-		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE_TERMINAL, 0, new ModelResourceLocation("transportterminal:remoteTerminal", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE_TERMINAL, 0, new ModelResourceLocation("transportterminal:remote_terminal", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE_QUANTUM_CRATE, 0, new ModelResourceLocation("transportterminal:remote_quantum_crate", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UPGRADE_CHIP, 0, new ModelResourceLocation("transportterminal:upgrade_chip_red", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UPGRADE_CHIP, 1, new ModelResourceLocation("transportterminal:upgrade_chip_green", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.UPGRADE_CHIP, 2, new ModelResourceLocation("transportterminal:upgrade_chip_blue", "inventory"));

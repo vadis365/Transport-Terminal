@@ -101,7 +101,7 @@ public class TeleportUtils {
 	
 	public static void consumeQuantumCrateEnergy(TileEntityQuantumCrate tile) {
 		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
+			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_CRATE);
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {
