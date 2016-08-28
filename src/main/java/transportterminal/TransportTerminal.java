@@ -113,7 +113,7 @@ public class TransportTerminal {
 			@SideOnly(Side.CLIENT)
 			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
 				list.add("Used to teleport to locations stored on chips.");
-				list.add("Can teleport to other players.");
+				list.add("Can used for teleporting to other players.");
 			}
 		};
 
@@ -150,7 +150,7 @@ public class TransportTerminal {
 				list.add("Stores and outputs RF.");
 				list.add("All sides configurable.");
 				list.add("Right Click to open configuration gui or");
-				list.add("Sneak + Right Click to toggle side's state.");
+				list.add("Sneak + Right Click with empty hand to toggle side's state.");
 			}
 		};
 

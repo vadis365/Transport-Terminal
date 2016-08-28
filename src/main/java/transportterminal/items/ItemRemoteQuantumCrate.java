@@ -42,7 +42,7 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 				list.add("Crate Z: " + stack.getTagCompound().getInteger("homeZ"));
 			} else {
 				list.add("Right click to open");
-				list.add("your linked Crate.");
+				list.add("your linked Quantum Crate.");
 			}
 	}
 
