@@ -15,13 +15,6 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack is) {
-		inventory[slot] = is;
-		if (is != null && is.stackSize > getInventoryStackLimit())
-			is.stackSize = getInventoryStackLimit();
-	}
-
-	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
 		if (slot == 0 && is.getItem() == TransportTerminal.PLAYER_CHIP)
 			return true;

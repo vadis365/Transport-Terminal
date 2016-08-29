@@ -23,6 +23,8 @@ public class ConfigHandler {
 	public static int GENERATOR_PROCESSING_TIME;
 	public static int GENERATOR_MAX_EXTRACT_PER_TICK;
 	public static int QUANTUM_CRATE_MAX_ENERGY;
+	public static int ITEM_TRANSPORTER_MAX_ENERGY;
+	public static int  ENERGY_PER_ITEM_TRANSFER;
 	public static boolean ALLOW_TELEPORT_TO_PLAYER;
 	public static boolean ALLOW_TELEPORT_SUMMON_PLAYER;
 	public final String[] usedCategories = { "RF Energy Settings", "Game Settings" };
@@ -48,9 +50,11 @@ public class ConfigHandler {
 		GENERATOR_PROCESSING_TIME = config.get("RF Energy Settings", "Generator Redstone to RF processing time (in ticks)", 80).getInt(80);
 		GENERATOR_MAX_EXTRACT_PER_TICK = config.get("RF Energy Settings", "Generator Max RF Extract per tick", 100).getInt(100);
 		QUANTUM_CRATE_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Quantum Crate", 320000).getInt(320000);
+		ITEM_TRANSPORTER_MAX_ENERGY = config.get("RF Energy Settings", "Max RF Stored in Item Transporter", 320000).getInt(320000);
+		ENERGY_PER_ITEM_TRANSFER = config.get("RF Energy Settings", "RF Used by Item Transporter to Teleport items.", 1000).getInt(1000);
 		ALLOW_TELEPORT_TO_PLAYER = config.get("Game Settings", "Enable Player Location Chips", true).getBoolean(true);
 		ALLOW_TELEPORT_SUMMON_PLAYER = config.get("Game Settings", "Enable Player Summoning Block", true).getBoolean(true);
-		
+
 		if (config.hasChanged())
 			config.save();
 	}

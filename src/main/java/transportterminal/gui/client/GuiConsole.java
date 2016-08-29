@@ -39,8 +39,7 @@ public class GuiConsole extends GuiContainer {
 		int yOffSet = (height - ySize) / 2;
 		for (int rowTop = 2; rowTop <= 8; ++rowTop)
 			buttonList.add(new GuiConsoleButton(rowTop, xOffSet + 44 + rowTop * 18 - 36, yOffSet + 18, 0, 0, ""));
-			
-		//	buttonList.add(new GuiButton(rowTop, xOffSet + 44 + rowTop * 18 - 36, yOffSet + 18, 16, 7, ""));
+
 		for (int rowBottom = 9; rowBottom <= 15; ++rowBottom)
 			buttonList.add(new GuiConsoleButton(rowBottom, xOffSet + 44 + rowBottom * 18 - 162, yOffSet + 63, 0, 0, ""));
 	}

@@ -6,6 +6,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
+import transportterminal.tileentites.TileEntityItemTransporter;
+import transportterminal.tileentites.TileEntityItemTransporterRenderer;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntitySummonerRenderer;
 
@@ -31,7 +33,9 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.GENERATOR_ITEM, 0, new ModelResourceLocation("transportterminal:generator", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.METAL_CRATE_ITEM, 0, new ModelResourceLocation("transportterminal:metal_crate", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.QUANTUM_CRATE_ITEM, 0, new ModelResourceLocation("transportterminal:quantum_crate", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(TransportTerminal.ITEM_TRANSPORTER_ITEM, 0, new ModelResourceLocation("transportterminal:item_transporter", "inventory"));
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySummoner.class, new TileEntitySummonerRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemTransporter.class, new TileEntityItemTransporterRenderer());
 	}
 }

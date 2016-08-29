@@ -15,6 +15,7 @@ import transportterminal.gui.client.GuiChipUtils;
 import transportterminal.gui.client.GuiConsole;
 import transportterminal.gui.client.GuiEnergyCube;
 import transportterminal.gui.client.GuiGenerator;
+import transportterminal.gui.client.GuiItemTransporter;
 import transportterminal.gui.client.GuiMetalCrate;
 import transportterminal.gui.client.GuiNaming;
 import transportterminal.gui.client.GuiQuantumCrate;
@@ -26,6 +27,7 @@ import transportterminal.gui.server.ContainerCharger;
 import transportterminal.gui.server.ContainerChipUtils;
 import transportterminal.gui.server.ContainerEnergyCube;
 import transportterminal.gui.server.ContainerGenerator;
+import transportterminal.gui.server.ContainerItemTransporter;
 import transportterminal.gui.server.ContainerMetalCrate;
 import transportterminal.gui.server.ContainerQuantumCrate;
 import transportterminal.gui.server.ContainerSummoner;
@@ -35,6 +37,7 @@ import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityChipUtilities;
 import transportterminal.tileentites.TileEntityEnergyCube;
 import transportterminal.tileentites.TileEntityGenerator;
+import transportterminal.tileentites.TileEntityItemTransporter;
 import transportterminal.tileentites.TileEntityMetalCrate;
 import transportterminal.tileentites.TileEntityQuantumCrate;
 import transportterminal.tileentites.TileEntitySummoner;
@@ -42,7 +45,7 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 
 public class CommonProxy implements IGuiHandler {
 
-	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 6, GUI_ID_ENERGY_CUBE = 7, GUI_ID_GENERATOR = 8, GUI_ID_METAL_CRATE = 9, GUI_ID_QUANTUM_CRATE = 10, GUI_ID_REMOTE_QUANTUM_CRATE = 11;
+	public final int GUI_ID_TERMINAL = 0, GUI_ID_REMOTE = 1, GUI_ID_CHIP_UTILS = 2, GUI_ID_CHIP_UTILS_NAMING = 3, GUI_ID_CHARGER = 4, GUI_ID_REMOTE_TERMINAL = 5, GUI_ID_SUMMONER = 6, GUI_ID_ENERGY_CUBE = 7, GUI_ID_GENERATOR = 8, GUI_ID_METAL_CRATE = 9, GUI_ID_QUANTUM_CRATE = 10, GUI_ID_REMOTE_QUANTUM_CRATE = 11, GUI_ID_ITEM_TRANSPORTER = 12;
 
 	public void registerRenderInformation() {
 	}
@@ -56,6 +59,7 @@ public class CommonProxy implements IGuiHandler {
 		registerTileEntity(TileEntityGenerator.class, "generator");
 		registerTileEntity(TileEntityMetalCrate.class, "metal_crate");
 		registerTileEntity(TileEntityQuantumCrate.class, "quantum_crate");
+		registerTileEntity(TileEntityItemTransporter.class, "item_transporter");
 	}
 
 	private void registerTileEntity(Class<? extends TileEntity> cls, String baseName) {
@@ -139,6 +143,13 @@ public class CommonProxy implements IGuiHandler {
 			if (getTile(player, world, x, y, z, true) instanceof TileEntityQuantumCrate)
 				return new ContainerQuantumCrate(player, (TileEntityQuantumCrate) getTile(player, world, x, y, z, false));
 		}
+
+		if (ID == GUI_ID_ITEM_TRANSPORTER) {
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityItemTransporter)
+				return new ContainerItemTransporter(player, (TileEntityItemTransporter) tileentity);
+		}
 		return null;
 	}
 
@@ -214,6 +225,13 @@ public class CommonProxy implements IGuiHandler {
 
 		if (ID == GUI_ID_REMOTE_QUANTUM_CRATE)
 			return new GuiRemoteQuantumCrate(player);
+
+		if (ID == GUI_ID_ITEM_TRANSPORTER) {
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof TileEntityItemTransporter)
+				return new GuiItemTransporter(player, (TileEntityItemTransporter) tileentity);
+		}
 		return null;
 	}
 

@@ -32,6 +32,7 @@ import transportterminal.blocks.BlockCharger;
 import transportterminal.blocks.BlockChipUtilities;
 import transportterminal.blocks.BlockEnergyCube;
 import transportterminal.blocks.BlockGenerator;
+import transportterminal.blocks.BlockItemTransporter;
 import transportterminal.blocks.BlockMetalCrate;
 import transportterminal.blocks.BlockQuantumCrate;
 import transportterminal.blocks.BlockSummoner;
@@ -48,6 +49,7 @@ import transportterminal.network.handler.ConsolePacketHandler;
 import transportterminal.network.handler.ContainerPacketHandler;
 import transportterminal.network.handler.EnergyCubePacketHandler;
 import transportterminal.network.handler.GeneratorPacketHandler;
+import transportterminal.network.handler.ItemTransporterPacketHandler;
 import transportterminal.network.handler.NamingPacketHandler;
 import transportterminal.network.handler.PlayerSummonPacketHandler;
 import transportterminal.network.handler.RemotePacketHandler;
@@ -56,6 +58,7 @@ import transportterminal.network.message.ChipUtilsMessage;
 import transportterminal.network.message.ContainerMessage;
 import transportterminal.network.message.EnergyCubeMessage;
 import transportterminal.network.message.GeneratorMessage;
+import transportterminal.network.message.ItemTransporterMessage;
 import transportterminal.network.message.NamingMessage;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
@@ -69,8 +72,8 @@ public class TransportTerminal {
 
 	@SidedProxy(clientSide = "transportterminal.proxy.ClientProxy", serverSide = "transportterminal.proxy.CommonProxy")
 	public static CommonProxy PROXY;
-	public static Item REMOTE, REMOTE_TERMINAL, REMOTE_QUANTUM_CRATE, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM, UPGRADE_CHIP, METAL_CRATE_ITEM, QUANTUM_CRATE_ITEM;
-	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR, METAL_CRATE, QUANTUM_CRATE;
+	public static Item REMOTE, REMOTE_TERMINAL, REMOTE_QUANTUM_CRATE, CHIP, PLAYER_CHIP, TERMINAL_ITEM, UTILS_ITEM, CHARGER_ITEM, SUMMONER_ITEM, ENERGY_CUBE_ITEM, GENERATOR_ITEM, UPGRADE_CHIP, METAL_CRATE_ITEM, QUANTUM_CRATE_ITEM, ITEM_TRANSPORTER_ITEM;
+	public static Block TERMINAL, UTILS, CHARGER, SUMMONER, ENERGY_CUBE, GENERATOR, METAL_CRATE, QUANTUM_CRATE, ITEM_TRANSPORTER;
 	public static SimpleNetworkWrapper NETWORK_WRAPPER;
 	public static SoundEvent OK_SOUND;
 	public static SoundEvent ERROR_SOUND;
@@ -107,6 +110,7 @@ public class TransportTerminal {
 		GENERATOR = new BlockGenerator().setHardness(3.0F);
 		METAL_CRATE = new BlockMetalCrate().setHardness(3.0F);
 		QUANTUM_CRATE = new BlockQuantumCrate().setHardness(3.0F);
+		ITEM_TRANSPORTER = new BlockItemTransporter().setHardness(3.0F);
 
 		TERMINAL_ITEM = new ItemBlock(TERMINAL) {
 			@Override
@@ -214,13 +218,21 @@ public class TransportTerminal {
 			}
 		};
 
+		ITEM_TRANSPORTER_ITEM = new ItemBlock(ITEM_TRANSPORTER) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("Sends Items to stored chip's location.");
+			}
+		};
+
 		GameRegistry.register(REMOTE.setRegistryName("transportterminal", "remote").setUnlocalizedName("transportterminal.remote"));
 		GameRegistry.register(REMOTE_TERMINAL.setRegistryName("transportterminal", "remote_terminal").setUnlocalizedName("transportterminal.remote_terminal"));
 		GameRegistry.register(REMOTE_QUANTUM_CRATE.setRegistryName("transportterminal", "remote_quantum_crate").setUnlocalizedName("transportterminal.remote_quantum_crate"));
 		GameRegistry.register(CHIP.setRegistryName("transportterminal", "chip").setUnlocalizedName("transportterminal.chip"));
 		GameRegistry.register(PLAYER_CHIP.setRegistryName("transportterminal", "player_chip").setUnlocalizedName("transportterminal.player_chip"));
 		GameRegistry.register(UPGRADE_CHIP.setRegistryName("transportterminal", "upgrade_chip").setUnlocalizedName("transportterminal.upgrade_chip"));
-		
+
 		GameRegistry.register(TERMINAL.setRegistryName("transportterminal", "console").setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS.setRegistryName("transportterminal", "utils").setUnlocalizedName("transportterminal.utils"));
 		GameRegistry.register(SUMMONER.setRegistryName("transportterminal", "summoner").setUnlocalizedName("transportterminal.summoner"));
@@ -230,6 +242,7 @@ public class TransportTerminal {
 		GameRegistry.register(GENERATOR.setRegistryName("transportterminal", "generator").setUnlocalizedName("transportterminal.generator"));
 		GameRegistry.register(METAL_CRATE.setRegistryName("transportterminal", "metal_crate").setUnlocalizedName("transportterminal.metal_crate"));
 		GameRegistry.register(QUANTUM_CRATE.setRegistryName("transportterminal", "quantum_crate").setUnlocalizedName("transportterminal.quantum_crate"));
+		GameRegistry.register(ITEM_TRANSPORTER.setRegistryName("transportterminal", "item_transporter").setUnlocalizedName("transportterminal.item_transporter"));
 
 		GameRegistry.register(TERMINAL_ITEM.setRegistryName(TERMINAL.getRegistryName()).setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS_ITEM.setRegistryName(UTILS.getRegistryName()).setUnlocalizedName("transportterminal.utils"));
@@ -240,6 +253,7 @@ public class TransportTerminal {
 		GameRegistry.register(GENERATOR_ITEM.setRegistryName(GENERATOR.getRegistryName()).setUnlocalizedName("transportterminal.generator"));
 		GameRegistry.register(METAL_CRATE_ITEM.setRegistryName(METAL_CRATE.getRegistryName()).setUnlocalizedName("transportterminal.metal_crate"));
 		GameRegistry.register(QUANTUM_CRATE_ITEM.setRegistryName(QUANTUM_CRATE.getRegistryName()).setUnlocalizedName("transportterminal.quantum_crate"));
+		GameRegistry.register(ITEM_TRANSPORTER_ITEM.setRegistryName(ITEM_TRANSPORTER.getRegistryName()).setUnlocalizedName("transportterminal.item_transporter"));
 
 		PROXY.registerTileEntities();
 		PROXY.registerRenderInformation();
@@ -256,6 +270,7 @@ public class TransportTerminal {
 		NETWORK_WRAPPER.registerMessage(ContainerPacketHandler.class, ContainerMessage.class, 5, Side.CLIENT);
 		NETWORK_WRAPPER.registerMessage(EnergyCubePacketHandler.class, EnergyCubeMessage.class, 6, Side.SERVER);
 		NETWORK_WRAPPER.registerMessage(GeneratorPacketHandler.class, GeneratorMessage.class, 7, Side.SERVER);
+		NETWORK_WRAPPER.registerMessage(ItemTransporterPacketHandler.class, ItemTransporterMessage.class, 8, Side.SERVER);
 
 		ForgeChunkManager.setForcedChunkLoadingCallback(INSTANCE, null);
 	}

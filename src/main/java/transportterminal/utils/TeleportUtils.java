@@ -17,6 +17,7 @@ import transportterminal.network.TransportTerminalTeleporter;
 import transportterminal.tileentites.TileEntityCharger;
 import transportterminal.tileentites.TileEntityEnergyCube;
 import transportterminal.tileentites.TileEntityGenerator;
+import transportterminal.tileentites.TileEntityItemTransporter;
 import transportterminal.tileentites.TileEntityQuantumCrate;
 import transportterminal.tileentites.TileEntitySummoner;
 import transportterminal.tileentites.TileEntityTransportTerminal;
@@ -74,6 +75,10 @@ public class TeleportUtils {
 		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).getTagCompound().hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemChip;
 	}
 
+	public static boolean isValidInterfaceStandardChip(TileEntityItemTransporter tile) {
+		return tile.getStackInSlot(0) != null && tile.getStackInSlot(0).getTagCompound().hasKey("chipX") && tile.getStackInSlot(0).getItem() instanceof ItemChip;
+	}
+
 	public static void consumeConsoleEnergy(TileEntityTransportTerminal tile) {
 		if (TransportTerminal.IS_RF_PRESENT)
 			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
@@ -102,6 +107,11 @@ public class TeleportUtils {
 	public static void consumeQuantumCrateEnergy(TileEntityQuantumCrate tile) {
 		if (TransportTerminal.IS_RF_PRESENT)
 			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_CRATE);
+	}
+
+	public static void consumeItemTransporterEnergy(TileEntityItemTransporter tile) {
+		if (TransportTerminal.IS_RF_PRESENT)
+			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_ITEM_TRANSFER);
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {

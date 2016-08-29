@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "transportterminal:item_transporter", "y": 180 },
+        "facing=south": { "model": "transportterminal:item_transporter" },
+        "facing=west":  { "model": "transportterminal:item_transporter", "y": 90 },
+        "facing=east":  { "model": "transportterminal:item_transporter", "y": 270 }
+    }
+}
