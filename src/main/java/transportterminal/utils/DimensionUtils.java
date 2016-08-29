@@ -25,12 +25,20 @@ public class DimensionUtils {
 	public static void forceChunkloading(EntityPlayerMP player, final int dimensionID, final int posX, final int posY, final int posZ) {
 		player.getServer().addScheduledTask(new Runnable() {
 			public void run() {
-		if (CHUNK_TICKET == null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
-			CHUNK_TICKET = ForgeChunkManager.requestTicket(TransportTerminal.INSTANCE, getWorldFromDimID(dimensionID), ForgeChunkManager.Type.NORMAL);
+				if (CHUNK_TICKET == null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
+					CHUNK_TICKET = ForgeChunkManager.requestTicket(TransportTerminal.INSTANCE, getWorldFromDimID(dimensionID), ForgeChunkManager.Type.NORMAL);
 
-		if (CHUNK_TICKET != null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
-			ForgeChunkManager.forceChunk(CHUNK_TICKET, new ChunkPos(posX, posY));
+				if (CHUNK_TICKET != null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
+					ForgeChunkManager.forceChunk(CHUNK_TICKET, new ChunkPos(posX >> 4, posZ >> 4));
 			}
 		});
+	}
+
+	public static void releaseChunks() {
+		if(CHUNK_TICKET != null) {
+			System.out.println("RELEASING CHUNK!: " + CHUNK_TICKET);
+			ForgeChunkManager.releaseTicket(CHUNK_TICKET);
+			CHUNK_TICKET = null;
+		}
 	}
 }
