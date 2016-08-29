@@ -1,6 +1,7 @@
 package transportterminal.utils;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -109,9 +110,9 @@ public class TeleportUtils {
 			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_CRATE);
 	}
 
-	public static void consumeItemTransporterEnergy(TileEntityItemTransporter tile) {
+	public static void consumeItemTransporterEnergy(TileEntityItemTransporter tile, ItemStack stack) {
 		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_ITEM_TRANSFER);
+			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_ITEM_TRANSFER * stack.stackSize);
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {

@@ -53,9 +53,8 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 									entityitem.setLocationAndAngles(x + 0.5D, y + 1.5D, z + 0.5D, entityitem.rotationYaw, entityitem.rotationPitch);
 									System.out.println("SPAWNED HERE! " + world2.provider.getDimensionType().getName() + " X:" + entityitem.posX+ " Y:" + entityitem.posY+ " Z:" + entityitem.posZ);
 									world2.spawnEntityInWorld(entityitem);
-									
 									tile.setInventorySlotContents(1, null);
-									TeleportUtils.consumeItemTransporterEnergy(tile);
+									TeleportUtils.consumeItemTransporterEnergy(tile, is);
 								}
 							}
 						}
