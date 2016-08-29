@@ -51,8 +51,9 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 									DimensionUtils.forceChunkloading((EntityPlayerMP) player, newDim, x, y, z);
 									EntityItem entityitem = new EntityItem(world2, x + 0.5D, y + 1.5D, z + 0.5D, is);
 									entityitem.setLocationAndAngles(x + 0.5D, y + 1.5D, z + 0.5D, entityitem.rotationYaw, entityitem.rotationPitch);
-									entityitem.worldObj.spawnEntityInWorld(entityitem);
 									System.out.println("SPAWNED HERE! " + world2.provider.getDimensionType().getName() + " X:" + entityitem.posX+ " Y:" + entityitem.posY+ " Z:" + entityitem.posZ);
+									world2.spawnEntityInWorld(entityitem);
+									
 									tile.setInventorySlotContents(1, null);
 									TeleportUtils.consumeItemTransporterEnergy(tile);
 								}
