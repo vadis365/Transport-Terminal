@@ -1,15 +1,19 @@
 package transportterminal.utils;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.LoadingCallback;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import transportterminal.TransportTerminal;
 
-public class DimensionUtils {
+public class DimensionUtils implements LoadingCallback {
 
 	public static DimensionManager DIM_MANAGER;
 	private static Ticket CHUNK_TICKET;
@@ -34,11 +38,30 @@ public class DimensionUtils {
 		});
 	}
 
+	public static void forceTileChunkloading(int dimensionID, int posX, int posY, int posZ) {
+		if (CHUNK_TICKET == null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
+			CHUNK_TICKET = ForgeChunkManager.requestTicket(TransportTerminal.INSTANCE, getWorldFromDimID(dimensionID), ForgeChunkManager.Type.NORMAL);
+
+		if (CHUNK_TICKET != null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
+			ForgeChunkManager.forceChunk(CHUNK_TICKET, new ChunkPos(posX >> 4, posZ >> 4));
+	}
+
 	public static void releaseChunks() {
 		if(CHUNK_TICKET != null) {
 			System.out.println("RELEASING CHUNK!: " + CHUNK_TICKET);
 			ForgeChunkManager.releaseTicket(CHUNK_TICKET);
 			CHUNK_TICKET = null;
 		}
+	}
+
+	@Override
+	public void ticketsLoaded(List<Ticket> tickets, World world) {
+		//NBTTagCompound nbt = new NBTTagCompound();
+		for (int i = 0; i < tickets.size(); i++) {
+			CHUNK_TICKET = tickets.get(i);
+			System.out.println("Element " + CHUNK_TICKET.getModData());
+			}
+		//nbt = tickets.getModData();
+		//System.out.println("TICKET LIST?: " + ((Ticket) tickets).getModData());
 	}
 }

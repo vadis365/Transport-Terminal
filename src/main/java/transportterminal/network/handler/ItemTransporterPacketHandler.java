@@ -48,6 +48,8 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 										return;
 									}
 									WorldServer world2 = DimensionUtils.getWorldFromDimID(newDim);
+									System.out.println("WORLD! " + world2  + " newDim: " + newDim);
+									
 									DimensionUtils.forceChunkloading((EntityPlayerMP) player, newDim, x, y, z);
 									EntityItem entityitem = new EntityItem(world2, x + 0.5D, y + 1.5D, z + 0.5D, is);
 									entityitem.setLocationAndAngles(x + 0.5D, y + 1.5D, z + 0.5D, entityitem.rotationYaw, entityitem.rotationPitch);

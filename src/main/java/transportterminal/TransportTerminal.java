@@ -63,6 +63,7 @@ import transportterminal.network.message.NamingMessage;
 import transportterminal.network.message.PlayerSummonMessage;
 import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
+import transportterminal.utils.DimensionUtils;
 
 @Mod(modid = "transportterminal", name = "transportterminal", version = "1.0.1", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
 public class TransportTerminal {
@@ -272,7 +273,7 @@ public class TransportTerminal {
 		NETWORK_WRAPPER.registerMessage(GeneratorPacketHandler.class, GeneratorMessage.class, 7, Side.SERVER);
 		NETWORK_WRAPPER.registerMessage(ItemTransporterPacketHandler.class, ItemTransporterMessage.class, 8, Side.SERVER);
 
-		ForgeChunkManager.setForcedChunkLoadingCallback(INSTANCE, null);
+		ForgeChunkManager.setForcedChunkLoadingCallback(INSTANCE, new DimensionUtils());
 	}
 
 	@EventHandler
