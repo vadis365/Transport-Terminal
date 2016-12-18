@@ -2,7 +2,7 @@ package transportterminal.blocks;
 
 import java.util.Random;
 
-import com.sun.istack.internal.Nullable;
+import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
