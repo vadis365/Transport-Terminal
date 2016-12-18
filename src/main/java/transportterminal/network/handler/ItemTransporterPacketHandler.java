@@ -35,7 +35,6 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 						if (tile != null && TeleportUtils.isValidInterfaceStandardChip(tile)) {
 							WorldServer worldserver = (WorldServer) world;
 							if (tile.canTeleport()) {
-								System.out.println("SEND ITEM TRANSPORT HERE!");
 								ItemStack is = tile.getStackInSlot(1).copy();
 								ItemStack chip = tile.getStackInSlot(0);
 								if (is != null) {
@@ -47,13 +46,11 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 										world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 										return;
 									}
-									WorldServer world2 = DimensionUtils.getWorldFromDimID(newDim);
-									System.out.println("WORLD! " + world2  + " newDim: " + newDim);
-									
 									DimensionUtils.forceChunkloading((EntityPlayerMP) player, newDim, x, y, z);
+									WorldServer world2 = DimensionUtils.getWorldFromDimID(newDim);
+
 									EntityItem entityitem = new EntityItem(world2, x + 0.5D, y + 1.5D, z + 0.5D, is);
 									entityitem.setLocationAndAngles(x + 0.5D, y + 1.5D, z + 0.5D, entityitem.rotationYaw, entityitem.rotationPitch);
-									System.out.println("SPAWNED HERE! " + world2.provider.getDimensionType().getName() + " X:" + entityitem.posX+ " Y:" + entityitem.posY+ " Z:" + entityitem.posZ);
 									world2.spawnEntityInWorld(entityitem);
 									tile.setInventorySlotContents(1, null);
 									TeleportUtils.consumeItemTransporterEnergy(tile, is);

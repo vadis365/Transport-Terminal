@@ -1,5 +1,7 @@
 package transportterminal.gui.client;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
@@ -7,9 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
 import transportterminal.TransportTerminal;
 import transportterminal.gui.button.GuiConsoleButton;
 import transportterminal.gui.server.ContainerTerminal;
@@ -48,8 +47,7 @@ public class GuiConsole extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		fontRendererObj.drawString(I18n.format(tile.getName()), 8, 6, 4210752);
 		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
-		if (TransportTerminal.IS_RF_PRESENT)
-			fontRendererObj.drawString(I18n.format("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override

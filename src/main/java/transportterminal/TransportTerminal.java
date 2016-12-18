@@ -19,7 +19,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.ModAPIManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -87,11 +86,8 @@ public class TransportTerminal {
 		}
 	};
 
-	public static boolean IS_RF_PRESENT;
-
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		IS_RF_PRESENT = ModAPIManager.INSTANCE.hasAPI("CoFHAPI|energy");
 		ConfigHandler.INSTANCE.loadConfig(event);
 
 		// Items
@@ -223,6 +219,8 @@ public class TransportTerminal {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+				list.add("WARNING! Not Fully Implemented.");
+				list.add("Use at own risk!");
 				list.add("Sends Items to stored chip's location.");
 			}
 		};
@@ -237,8 +235,7 @@ public class TransportTerminal {
 		GameRegistry.register(TERMINAL.setRegistryName("transportterminal", "console").setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS.setRegistryName("transportterminal", "utils").setUnlocalizedName("transportterminal.utils"));
 		GameRegistry.register(SUMMONER.setRegistryName("transportterminal", "summoner").setUnlocalizedName("transportterminal.summoner"));
-		if (IS_RF_PRESENT) // No need for a charger if there's no RF
-			GameRegistry.register(CHARGER.setRegistryName("transportterminal", "charger").setUnlocalizedName("transportterminal.charger"));
+		GameRegistry.register(CHARGER.setRegistryName("transportterminal", "charger").setUnlocalizedName("transportterminal.charger"));
 		GameRegistry.register(ENERGY_CUBE.setRegistryName("transportterminal", "energy_cube").setUnlocalizedName("transportterminal.energy_cube"));
 		GameRegistry.register(GENERATOR.setRegistryName("transportterminal", "generator").setUnlocalizedName("transportterminal.generator"));
 		GameRegistry.register(METAL_CRATE.setRegistryName("transportterminal", "metal_crate").setUnlocalizedName("transportterminal.metal_crate"));
@@ -248,8 +245,7 @@ public class TransportTerminal {
 		GameRegistry.register(TERMINAL_ITEM.setRegistryName(TERMINAL.getRegistryName()).setUnlocalizedName("transportterminal.console"));
 		GameRegistry.register(UTILS_ITEM.setRegistryName(UTILS.getRegistryName()).setUnlocalizedName("transportterminal.utils"));
 		GameRegistry.register(SUMMONER_ITEM.setRegistryName(SUMMONER.getRegistryName()).setUnlocalizedName("transportterminal.summoner"));
-		if (IS_RF_PRESENT) // No need for a charger if there's no RF
-			GameRegistry.register(CHARGER_ITEM.setRegistryName(CHARGER.getRegistryName()).setUnlocalizedName("transportterminal.charger"));
+		GameRegistry.register(CHARGER_ITEM.setRegistryName(CHARGER.getRegistryName()).setUnlocalizedName("transportterminal.charger"));
 		GameRegistry.register(ENERGY_CUBE_ITEM.setRegistryName(ENERGY_CUBE.getRegistryName()).setUnlocalizedName("transportterminal.energy_cube"));
 		GameRegistry.register(GENERATOR_ITEM.setRegistryName(GENERATOR.getRegistryName()).setUnlocalizedName("transportterminal.generator"));
 		GameRegistry.register(METAL_CRATE_ITEM.setRegistryName(METAL_CRATE.getRegistryName()).setUnlocalizedName("transportterminal.metal_crate"));

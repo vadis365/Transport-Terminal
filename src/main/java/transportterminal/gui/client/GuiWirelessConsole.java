@@ -1,5 +1,8 @@
 package transportterminal.gui.client;
 
+import org.lwjgl.opengl.GL11;
+
+import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
@@ -8,15 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
 import transportterminal.TransportTerminal;
 import transportterminal.gui.button.GuiConsoleButton;
 import transportterminal.gui.server.ContainerTerminal;
 import transportterminal.network.message.ButtonMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import cofh.api.energy.IEnergyContainerItem;
 
 @SideOnly(Side.CLIENT)
 public class GuiWirelessConsole extends GuiContainer {
@@ -52,8 +51,7 @@ public class GuiWirelessConsole extends GuiContainer {
 		int zz = stack.getTagCompound().getInteger("homeZ");
 		fontRendererObj.drawString(I18n.format("Location X: " + xx + " Y: " + yy + " Z: " + zz), 8, 6, 4210752);
 		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
-		if (TransportTerminal.IS_RF_PRESENT)
-			fontRendererObj.drawString(I18n.format("RF: " + ((IEnergyContainerItem) stack.getItem()).getEnergyStored(stack)), 100, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format("RF: " + ((IEnergyContainerItem) stack.getItem()).getEnergyStored(stack)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override

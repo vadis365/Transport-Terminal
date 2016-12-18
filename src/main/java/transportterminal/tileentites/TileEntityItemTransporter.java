@@ -60,7 +60,7 @@ public class TileEntityItemTransporter extends TileEntityInventoryEnergy impleme
 	}
 
 	public boolean canTeleport() {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(null) >= ConfigHandler.ENERGY_PER_ITEM_TRANSFER;
+		return getEnergyStored(null) >= ConfigHandler.ENERGY_PER_ITEM_TRANSFER;
 	}
 
 }

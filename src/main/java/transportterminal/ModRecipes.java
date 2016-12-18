@@ -25,9 +25,7 @@ public class ModRecipes {
 		addShapedRecipe(new ItemStack(TransportTerminal.TERMINAL), "EGE", "IRI", "SSS", 'E', Items.ENDER_EYE, 'G', "blockGlass", 'I', "blockIron", 'R', "blockRedstone", 'S', Blocks.STONE_SLAB);
 		addShapedRecipe(new ItemStack(TransportTerminal.UTILS), "CTC", "IRI", "xxx", 'C', TransportTerminal.CHIP, 'T', Items.NAME_TAG, 'I', "blockIron", 'R', "blockRedstone", 'x', "ingotIron");
 		addShapedRecipe(new ItemStack(TransportTerminal.SUMMONER), "P P", "ERE", "P P", 'P', TransportTerminal.PLAYER_CHIP, 'E', "gemEmerald", 'R', "blockRedstone");
-
-		if (TransportTerminal.IS_RF_PRESENT)
-			addShapedRecipe(new ItemStack(TransportTerminal.CHARGER), "CRC", "GQG", "CLC", 'C', TransportTerminal.CHIP, 'G', "blockGold", 'Q', "blockQuartz", 'R', "blockRedstone", 'L', "blockLapis");
+		addShapedRecipe(new ItemStack(TransportTerminal.CHARGER), "CRC", "GQG", "CLC", 'C', TransportTerminal.CHIP, 'G', "blockGold", 'Q', "blockQuartz", 'R', "blockRedstone", 'L', "blockLapis");
 	}
 
 	private static void addShapelessRecipe(ItemStack output, Object... parameters) {

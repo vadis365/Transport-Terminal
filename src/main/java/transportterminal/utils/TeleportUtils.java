@@ -29,7 +29,7 @@ public class TeleportUtils {
 		if (player.dimension != newDim && player.dimension != 1)
 			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 		if (player.dimension != newDim && player.dimension == 1) {
-			//this has to be done twice because of stupid vanilla hacks
+			// this has to be done twice because of stupid vanilla hacks
 			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 		}
@@ -39,7 +39,7 @@ public class TeleportUtils {
 		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension != 1)
 			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension == 1) {
-			//this has to be done twice because of stupid vanilla hacks
+			// this has to be done twice because of stupid vanilla hacks
 			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 		}
@@ -81,38 +81,31 @@ public class TeleportUtils {
 	}
 
 	public static void consumeConsoleEnergy(TileEntityTransportTerminal tile) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
+		tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
 	}
 
 	public static void consumeSummonerEnergy(TileEntitySummoner tile) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
+		tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_TELEPORT);
 	}
 
 	public static void consumeChargerEnergy(TileEntityCharger tile, int energyExtracted) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
+		tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
 	}
 
 	public static void consumeEnergyCubeEnergy(TileEntityEnergyCube tile, int energyExtracted) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
+		tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
 	}
 
 	public static void consumeGeneratorEnergy(TileEntityGenerator tile, int energyExtracted) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
+		tile.setEnergy(tile.getEnergyStored(null) - energyExtracted);
 	}
-	
+
 	public static void consumeQuantumCrateEnergy(TileEntityQuantumCrate tile) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_CRATE);
+		tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_CRATE);
 	}
 
 	public static void consumeItemTransporterEnergy(TileEntityItemTransporter tile, ItemStack stack) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_ITEM_TRANSFER * stack.stackSize);
+		tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_ITEM_TRANSFER * stack.stackSize);
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {

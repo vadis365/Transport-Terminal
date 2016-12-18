@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import transportterminal.TransportTerminal;
 import transportterminal.gui.server.ContainerQuantumCrate;
 import transportterminal.tileentites.TileEntityQuantumCrate;
 
@@ -36,8 +35,7 @@ public class GuiRemoteQuantumCrate extends GuiContainer {
 		int zz = stack.getTagCompound().getInteger("homeZ");
 		fontRendererObj.drawString(I18n.format("Quantum Crate Location X: " + xx + " Y: " + yy + " Z: " + zz), 12, 4, 4210752);
 		fontRendererObj.drawString(I18n.format("container.inventory"), 48, ySize - 96, 4210752);
-		if (TransportTerminal.IS_RF_PRESENT)
-			fontRendererObj.drawString(I18n.format("RF: " + ((IEnergyContainerItem) stack.getItem()).getEnergyStored(stack)), 156, ySize - 96, 4210752);
+		fontRendererObj.drawString(I18n.format("RF: " + ((IEnergyContainerItem) stack.getItem()).getEnergyStored(stack)), 156, ySize - 96, 4210752);
 	}
 
 	@Override

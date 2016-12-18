@@ -12,6 +12,7 @@ tile.transportterminal.energy_cube.name=Energy Cube
 tile.transportterminal.generator.name=RF Generator
 tile.transportterminal.metal_crate.name=Metal Crate
 tile.transportterminal.quantum_crate.name=Quantum Crate
+tile.transportterminal.item_transporter.name=Item Transporter
 itemGroup.transportterminal=Transport Terminals
 chat.end_disabled_message=End Consoles are not accessible from other dimensions
 chat.end_crate_disabled_message=End Quantum Crates are not accessible from other dimensions

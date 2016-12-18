@@ -1,5 +1,7 @@
 package transportterminal.gui.client;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
@@ -8,9 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
 import transportterminal.TransportTerminal;
 import transportterminal.gui.button.GuiLargeButton;
 import transportterminal.gui.server.ContainerSummoner;
@@ -44,8 +43,7 @@ public class GuiSummoner extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		fontRendererObj.drawString(I18n.format(tile.getInventoryName()), xSize / 2 - fontRendererObj.getStringWidth(I18n.format(tile.getInventoryName())) / 2, ySize - 136, 4210752);
 		fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96 + 2, 4210752);
-		if (TransportTerminal.IS_RF_PRESENT)
-			fontRendererObj.drawString(I18n.format("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
+		fontRendererObj.drawString(I18n.format("RF: " + tile.getEnergyStored(null)), 100, ySize - 96 + 2, 4210752);
 	}
 
 	@Override

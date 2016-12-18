@@ -24,8 +24,6 @@ public abstract class ContainerEnergy extends Container {
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		if (!TransportTerminal.IS_RF_PRESENT)
-			return;
 		int currentEnergyAmount = tile.getEnergyStored(null);
 		if (currentEnergyAmount == lastEnergyAmount)
 			return;

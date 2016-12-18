@@ -46,7 +46,7 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 	}
 
 	public boolean canTeleport() {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT;
+		return getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT;
 	}
 
 	@Override

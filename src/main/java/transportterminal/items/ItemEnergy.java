@@ -2,6 +2,7 @@ package transportterminal.items;
 
 import java.util.List;
 
+import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -12,7 +13,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
-import cofh.api.energy.IEnergyContainerItem;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI")
 public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
@@ -32,7 +32,7 @@ public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack) {
-		return TransportTerminal.IS_RF_PRESENT && getDurabilityForDisplay(stack) > 0;
+		return getDurabilityForDisplay(stack) > 0;
 	}
 
 	@Override
@@ -40,19 +40,16 @@ public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		super.getSubItems(item, tab, list);
-		if (TransportTerminal.IS_RF_PRESENT) {
 			ItemStack charged = new ItemStack(item);
 			receiveEnergy(charged, capacity, false);
 			list.add(charged);
-		}
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
-		if (TransportTerminal.IS_RF_PRESENT)
-			list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
+		list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
 	}
 
 	/* ENERGY */
@@ -108,6 +105,6 @@ public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
 	}
 
 	protected boolean canTeleport(ItemStack stack) {
-		return !TransportTerminal.IS_RF_PRESENT || getEnergyStored(stack) >= ConfigHandler.ENERGY_PER_REMOTE_USE;
+		return getEnergyStored(stack) >= ConfigHandler.ENERGY_PER_REMOTE_USE;
 	}
 }
