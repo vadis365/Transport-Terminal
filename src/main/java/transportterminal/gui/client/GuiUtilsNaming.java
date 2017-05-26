@@ -2,6 +2,9 @@ package transportterminal.gui.client;
 
 import java.io.IOException;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -10,10 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-
 import transportterminal.TransportTerminal;
 import transportterminal.gui.button.GuiNamingButton;
 import transportterminal.gui.server.ContainerTerminal;
@@ -23,7 +22,7 @@ import transportterminal.tileentites.TileEntityChipUtilities;
 @SideOnly(Side.CLIENT)
 public class GuiUtilsNaming extends GuiContainer {
 
-	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
+	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transport_terminal_remote_gui.png");
 	private GuiTextField textFieldName;
 	private EntityPlayer playerSent;
 	private final TileEntityChipUtilities tile;

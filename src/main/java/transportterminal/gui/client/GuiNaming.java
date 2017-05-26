@@ -22,7 +22,7 @@ import transportterminal.network.message.NamingMessage;
 @SideOnly(Side.CLIENT)
 public class GuiNaming extends GuiContainer {
 
-	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transportTerminalRemoteGui.png");
+	private static final ResourceLocation GUI_REMOTE = new ResourceLocation("transportterminal:textures/gui/transport_terminal_remote_gui.png");
 	private GuiTextField textFieldName;
 	private EntityPlayer playerSent;
 

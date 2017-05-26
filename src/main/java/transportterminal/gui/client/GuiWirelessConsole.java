@@ -20,7 +20,7 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 @SideOnly(Side.CLIENT)
 public class GuiWirelessConsole extends GuiContainer {
 
-	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transportTerminalGui.png");
+	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transport_terminal_gui.png");
 	private EntityPlayer playerSent;
 
 	public GuiWirelessConsole(EntityPlayer player) {

@@ -19,7 +19,7 @@ import transportterminal.tileentites.TileEntityItemTransporter;
 @SideOnly(Side.CLIENT)
 public class GuiItemTransporter extends GuiContainer {
 
-	private static final ResourceLocation GUI_ITEMS = new ResourceLocation("transportterminal:textures/gui/transportTerminalItemsGui.png");
+	private static final ResourceLocation GUI_ITEMS = new ResourceLocation("transportterminal:textures/gui/transport_terminal_items_gui.png");
 	private final TileEntityItemTransporter tile;
 
 	public GuiItemTransporter(EntityPlayer player, TileEntityItemTransporter tile) {

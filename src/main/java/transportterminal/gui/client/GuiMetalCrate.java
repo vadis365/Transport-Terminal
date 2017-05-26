@@ -14,7 +14,7 @@ import transportterminal.tileentites.TileEntityMetalCrate;
 @SideOnly(Side.CLIENT)
 public class GuiMetalCrate extends GuiContainer {
 
-	private static final ResourceLocation GUI_CRATE = new ResourceLocation("transportterminal:textures/gui/metalCrateGui.png");
+	private static final ResourceLocation GUI_CRATE = new ResourceLocation("transportterminal:textures/gui/metal_crate_gui.png");
 	private final TileEntityMetalCrate crate;
 
 	public GuiMetalCrate(EntityPlayer player, TileEntityMetalCrate tile) {

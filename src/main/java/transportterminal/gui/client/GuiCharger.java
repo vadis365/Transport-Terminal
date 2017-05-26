@@ -14,7 +14,7 @@ import transportterminal.tileentites.TileEntityCharger;
 @SideOnly(Side.CLIENT)
 public class GuiCharger extends GuiContainer {
 
-	private static final ResourceLocation GUI_CHARGER = new ResourceLocation("transportterminal:textures/gui/transportChargerGui.png");
+	private static final ResourceLocation GUI_CHARGER = new ResourceLocation("transportterminal:textures/gui/transport_charger_gui.png");
 	private final TileEntityCharger tile;
 
 	public GuiCharger(EntityPlayer player, TileEntityCharger tile) {

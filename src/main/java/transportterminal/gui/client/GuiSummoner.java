@@ -19,7 +19,7 @@ import transportterminal.tileentites.TileEntitySummoner;
 @SideOnly(Side.CLIENT)
 public class GuiSummoner extends GuiContainer {
 
-	private static final ResourceLocation GUI_SUMMONER = new ResourceLocation("transportterminal:textures/gui/transportSummonerGui.png");
+	private static final ResourceLocation GUI_SUMMONER = new ResourceLocation("transportterminal:textures/gui/transport_summoner_gui.png");
 	private final TileEntitySummoner tile;
 
 	public GuiSummoner(EntityPlayer player, TileEntitySummoner tile) {

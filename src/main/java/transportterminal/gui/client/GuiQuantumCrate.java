@@ -14,7 +14,7 @@ import transportterminal.tileentites.TileEntityQuantumCrate;
 @SideOnly(Side.CLIENT)
 public class GuiQuantumCrate extends GuiContainer {
 
-	private static final ResourceLocation GUI_CRATE = new ResourceLocation("transportterminal:textures/gui/quantumCrateGui.png");
+	private static final ResourceLocation GUI_CRATE = new ResourceLocation("transportterminal:textures/gui/quantum_crate_gui.png");
 	private final TileEntityQuantumCrate crate;
 
 	public GuiQuantumCrate(EntityPlayer player, TileEntityQuantumCrate tile) {

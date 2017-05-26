@@ -22,7 +22,7 @@ import transportterminal.tileentites.TileEntityEnergyCube.EnumStatus;
 @SideOnly(Side.CLIENT)
 public class GuiEnergyCube extends GuiContainer {
 
-	private static final ResourceLocation GUI_ENERGY_CUBE = new ResourceLocation("transportterminal:textures/gui/energyCubeGui.png");
+	private static final ResourceLocation GUI_ENERGY_CUBE = new ResourceLocation("transportterminal:textures/gui/energy_cube_gui.png");
 	private final TileEntityEnergyCube tile;
 
 	public GuiEnergyCube(EntityPlayer player, TileEntityEnergyCube tile) {

@@ -18,7 +18,7 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 @SideOnly(Side.CLIENT)
 public class GuiConsole extends GuiContainer {
 	EntityPlayer player;
-	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transportTerminalGui.png");
+	private static final ResourceLocation GUI_TRANSPORTER = new ResourceLocation("transportterminal:textures/gui/transport_terminal_gui.png");
 	private final TileEntityTransportTerminal tile;
 
 	public GuiConsole(EntityPlayer player, TileEntityTransportTerminal tile, int id) {

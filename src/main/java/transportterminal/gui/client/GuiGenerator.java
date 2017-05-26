@@ -20,7 +20,7 @@ import transportterminal.tileentites.TileEntityGenerator.EnumStatus;
 @SideOnly(Side.CLIENT)
 public class GuiGenerator extends GuiContainer {
 
-	private static final ResourceLocation GUI_GENERATOR = new ResourceLocation("transportterminal:textures/gui/generatorGui.png");
+	private static final ResourceLocation GUI_GENERATOR = new ResourceLocation("transportterminal:textures/gui/generator_gui.png");
 	private final TileEntityGenerator tile;
 
 	public GuiGenerator(EntityPlayer player, TileEntityGenerator tile) {
