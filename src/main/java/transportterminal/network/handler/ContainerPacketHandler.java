@@ -12,7 +12,7 @@ public class ContainerPacketHandler implements IMessageHandler<ContainerMessage,
 
 	@Override
 	public IMessage onMessage(ContainerMessage message, MessageContext ctx) {
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
 		if (player.openContainer != null && player.openContainer.windowId == message.windowId) {
 			ContainerEnergy container = (ContainerEnergy) player.openContainer;

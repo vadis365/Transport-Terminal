@@ -47,8 +47,8 @@ public class BlockCharger extends BlockDirectional {
 		return false;
 	}
 
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
 			return true;
 		if (world.getTileEntity(pos) instanceof TileEntityCharger) {
@@ -72,8 +72,8 @@ public class BlockCharger extends BlockDirectional {
 				InventoryHelper.dropInventoryItems(world, pos, (TileEntityCharger) tileentity);
 				for (int i = 0; i < ((TileEntityInventoryEnergy) tileentity).getSizeInventory(); ++i) {
 					ItemStack itemstack = ((TileEntityInventoryEnergy) tileentity).getStackInSlot(i);
-					if (itemstack != null)
-						((TileEntityCharger) tileentity).setInventorySlotContents(i, null);
+					if (!itemstack.isEmpty())
+						((TileEntityCharger) tileentity).setInventorySlotContents(i, ItemStack.EMPTY);
 				}
 				NBTTagCompound nbt = new NBTTagCompound();
 				tileentity.writeToNBT(nbt);

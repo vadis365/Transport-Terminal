@@ -1,5 +1,6 @@
 package transportterminal.tileentites;
 
+import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -7,7 +8,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.utils.TeleportUtils;
-import cofh.api.energy.IEnergyContainerItem;
 
 public class TileEntityCharger extends TileEntityInventoryEnergy implements ITickable {
 
@@ -22,19 +22,19 @@ public class TileEntityCharger extends TileEntityInventoryEnergy implements ITic
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public void update() {
-		if (worldObj.isRemote)
+		if (getWorld().isRemote)
 			return;
 
 		int stored = getEnergyStored(null);
-		for (ItemStack stack : inventory) {
+		for (ItemStack stack : getItems()) {
 			if (stored <= 0)
 				return;
-			if (stack != null && stack.getItem() instanceof IEnergyContainerItem && stack.stackSize == 1) {
+			if (!stack.isEmpty() && stack.getItem() instanceof IEnergyContainerItem && stack.getCount() == 1) {
 				IEnergyContainerItem item = (IEnergyContainerItem) stack.getItem();
 				int received = item.receiveEnergy(stack, stored, false);
 				extractEnergy(null, received, false);

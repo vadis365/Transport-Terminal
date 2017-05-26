@@ -4,8 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import transportterminal.items.ItemRemoteTerminal;
 import transportterminal.items.ItemRemote;
+import transportterminal.items.ItemRemoteTerminal;
 
 public class SlotRemote extends Slot {
 
@@ -20,15 +20,15 @@ public class SlotRemote extends Slot {
 	}
 
 	@Override
-	public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
+	public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 		if (stack != null && slotNumber == 0)
-			inventory.setInventorySlotContents(1, null);
+			inventory.setInventorySlotContents(1, ItemStack.EMPTY);
 
 		if (stack != null && slotNumber == 1) {
-			inventory.setInventorySlotContents(0, null);
-			stack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionType().getName());
+			inventory.setInventorySlotContents(0, ItemStack.EMPTY);
+			stack.getTagCompound().setString("dimName", player.getEntityWorld().provider.getDimensionType().getName());
 			stack.getTagCompound().setInteger("dim", player.dimension);
 		}
-		super.onPickupFromSlot(player, stack);
+		return super.onTake(player, stack);
 	}
 }

@@ -18,10 +18,10 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack is) {
-		inventory[slot] = is;
-		if (is != null && is.stackSize > getInventoryStackLimit())
-			is.stackSize = getInventoryStackLimit();
-		if (is != null && slot == 0 && is.getItem() == TransportTerminal.REMOTE || is != null && slot == 0 && is.getItem() == TransportTerminal.REMOTE_TERMINAL) {
+		getItems().set(slot, is);
+		 if (is.getCount() > getInventoryStackLimit())
+			 is.setCount(this.getInventoryStackLimit());
+		if (!is.isEmpty() && slot == 0 && is.getItem() == TransportTerminal.REMOTE || !is.isEmpty() && slot == 0 && is.getItem() == TransportTerminal.REMOTE_TERMINAL) {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
@@ -62,7 +62,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	public void setName(String text) {
 		chipName = text;
 		ItemStack is = getStackInSlot(getTempSlot());
-		if (is != null && is.getItem() == TransportTerminal.CHIP)
+		if (!is.isEmpty() && is.getItem() == TransportTerminal.CHIP)
 			is.getTagCompound().setString("description", chipName);
 	}
 
@@ -92,6 +92,6 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 }

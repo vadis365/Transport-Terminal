@@ -47,7 +47,8 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 	}
 
 	@Override
-	 public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	 public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
 		if (stack.getTagCompound().hasKey("homeX") && hand.equals(EnumHand.MAIN_HAND)) {
 			if (!world.isRemote) {
 				if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1) {
@@ -78,7 +79,7 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 			}
 			if (world.isRemote)
 				if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1)
-					player.addChatMessage(new TextComponentTranslation("chat.end_crate_disabled_message"));
+					player.sendStatusMessage(new TextComponentTranslation("chat.end_crate_disabled_message"), false);
 		}
 		return new ActionResult(EnumActionResult.PASS, stack);
 	}

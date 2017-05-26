@@ -34,7 +34,7 @@ public class ContainerChipUtils extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex) {
-		ItemStack stack = null;
+		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot) inventorySlots.get(slotIndex);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
@@ -42,20 +42,20 @@ public class ContainerChipUtils extends Container {
 			if (slotIndex > 1) {
 				if (stack1.getItem() == TransportTerminal.CHIP || stack1.getItem() == TransportTerminal.PLAYER_CHIP) {
 					if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
-						return null;
+						return ItemStack.EMPTY;
 				} else if (stack1.getItem() != TransportTerminal.CHIP || stack1.getItem() != TransportTerminal.PLAYER_CHIP)
 					if (!mergeItemStack(stack1, 0, 1, true))
-						return null;
+						return ItemStack.EMPTY;
 			} else if (!mergeItemStack(stack1, 2, inventorySlots.size(), false))
-				return null;
-			if (stack1.stackSize == 0)
-				slot.putStack(null);
+				return ItemStack.EMPTY;
+			if (stack1.getCount() == 0)
+				slot.putStack(ItemStack.EMPTY);
 			else
 				slot.onSlotChanged();
-			if (stack1.stackSize != stack.stackSize)
-				slot.onPickupFromSlot(player, stack1);
+			if (stack1.getCount() != stack.getCount())
+				slot.onTake(player, stack1);
 			else
-				return null;
+				return ItemStack.EMPTY;
 		}
 		return stack;
 	}

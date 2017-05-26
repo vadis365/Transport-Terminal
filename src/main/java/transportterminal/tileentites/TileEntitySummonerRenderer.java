@@ -31,7 +31,7 @@ public class TileEntitySummonerRenderer extends TileEntitySpecialRenderer<TileEn
         GlStateManager.depthMask(true);
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		float f2 = tile.getWorld().getTotalWorldTime() + partialTick;
-		float f3 = -f2 * 0.2F - MathHelper.floor_float(-f2 * 0.1F);
+		float f3 = -f2 * 0.2F - MathHelper.floor(-f2 * 0.1F);
 		byte b0 = 1;
 		double d3 = f2 * 0.025D * (1.0D - (b0 & 1) * 2.5D);
 		double d5 = b0 * 0.2D;

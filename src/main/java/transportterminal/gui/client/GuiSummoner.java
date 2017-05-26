@@ -61,8 +61,8 @@ public class GuiSummoner extends GuiContainer {
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0) {
-				TransportTerminal.NETWORK_WRAPPER.sendToServer(new PlayerSummonMessage(mc.thePlayer, guibutton.id, pos));
-				mc.thePlayer.closeScreen();
+				TransportTerminal.NETWORK_WRAPPER.sendToServer(new PlayerSummonMessage(mc.player, guibutton.id, pos));
+				mc.player.closeScreen();
 			}
 	}
 }

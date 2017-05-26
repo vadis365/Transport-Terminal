@@ -81,8 +81,8 @@ public class TransportTerminal {
 
 	public static CreativeTabs tab = new CreativeTabs("transportterminal") {
 		@Override
-		public Item getTabIconItem() {
-			return TransportTerminal.REMOTE;
+		public ItemStack getTabIconItem() {
+			return new ItemStack(TransportTerminal.REMOTE);
 		}
 	};
 
@@ -176,14 +176,14 @@ public class TransportTerminal {
 						int j = data.getByte("Slot") & 255;
 
 						if (i >= 0 && i <= 51 && !GuiControls.isShiftKeyDown()) {
-							list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+							list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + new ItemStack(data).getDisplayName() + " x " + new ItemStack(data).getCount());
 
 							if (i == 51)
 								list.add("Hold Shift for more." );
 						}
 						else
 							if(i > 51 && i <= 103 && GuiControls.isShiftKeyDown())
-								list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+								list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + new ItemStack(data).getDisplayName() + " x " + new ItemStack(data).getCount());
 					}
 				}
 			}
@@ -202,14 +202,14 @@ public class TransportTerminal {
 						int j = data.getByte("Slot") & 255;
 
 						if (i >= 0 && i <= 51 && !GuiControls.isShiftKeyDown()) {
-							list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+							list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + new ItemStack(data).getDisplayName() + " x " + new ItemStack(data).getCount());
 
 							if (i == 51)
 								list.add("Hold Shift for more." );
 						}
 						else
 							if(i > 51 && i <= 105 && GuiControls.isShiftKeyDown())
-								list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + ItemStack.loadItemStackFromNBT(data).getDisplayName() + " x " + ItemStack.loadItemStackFromNBT(data).stackSize);
+								list.add("Slot " + (j + 1) + ": " + TextFormatting.GREEN + new ItemStack(data).getDisplayName() + " x " + new ItemStack(data).getCount());
 					}
 				}
 			}

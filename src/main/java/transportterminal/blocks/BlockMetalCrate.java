@@ -18,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -60,8 +61,8 @@ public class BlockMetalCrate extends BlockContainer {
 		return null;
 	}
 
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
 			return true;
 		if (world.getTileEntity(pos) instanceof TileEntityMetalCrate)
@@ -92,14 +93,14 @@ public class BlockMetalCrate extends BlockContainer {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityMetalCrate) {
 				NBTTagList tags = stack.getTagCompound().getTagList("Items", 10);
-				((TileEntityMetalCrate) tileentity).inventory = new ItemStack[((TileEntityMetalCrate) tileentity).getSizeInventory()];
+				((TileEntityMetalCrate) tileentity).inventory = NonNullList.<ItemStack>withSize(((TileEntityMetalCrate) tileentity).getSizeInventory(), ItemStack.EMPTY);
 
 				for (int i = 0; i < tags.tagCount(); i++) {
 					NBTTagCompound data = tags.getCompoundTagAt(i);
 					int j = data.getByte("Slot") & 255;
 
-					if (j >= 0 && j < ((TileEntityMetalCrate) tileentity).inventory.length)
-						((TileEntityMetalCrate) tileentity).inventory[j] = ItemStack.loadItemStackFromNBT(data);
+					if (j >= 0 && j < ((TileEntityMetalCrate) tileentity).inventory.size())
+						((TileEntityMetalCrate) tileentity).inventory.set(j, new ItemStack(data));
 				}
 			}
 			world.notifyBlockUpdate(pos, state, state, 3);

@@ -46,7 +46,7 @@ public class TileEntityEnergyCube extends TileEntityInventoryEnergy implements I
 		readFromNBT(packet.getNbtCompound());
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			if (old[facing.ordinal()] != status[facing.ordinal()]) {
-				worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
+				getWorld().markBlockRangeForRenderUpdate(getPos(), getPos());
 				return;
 			}
 		}
@@ -109,14 +109,14 @@ public class TileEntityEnergyCube extends TileEntityInventoryEnergy implements I
 
 	@Override
 	public void update() {
-		if (worldObj.isRemote)
+		if (getWorld().isRemote)
 			return;
 
 		int stored = getEnergyStored(null);
 		if ((stored > 0)) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (status[facing.ordinal()] == EnumStatus.STATUS_OUTPUT) {
-					TileEntity tile = worldObj.getTileEntity(pos.offset(facing));
+					TileEntity tile = getWorld().getTileEntity(pos.offset(facing));
 					if (tile != null && tile instanceof IEnergyHandler) {
 						int received = ((IEnergyReceiver) tile).receiveEnergy(facing.getOpposite(), stored, false);
 						extractEnergy(facing, received, false);

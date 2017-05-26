@@ -19,15 +19,15 @@ public class SlotRemoteCrate extends Slot {
 	}
 
 	@Override
-	public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
+	public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 		if (stack != null && this.slotNumber == 0)
-			inventory.setInventorySlotContents(105, null);
+			inventory.setInventorySlotContents(105, ItemStack.EMPTY);
 
 		if (stack != null && this.slotNumber == 1) {
-			inventory.setInventorySlotContents(104, null);
-			stack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionType().getName());
+			inventory.setInventorySlotContents(104, ItemStack.EMPTY);
+			stack.getTagCompound().setString("dimName", player.getEntityWorld().provider.getDimensionType().getName());
 			stack.getTagCompound().setInteger("dim", player.dimension);
 		}
-		super.onPickupFromSlot(player, stack);
+		return super.onTake(player, stack);
 	}
 }

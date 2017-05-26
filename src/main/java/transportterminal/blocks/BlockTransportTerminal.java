@@ -33,8 +33,8 @@ public class BlockTransportTerminal extends BlockDirectional {
 		return new TileEntityTransportTerminal();
 	}
 
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
 			return true;
 		if (world.getTileEntity(pos) != null) {
@@ -59,8 +59,8 @@ public class BlockTransportTerminal extends BlockDirectional {
 
 				for (int i = 0; i < ((TileEntityInventoryEnergy) tileentity).getSizeInventory(); ++i) {
 					ItemStack itemstack = ((TileEntityInventoryEnergy) tileentity).getStackInSlot(i);
-					if (itemstack != null)
-						((TileEntityTransportTerminal) tileentity).setInventorySlotContents(i, null);
+					if (!itemstack.isEmpty())
+						((TileEntityTransportTerminal) tileentity).setInventorySlotContents(i, ItemStack.EMPTY);
 				}
 
 				NBTTagCompound nbt = new NBTTagCompound();

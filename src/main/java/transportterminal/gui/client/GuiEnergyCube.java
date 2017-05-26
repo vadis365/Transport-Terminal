@@ -94,7 +94,7 @@ public class GuiEnergyCube extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton guibutton) {
 		if (guibutton instanceof GuiButton)
-			TransportTerminal.NETWORK_WRAPPER.sendToServer(new EnergyCubeMessage(mc.thePlayer, guibutton.id, tile.getPos()));
+			TransportTerminal.NETWORK_WRAPPER.sendToServer(new EnergyCubeMessage(mc.player, guibutton.id, tile.getPos()));
 	}
 
 }

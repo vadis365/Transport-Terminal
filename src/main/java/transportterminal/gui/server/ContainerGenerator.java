@@ -33,7 +33,7 @@ public class ContainerGenerator extends ContainerEnergy {
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex) {
-		ItemStack stack = null;
+		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot) inventorySlots.get(slotIndex);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
@@ -41,20 +41,20 @@ public class ContainerGenerator extends ContainerEnergy {
 			if (slotIndex > 1) {
 				if (stack1.getItem() == Items.REDSTONE || stack1.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK))
 					if (!mergeItemStack(stack1, 0, 1, false))
-						return null;
+						return ItemStack.EMPTY;
 				if (stack1.getItem() == TransportTerminal.UPGRADE_CHIP)
 					if (!mergeItemStack(stack1, 1, 2, false))
-						return null;
+						return ItemStack.EMPTY;
 			} else if (!mergeItemStack(stack1, 2, inventorySlots.size(), false))
-				return null;
-			if (stack1.stackSize == 0)
-				slot.putStack(null);
+				return ItemStack.EMPTY;
+			if (stack1.getCount() == 0)
+				slot.putStack(ItemStack.EMPTY);
 			else
 				slot.onSlotChanged();
-			if (stack1.stackSize != stack.stackSize)
-				slot.onPickupFromSlot(player, stack1);
+			if (stack1.getCount() != stack.getCount())
+				slot.onTake(player, stack1);
 			else
-				return null;
+				return ItemStack.EMPTY;
 		}
 		return stack;
 	}

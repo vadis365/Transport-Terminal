@@ -32,10 +32,10 @@ public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack is) {
-		inventory[slot] = is;
-		if (is != null && is.stackSize > getInventoryStackLimit())
-			is.stackSize = getInventoryStackLimit();
-		if (is != null && slot == 104 && is.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE) {
+		getItems().set(slot, is);
+		if (!is.isEmpty() && is.getCount() > getInventoryStackLimit())
+			is.setCount(getInventoryStackLimit());
+		if (!is.isEmpty() && slot == 104 && is.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE) {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
@@ -48,7 +48,7 @@ public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override

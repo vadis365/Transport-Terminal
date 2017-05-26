@@ -53,7 +53,7 @@ public class TeleportUtils {
 
 	public static void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {
 		player.connection.setPlayerLocation(x, y, z, yaw, pitch);
-		player.worldObj.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.TELEPORT_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		player.getEntityWorld().playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.TELEPORT_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 	}
 
 	public static boolean isConsole(World world, BlockPos pos) {
@@ -105,7 +105,7 @@ public class TeleportUtils {
 	}
 
 	public static void consumeItemTransporterEnergy(TileEntityItemTransporter tile, ItemStack stack) {
-		tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_ITEM_TRANSFER * stack.stackSize);
+		tile.setEnergy(tile.getEnergyStored(null) - ConfigHandler.ENERGY_PER_ITEM_TRANSFER * stack.getCount());
 	}
 
 	public static EntityPlayerMP getPlayerByUsername(String name) {

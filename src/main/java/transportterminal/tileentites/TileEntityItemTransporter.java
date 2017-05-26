@@ -19,7 +19,7 @@ public class TileEntityItemTransporter extends TileEntityInventoryEnergy impleme
 
 	@Override
 	public void update() {
-		if (this.worldObj.isRemote) {
+		if (this.getWorld().isRemote) {
 			this.prevRotation = this.rotation;
 			this.rotation += ROTATION_SPEED;
 			if (this.rotation >= 360.0F) {
@@ -49,7 +49,7 @@ public class TileEntityItemTransporter extends TileEntityInventoryEnergy impleme
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override

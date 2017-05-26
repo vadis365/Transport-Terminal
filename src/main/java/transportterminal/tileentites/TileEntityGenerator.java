@@ -52,7 +52,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 		readFromNBT(packet.getNbtCompound());
 		for (EnumFacing facing : EnumFacing.VALUES) {
 			if (old[facing.ordinal()] != status[facing.ordinal()]) {
-				worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
+				getWorld().markBlockRangeForRenderUpdate(getPos(), getPos());
 				return;
 			}
 		}
@@ -114,14 +114,14 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 
 	@Override
 	public void update() {
-		if (worldObj.isRemote)
+		if (getWorld().isRemote)
 			return;
 		int stored = getEnergyStored(null);
 
 		if ((stored > 0)) {
 			for (EnumFacing facing : EnumFacing.VALUES) {
 				if (status[facing.ordinal()] == EnumStatus.STATUS_OUTPUT) {
-					TileEntity tile = worldObj.getTileEntity(pos.offset(facing));
+					TileEntity tile = getWorld().getTileEntity(pos.offset(facing));
 					if (tile != null && tile instanceof IEnergyHandler) {
 						int received = ((IEnergyReceiver) tile).receiveEnergy(facing.getOpposite(), stored >= MAX_EXTRACT_PER_TICK ? MAX_EXTRACT_PER_TICK : 0, false);
 						extractEnergy(facing, received, false);
@@ -134,19 +134,18 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 
 		if (hasFuel() && getEnergyStored(null) <= ConfigHandler.GENERATOR_MAX_ENERGY - getFuelTypeModifier()) {
 			if(hasSpeedUpgrade())
-				time += inventory[1].getMetadata() + 2;
+				time += getItems().get(0).getMetadata() + 2;
 			else
 				time++;
 			if (time >= MAX_TIME) {
 				time = 0;
 				setEnergy(getEnergyStored(null) + getFuelTypeModifier());
-				if (inventory[0] != null)
-					if (--inventory[0].stackSize <= 0)
-						inventory[0] = null;
+				if (!getItems().get(0).isEmpty())
+					getItems().get(0).shrink(1);
 			}
 		}
 		
-		if (inventory[0] == null || getEnergyStored(null) == ConfigHandler.GENERATOR_MAX_ENERGY)
+		if (getItems().get(0).isEmpty() || getEnergyStored(null) == ConfigHandler.GENERATOR_MAX_ENERGY)
 			time = 0;
 
 	}
@@ -156,15 +155,15 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 	}
 
 	private boolean hasSpeedUpgrade() {
-		return inventory[1] != null && inventory[1].getItem() == TransportTerminal.UPGRADE_CHIP;
+		return !getItems().get(1).isEmpty() && getItems().get(1).getItem() == TransportTerminal.UPGRADE_CHIP;
 	}
 
 	private int getFuelTypeModifier() {
-		return inventory[0] != null && inventory[0].getItem() == Items.REDSTONE ? 2000 : inventory[0] != null && inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK) ? 18000 : 0;
+		return !getItems().get(0).isEmpty() && getItems().get(0).getItem() == Items.REDSTONE ? 2000 : !getItems().get(0).isEmpty() && getItems().get(0).getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK) ? 18000 : 0;
 	}
 
 	public boolean hasFuel() {
-		return inventory[0] != null && (inventory[0].getItem() == Items.REDSTONE || inventory[0].getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK)) && inventory[0].stackSize >= 1;
+		return !getItems().get(0).isEmpty() && (getItems().get(0).getItem() == Items.REDSTONE || getItems().get(0).getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK)) && getItems().get(0).getCount() >= 1;
 	}
 
 	public void getGUIData(int id, int value) {
@@ -191,7 +190,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 }

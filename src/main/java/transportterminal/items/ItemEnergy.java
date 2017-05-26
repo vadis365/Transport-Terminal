@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,7 +39,7 @@ public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
 	@Override
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
+	 public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
 		super.getSubItems(item, tab, list);
 			ItemStack charged = new ItemStack(item);
 			receiveEnergy(charged, capacity, false);

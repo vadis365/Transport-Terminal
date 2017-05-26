@@ -59,6 +59,6 @@ public class GuiItemTransporter extends GuiContainer {
 		BlockPos pos = tile.getPos();
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id == 0)
-				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ItemTransporterMessage(mc.thePlayer, guibutton.id, pos));
+				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ItemTransporterMessage(mc.player, guibutton.id, pos));
 	}
 }

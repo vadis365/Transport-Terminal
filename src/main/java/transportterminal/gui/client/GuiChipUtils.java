@@ -66,24 +66,24 @@ public class GuiChipUtils extends GuiContainer {
 		if (guibutton instanceof GuiButton) {
 			if (guibutton.id == 0) {
 				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()) && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBlankChip(tile.getStackInSlot(1)))
-					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, COPY_CHIP));
 
 				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()) && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isBlankPlayerChip(tile.getStackInSlot(1)))
-					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, COPY_CHIP));
+					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, COPY_CHIP));
 			}
 			if (guibutton.id == 1)
 				if (tile.getStackInSlot(1) == null) {
 					if (tile.getStackInSlot(0) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()))
-						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_CHIP));
+						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, ERASE_CHIP));
 
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
-						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.thePlayer, "", pos, ERASE_PLAYER_CHIP));
+						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, ERASE_PLAYER_CHIP));
 				}
 
 			if (guibutton.id == 2)
 				if (tile.getStackInSlot(1) == null)
 					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
-						mc.thePlayer.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS_NAMING, mc.thePlayer.worldObj, pos.getX(), pos.getY(), pos.getZ());
+						mc.player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS_NAMING, mc.player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
 

@@ -61,7 +61,7 @@ public class ItemRemote extends ItemEnergy {
 			TileEntityTransportTerminal tile = (TileEntityTransportTerminal) world2.getTileEntity(pos);
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
-					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.CHIP) {
+					if (!tile.getStackInSlot(slot).isEmpty() && tile.getStackInSlot(slot).getItem() == TransportTerminal.CHIP) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.getTagCompound() != null && !chipStack.getTagCompound().hasKey("chipX"))
 							return true;
@@ -84,12 +84,12 @@ public class ItemRemote extends ItemEnergy {
 
 			if (tile != null)
 				for (int slot = 2; slot < 16; slot++)
-					if (tile.getStackInSlot(slot) != null && tile.getStackInSlot(slot).getItem() == TransportTerminal.CHIP) {
+					if (!tile.getStackInSlot(slot).isEmpty() && tile.getStackInSlot(slot).getItem() == TransportTerminal.CHIP) {
 						ItemStack chipStack = tile.getStackInSlot(slot);
 						if (chipStack.getTagCompound() != null && !chipStack.getTagCompound().hasKey("chipX")) {
 							if (!world2.isRemote) {
 								tile.setTempSlot(slot);
-								chipStack.getTagCompound().setString("dimName", player.worldObj.provider.getDimensionType().getName());
+								chipStack.getTagCompound().setString("dimName", player.getEntityWorld().provider.getDimensionType().getName());
 								chipStack.getTagCompound().setInteger("chipDim", player.dimension);
 								chipStack.getTagCompound().setInteger("chipX", x);
 								chipStack.getTagCompound().setInteger("chipY", y);
@@ -103,8 +103,9 @@ public class ItemRemote extends ItemEnergy {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-	    if (hasTag(stack) && player.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack stack = player.getHeldItem(hand);
+		if (hasTag(stack) && player.isSneaking() && hand.equals(EnumHand.MAIN_HAND)) {
 	    	if(!world.isRemote){
 	    		if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1) {
 	    			world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
@@ -127,13 +128,14 @@ public class ItemRemote extends ItemEnergy {
 	    	}
 	    	if (world.isRemote)
 	    		if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1)
-	    			player.addChatMessage(new TextComponentTranslation("chat.end_disabled_message"));
+	    			player.sendStatusMessage(new TextComponentTranslation("chat.end_disabled_message"), false);
 	    }
 	    return EnumActionResult.FAIL;
 	}
 
 	@Override
-	 public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	 public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
 		if (!player.isSneaking() && stack.getTagCompound().hasKey("homeX") && hand.equals(EnumHand.MAIN_HAND)) {
 			int x = stack.getTagCompound().getInteger("homeX");
 			int y = stack.getTagCompound().getInteger("homeY");

@@ -41,12 +41,12 @@ public class BlockSummoner extends BlockDirectional {
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World world, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;
 	}
 
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
 			return true;
 		if (world.getTileEntity(pos) instanceof TileEntitySummoner) {
@@ -71,8 +71,8 @@ public class BlockSummoner extends BlockDirectional {
 
 				for (int i = 0; i < ((TileEntityInventoryEnergy) tileentity).getSizeInventory(); ++i) {
 					ItemStack itemstack = ((TileEntityInventoryEnergy) tileentity).getStackInSlot(i);
-					if (itemstack != null)
-						((TileEntitySummoner) tileentity).setInventorySlotContents(i, null);
+					if (!itemstack.isEmpty())
+						((TileEntitySummoner) tileentity).setInventorySlotContents(i, ItemStack.EMPTY);
 				}
 
 				NBTTagCompound nbt = new NBTTagCompound();

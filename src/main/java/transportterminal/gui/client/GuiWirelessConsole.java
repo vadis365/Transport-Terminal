@@ -73,8 +73,8 @@ public class GuiWirelessConsole extends GuiContainer {
 
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
-				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, x, y, z, newDim));
-				mc.thePlayer.closeScreen();
+				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.player, guibutton.id, x, y, z, newDim));
+				mc.player.closeScreen();
 			}
 	}
 }

@@ -1,11 +1,11 @@
 package transportterminal.gui.server;
 
+import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import transportterminal.tileentites.TileEntityCharger;
-import cofh.api.energy.IEnergyContainerItem;
 
 public class ContainerCharger extends ContainerEnergy {
 
@@ -28,7 +28,7 @@ public class ContainerCharger extends ContainerEnergy {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex) {
-		ItemStack stack = null;
+		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot) inventorySlots.get(slotIndex);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack1 = slot.getStack();
@@ -36,15 +36,15 @@ public class ContainerCharger extends ContainerEnergy {
 
 			if (slotIndex < 6) {
 				if (!mergeItemStack(stack1, 6, inventorySlots.size(), true))
-					return null;
+					return ItemStack.EMPTY;
 			} else if (stack1.getItem() instanceof IEnergyContainerItem) {
 				if (!mergeItemStack(stack1, 0, 6, false))
-					return null;
+					return ItemStack.EMPTY;
 			} else
-				return null;
+				return ItemStack.EMPTY;
 
-			if (stack1.stackSize == 0)
-				slot.putStack(null);
+			if (stack1.getCount() == 0)
+				slot.putStack(ItemStack.EMPTY);
 			else
 				slot.onSlotChanged();
 		}

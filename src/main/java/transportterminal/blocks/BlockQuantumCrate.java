@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -54,8 +55,8 @@ public class BlockQuantumCrate extends BlockDirectional {
 		return null;
 	}
 
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
 			return true;
 		if (world.getTileEntity(pos) instanceof TileEntityQuantumCrate) {
@@ -72,9 +73,9 @@ public class BlockQuantumCrate extends BlockDirectional {
 			if (tileentity instanceof TileEntityQuantumCrate) {
 				for (int i = ((TileEntityInventoryEnergy) tileentity).getSizeInventory() - 2 ; i < ((TileEntityInventoryEnergy) tileentity).getSizeInventory(); ++i) {
 					ItemStack itemstack = ((TileEntityInventoryEnergy) tileentity).getStackInSlot(i);
-					if (itemstack != null) {
+					if (!itemstack.isEmpty()) {
 						InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
-						((TileEntityInventoryEnergy) tileentity).setInventorySlotContents(i, null);
+						((TileEntityInventoryEnergy) tileentity).setInventorySlotContents(i, ItemStack.EMPTY);
 					}
 				}
 				NBTTagCompound nbt = new NBTTagCompound();
@@ -94,20 +95,21 @@ public class BlockQuantumCrate extends BlockDirectional {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof TileEntityQuantumCrate) {
 				NBTTagList tags = stack.getTagCompound().getTagList("Items", 10);
-				((TileEntityQuantumCrate) tileentity).inventory = new ItemStack[((TileEntityQuantumCrate) tileentity).getSizeInventory()];
+				((TileEntityQuantumCrate) tileentity).inventory = NonNullList.<ItemStack>withSize(((TileEntityQuantumCrate) tileentity).getSizeInventory(), ItemStack.EMPTY);
 
 				for (int i = 0; i < tags.tagCount(); i++) {
 					NBTTagCompound data = tags.getCompoundTagAt(i);
 					int j = data.getByte("Slot") & 255;
 
-					if (j >= 0 && j < ((TileEntityQuantumCrate) tileentity).inventory.length)
-						((TileEntityQuantumCrate) tileentity).inventory[j] = ItemStack.loadItemStackFromNBT(data);
+					if (j >= 0 && j < ((TileEntityQuantumCrate) tileentity).inventory.size())
+						((TileEntityQuantumCrate) tileentity).inventory.set(j, new ItemStack(data));
 				}
 
 				if (stack.hasTagCompound() && stack.getTagCompound().hasKey("energy")) {
 					int energy = stack.getTagCompound().getInteger("energy");
 					((TileEntityInventoryEnergy) tileentity).setEnergy(energy);
 				}
+				
 			}
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}

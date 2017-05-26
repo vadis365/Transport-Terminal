@@ -43,7 +43,7 @@ public class ContainerQuantumCrate extends ContainerEnergy {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex) {
-		ItemStack is = null;
+		ItemStack is = ItemStack.EMPTY;
 		Slot slot = (Slot) inventorySlots.get(slotIndex);
 
 		if (slot != null && slot.getHasStack()) {
@@ -52,17 +52,17 @@ public class ContainerQuantumCrate extends ContainerEnergy {
 
 			if (slotIndex < (numRows * 13) + 2) {
 				if (!mergeItemStack(is1, (numRows * 13) + 2, inventorySlots.size(), true))
-					return null;
+					return ItemStack.EMPTY;
 			} else if (!mergeItemStack(is1, 0, (numRows * 13) + 2, false))
-				return null;
+				return ItemStack.EMPTY;
 
-			if (is1.stackSize == 0)
-				slot.putStack(null);
+			if (is1.getCount() == 0)
+				slot.putStack(ItemStack.EMPTY);
 			else
 				slot.onSlotChanged();
 
-			if (is1.stackSize != is.stackSize)
-				slot.onPickupFromSlot(player, is1);
+			if (is1.getCount() != is.getCount())
+				slot.onTake(player, is1);
 			else
 				return null;
 		}

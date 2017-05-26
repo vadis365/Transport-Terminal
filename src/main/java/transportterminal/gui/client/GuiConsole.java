@@ -64,8 +64,8 @@ public class GuiConsole extends GuiContainer {
 		if (guibutton instanceof GuiButton)
 			if (guibutton.id >= 2 && guibutton.id <= 15) {
 				int newDim = player.dimension;
-				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.thePlayer, guibutton.id, tile.getPos(), newDim));
-				mc.thePlayer.closeScreen();
+				TransportTerminal.NETWORK_WRAPPER.sendToServer(new ButtonMessage(mc.player, guibutton.id, tile.getPos(), newDim));
+				mc.player.closeScreen();
 			}
 	}
 }

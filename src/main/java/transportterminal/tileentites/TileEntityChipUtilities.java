@@ -1,65 +1,53 @@
 package transportterminal.tileentites;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import transportterminal.TransportTerminal;
 
 public class TileEntityChipUtilities extends TileEntity implements IInventory {
 
-	private ItemStack[] inventory = new ItemStack[3];
+	private NonNullList<ItemStack> inventory = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
 	private String playerChipName = "Blank";
 
 	@Override
 	public int getSizeInventory() {
-		return inventory.length;
+		return inventory.size();
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		return inventory[slot];
+		return inventory.get(slot);
+	}
+
+    protected NonNullList<ItemStack> getItems() {
+        return inventory;
+    }
+
+	@Override
+    public ItemStack decrStackSize(int index, int count) {
+		ItemStack itemstack = ItemStackHelper.getAndSplit(inventory, index, count);
+		if (!itemstack.isEmpty())
+			this.markDirty();
+		return itemstack;
 	}
 
 	@Override
-	public ItemStack decrStackSize(int slot, int size) {
-		if (inventory[slot] != null) {
-			ItemStack is;
-			if (inventory[slot].stackSize <= size) {
-				is = inventory[slot];
-				inventory[slot] = null;
-				return is;
-			} else {
-				is = inventory[slot].splitStack(size);
-				if (inventory[slot].stackSize == 0)
-					inventory[slot] = null;
-				return is;
-			}
-		} else
-			return null;
-	}
-
-	//@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
-		if (inventory[slot] != null) {
-			ItemStack is = inventory[slot];
-			inventory[slot] = null;
-			return is;
-		} else
-			return null;
-	}
-
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack is) {
-		inventory[slot] = is;
-		if (is != null && is.stackSize > getInventoryStackLimit())
-			is.stackSize = getInventoryStackLimit();
-	}
+    public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
+        inventory.set(index, stack);
+        if (stack.getCount() > this.getInventoryStackLimit())
+            stack.setCount(this.getInventoryStackLimit());
+        this.markDirty();
+    }
 
 	@Override
 	public int getInventoryStackLimit() {
@@ -67,42 +55,90 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		NBTTagList tags = nbt.getTagList("Items", 10);
-		inventory = new ItemStack[getSizeInventory()];
-
-		for (int i = 0; i < tags.tagCount(); i++) {
-			NBTTagCompound data = tags.getCompoundTagAt(i);
-			int j = data.getByte("Slot") & 255;
-
-			if (j >= 0 && j < inventory.length)
-				inventory[j] = ItemStack.loadItemStackFromNBT(data);
-		}
-		playerChipName = nbt.getString("playerChipName");
+	public boolean isUsableByPlayer(EntityPlayer player) {
+		return true;
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		NBTTagList tags = new NBTTagList();
-
-		for (int i = 0; i < inventory.length; i++)
-			if (inventory[i] != null) {
-				NBTTagCompound data = new NBTTagCompound();
-				data.setByte("Slot", (byte) i);
-				inventory[i].writeToNBT(data);
-				tags.appendTag(data);
+	public boolean isEmpty() {
+		for (ItemStack itemstack : inventory) {
+			if (!itemstack.isEmpty()) {
+				return false;
 			}
+		}
 
-		nbt.setTag("Items", tags);
-		nbt.setString("playerChipName", playerChipName);
-		return nbt;
+		return true;
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(pos) != this ? false : player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.loadFromNbt(compound);
+		playerChipName = compound.getString("playerChipName");
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setString("playerChipName", playerChipName);
+		return this.saveToNbt(compound);
+	}
+
+	public void loadFromNbt(NBTTagCompound compound) {
+		inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		if (compound.hasKey("Items", 9))
+			ItemStackHelper.loadAllItems(compound, inventory);
+	}
+
+	public NBTTagCompound saveToNbt(NBTTagCompound compound) {
+		ItemStackHelper.saveAllItems(compound, inventory, false);
+		return compound;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer playerIn) {
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer playerIn) {
+	}
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+	}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		inventory.clear();
+	}
+
+	@Override
+	public String getName() {
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomName() {
+		return false;
+	}
+
+	@Override
+	public ITextComponent getDisplayName() {
+		return null;
+	}
+
+	public boolean canInsertItem() {
+		return false;
 	}
 
 	@Override
@@ -130,66 +166,23 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 		ItemStack nbtChip = new ItemStack(TransportTerminal.CHIP);
 		nbtChip.setTagCompound(new NBTTagCompound());
 		setInventorySlotContents(1, nbtChip);
-		setInventorySlotContents(0, null);
+		setInventorySlotContents(0, ItemStack.EMPTY);
 	}
 
 	public void erasePlayerChip() {
 		setInventorySlotContents(1, new ItemStack(TransportTerminal.PLAYER_CHIP));
-		setInventorySlotContents(0, null);
+		setInventorySlotContents(0, ItemStack.EMPTY);
 	}
 
 	public void setName(String text) {
 		playerChipName = text;
 		ItemStack stack = getStackInSlot(1);
-		if (stack != null && stack.getItem() == TransportTerminal.PLAYER_CHIP)
+		if (!stack.isEmpty() && stack.getItem() == TransportTerminal.PLAYER_CHIP)
 			stack.setStackDisplayName(playerChipName);
 	}
 
 	@Override
-	public String getName() {
-		return null;
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		return false;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return null;
-	}
-
-	@Override
-	public void openInventory(EntityPlayer playerIn) {
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer playerIn) {
-	}
-
-	@Override
-	public int getField(int id) {
-		return 0;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-	}
-
-	@Override
-	public int getFieldCount() {
-		return 0;
-	}
-
-	@Override
-	public void clear() {
-		for (int i = 0; i < inventory.length; i++)
-			inventory[i] = null;
-	}
-
-	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 }
