@@ -37,7 +37,7 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 							if (tile.canTeleport()) {
 								ItemStack is = tile.getStackInSlot(1).copy();
 								ItemStack chip = tile.getStackInSlot(0);
-								if (is != null) {
+								if (!is.isEmpty()) {
 									int newDim = chip.getTagCompound().getInteger("chipDim");
 									int x = chip.getTagCompound().getInteger("chipX");
 									int y = chip.getTagCompound().getInteger("chipY");
@@ -46,14 +46,15 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 										world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 										return;
 									}
-									DimensionUtils.forceChunkloading((EntityPlayerMP) player, newDim, x, y, z);
+									//DimensionUtils.forceChunkloading((EntityPlayerMP) player, newDim, x, y, z);
 									WorldServer world2 = DimensionUtils.getWorldFromDimID(newDim);
-
-									EntityItem entityitem = new EntityItem(world2, x + 0.5D, y + 1.5D, z + 0.5D, is);
-									entityitem.setLocationAndAngles(x + 0.5D, y + 1.5D, z + 0.5D, entityitem.rotationYaw, entityitem.rotationPitch);
-									world2.spawnEntity(entityitem);
-									tile.setInventorySlotContents(1, null);
-									TeleportUtils.consumeItemTransporterEnergy(tile, is);
+									if(world2 != null) {
+										EntityItem entityitem = new EntityItem(world2, x + 0.5D, y + 1.5D, z + 0.5D, is);
+										entityitem.setLocationAndAngles(x + 0.5D, y + 1.5D, z + 0.5D, entityitem.rotationYaw, entityitem.rotationPitch);
+										world2.spawnEntity(entityitem);
+										tile.setInventorySlotContents(1, ItemStack.EMPTY);
+										TeleportUtils.consumeItemTransporterEnergy(tile, is);
+									}
 								}
 							}
 						}

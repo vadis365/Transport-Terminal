@@ -1,5 +1,7 @@
 package transportterminal.gui.client;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
@@ -10,9 +12,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
 import transportterminal.TransportTerminal;
 import transportterminal.gui.button.GuiLargeButton;
 import transportterminal.gui.server.ContainerChipUtils;
@@ -65,24 +64,24 @@ public class GuiChipUtils extends GuiContainer {
 
 		if (guibutton instanceof GuiButton) {
 			if (guibutton.id == 0) {
-				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()) && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBlankChip(tile.getStackInSlot(1)))
+				if (!tile.getStackInSlot(0).isEmpty() && !tile.getStackInSlot(1).isEmpty() && isBasicChipItem(tile.getStackInSlot(0).getItem()) && isBasicChipItem(tile.getStackInSlot(1).getItem()) && isBlankChip(tile.getStackInSlot(1)))
 					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, COPY_CHIP));
 
-				if (tile.getStackInSlot(0) != null && tile.getStackInSlot(1) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()) && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isBlankPlayerChip(tile.getStackInSlot(1)))
+				if (!tile.getStackInSlot(0).isEmpty() && !tile.getStackInSlot(1).isEmpty() && isPlayerChipItem(tile.getStackInSlot(0).getItem()) && isPlayerChipItem(tile.getStackInSlot(1).getItem()) && isBlankPlayerChip(tile.getStackInSlot(1)))
 					TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, COPY_CHIP));
 			}
 			if (guibutton.id == 1)
-				if (tile.getStackInSlot(1) == null) {
-					if (tile.getStackInSlot(0) != null && isBasicChipItem(tile.getStackInSlot(0).getItem()))
+				if (tile.getStackInSlot(1).isEmpty()) {
+					if (!tile.getStackInSlot(0).isEmpty() && isBasicChipItem(tile.getStackInSlot(0).getItem()))
 						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, ERASE_CHIP));
 
-					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
+					if (!tile.getStackInSlot(0).isEmpty() && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
 						TransportTerminal.NETWORK_WRAPPER.sendToServer(new ChipUtilsMessage(mc.player, "", pos, ERASE_PLAYER_CHIP));
 				}
 
 			if (guibutton.id == 2)
-				if (tile.getStackInSlot(1) == null)
-					if (tile.getStackInSlot(0) != null && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
+				if (tile.getStackInSlot(1).isEmpty())
+					if (!tile.getStackInSlot(0).isEmpty() && isPlayerChipItem(tile.getStackInSlot(0).getItem()))
 						mc.player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_CHIP_UTILS_NAMING, mc.player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ());
 		}
 	}
