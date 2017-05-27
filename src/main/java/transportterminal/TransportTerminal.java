@@ -64,7 +64,7 @@ import transportterminal.network.message.TeleportMessage;
 import transportterminal.proxy.CommonProxy;
 import transportterminal.utils.DimensionUtils;
 
-@Mod(modid = "transportterminal", name = "transportterminal", version = "1.0.1", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
+@Mod(modid = "transportterminal", name = "transportterminal", version = "1.0.2", guiFactory = "transportterminal.core.confighandler.ConfigGuiFactory")
 public class TransportTerminal {
 
 	@Instance("transportterminal")
