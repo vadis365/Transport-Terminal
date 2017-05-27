@@ -1,5 +1,8 @@
 package transportterminal.tileentites;
 
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -10,9 +13,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ITickable;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.utils.TeleportUtils;
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.api.energy.IEnergyHandler;
-import cofh.api.energy.IEnergyReceiver;
 
 public class TileEntityEnergyCube extends TileEntityInventoryEnergy implements ITickable {
 

@@ -1,11 +1,11 @@
 package transportterminal.gui.button;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
 
 public class GuiLargeButton extends GuiButton {
 	private static final ResourceLocation TEXTURES = new ResourceLocation("transportterminal:textures/gui/buttons.png");

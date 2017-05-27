@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import transportterminal.network.message.NamingMessage;
 import transportterminal.tileentites.TileEntityTransportTerminal;
-import transportterminal.utils.DimensionUtils;
 
 public class NamingPacketHandler implements IMessageHandler<NamingMessage, IMessage> {
 
