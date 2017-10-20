@@ -29,11 +29,12 @@ public class DimensionUtils implements LoadingCallback {
 	public static void forceChunkloading(EntityPlayerMP player, final int dimensionID, final int posX, final int posY, final int posZ) {
 		player.getServer().addScheduledTask(new Runnable() {
 			public void run() {
-				if (CHUNK_TICKET == null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
+				if (CHUNK_TICKET == null)
 					CHUNK_TICKET = ForgeChunkManager.requestTicket(TransportTerminal.INSTANCE, getWorldFromDimID(dimensionID), ForgeChunkManager.Type.NORMAL);
 
-				if (CHUNK_TICKET != null && !isDimensionAreaLoaded(dimensionID, posX, posY, posZ))
+				if (CHUNK_TICKET != null)
 					ForgeChunkManager.forceChunk(CHUNK_TICKET, new ChunkPos(posX >> 4, posZ >> 4));
+				System.out.println("Forcing Chunk");
 			}
 		});
 	}

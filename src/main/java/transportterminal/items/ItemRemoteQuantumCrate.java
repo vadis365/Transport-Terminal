@@ -51,16 +51,17 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 		ItemStack stack = player.getHeldItem(hand);
 		if (stack.getTagCompound().hasKey("homeX") && hand.equals(EnumHand.MAIN_HAND)) {
 			if (!world.isRemote) {
+				int dimensionID = stack.getTagCompound().getInteger("dim");
+				int homeX = stack.getTagCompound().getInteger("homeX");
+				int homeY = stack.getTagCompound().getInteger("homeY");
+				int homeZ = stack.getTagCompound().getInteger("homeZ");
+				DimensionUtils.forceChunkloading((EntityPlayerMP) player, dimensionID, homeX, homeY, homeZ);
 				if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1) {
 					world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 					return new ActionResult(EnumActionResult.FAIL, stack);
 				}
 				if (canTeleport(stack)) {
-					int dimensionID = stack.getTagCompound().getInteger("dim");
-					int homeX = stack.getTagCompound().getInteger("homeX");
-					int homeY = stack.getTagCompound().getInteger("homeY");
-					int homeZ = stack.getTagCompound().getInteger("homeZ");
-					DimensionUtils.forceChunkloading((EntityPlayerMP) player, dimensionID, homeX, homeY, homeZ);
+
 					WorldServer world2 = DimensionUtils.getWorldFromDimID(dimensionID);
 					TileEntity tile = world2.getTileEntity(new BlockPos(homeX, homeY, homeZ));
 					if (tile instanceof TileEntityInventoryEnergy) {
