@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.core.confighandler.ConfigHandler;
 
 public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
@@ -35,7 +35,7 @@ public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
 		getItems().set(slot, is);
 		if (!is.isEmpty() && is.getCount() > getInventoryStackLimit())
 			is.setCount(getInventoryStackLimit());
-		if (!is.isEmpty() && slot == 104 && is.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE) {
+		if (!is.isEmpty() && slot == 104 && is.getItem() == ModItems.REMOTE_QUANTUM_CRATE) {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
@@ -53,7 +53,7 @@ public class TileEntityQuantumCrate extends TileEntityInventoryEnergy {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if (slot == 104 && is.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE || slot == 105 && is.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE)
+		if (slot == 104 && is.getItem() == ModItems.REMOTE_QUANTUM_CRATE || slot == 105 && is.getItem() == ModItems.REMOTE_QUANTUM_CRATE)
 			return true;
 		else
 			if (slot < 104)

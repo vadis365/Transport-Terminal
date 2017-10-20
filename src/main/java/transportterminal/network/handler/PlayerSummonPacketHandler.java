@@ -23,8 +23,8 @@ public class PlayerSummonPacketHandler implements IMessageHandler<PlayerSummonMe
 			return null;
 
 		else if (!world.isRemote)
-			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+			if (ctx.getServerHandler().player.getEntityId() == message.entityID) {
+				final EntityPlayerMP player = ctx.getServerHandler().player;
 				player.getServer().addScheduledTask(new Runnable() {
 					public void run() {
 						TileEntitySummoner tile = (TileEntitySummoner) world.getTileEntity(message.tilePos);

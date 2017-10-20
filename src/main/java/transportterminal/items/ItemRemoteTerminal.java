@@ -2,6 +2,9 @@ package transportterminal.items;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -16,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import transportterminal.ModSounds;
 import transportterminal.TransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.tileentites.TileEntityInventoryEnergy;
@@ -31,9 +35,8 @@ public class ItemRemoteTerminal extends ItemEnergy {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
-		super.addInformation(stack, player, list, flag);
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> list, ITooltipFlag flag) {
+		super.addInformation(stack, worldIn, list, flag);
 		if (hasTag(stack))
 			if (stack.getTagCompound().hasKey("dim")) {
 				list.add("Terminal Dimension: " + stack.getTagCompound().getInteger("dim") + " " + stack.getTagCompound().getString("dimName"));
@@ -52,7 +55,7 @@ public class ItemRemoteTerminal extends ItemEnergy {
 		if (stack.getTagCompound().hasKey("homeX") && hand.equals(EnumHand.MAIN_HAND)) {
 			if (!world.isRemote) {
 				if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1) {
-					world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+					world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 					return new ActionResult(EnumActionResult.FAIL, stack);
 				}
 				if (canTeleport(stack)) {
@@ -67,11 +70,11 @@ public class ItemRemoteTerminal extends ItemEnergy {
 						if(((TileEntityInventoryEnergy) tile).getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT) {
 							TeleportUtils.consumeConsoleEnergy((TileEntityTransportTerminal) tile);
 							extractEnergy(stack, ConfigHandler.ENERGY_PER_REMOTE_USE, false);
-							world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+							world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 							player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 						}
 						else {
-							world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+							world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 							return new ActionResult(EnumActionResult.FAIL, stack);
 						}
 					}

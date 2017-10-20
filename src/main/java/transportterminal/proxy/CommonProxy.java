@@ -9,6 +9,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import transportterminal.ModItems;
 import transportterminal.TransportTerminal;
 import transportterminal.gui.client.GuiCharger;
 import transportterminal.gui.client.GuiChipUtils;
@@ -238,7 +239,7 @@ public class CommonProxy implements IGuiHandler {
 	public TileEntity getTile(EntityPlayer player, World world, int x, int y, int z, boolean loadDimension) {
 		TileEntity tileentity;
 		ItemStack stack = player.getHeldItemMainhand();
-		if (stack != null && (stack.getItem() == TransportTerminal.REMOTE_TERMINAL || stack.getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE)) {
+		if (!stack.isEmpty() && (stack.getItem() == ModItems.REMOTE_TERMINAL || stack.getItem() == ModItems.REMOTE_QUANTUM_CRATE)) {
 			WorldServer world2 = DimensionManager.getWorld(stack.getTagCompound().getInteger("dim"));
 			int xx = stack.getTagCompound().getInteger("homeX");
 			int yy = stack.getTagCompound().getInteger("homeY");

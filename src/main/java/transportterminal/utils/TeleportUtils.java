@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import transportterminal.TransportTerminal;
+import transportterminal.ModSounds;
 import transportterminal.blocks.BlockDirectional;
 import transportterminal.blocks.BlockTransportTerminal;
 import transportterminal.core.confighandler.ConfigHandler;
@@ -53,7 +53,7 @@ public class TeleportUtils {
 
 	public static void teleportPlayer(EntityPlayerMP player, double x, double y, double z, float yaw, float pitch) {
 		player.connection.setPlayerLocation(x, y, z, yaw, pitch);
-		player.getEntityWorld().playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.TELEPORT_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		player.getEntityWorld().playSound(null, player.posX, player.posY, player.posZ, ModSounds.TELEPORT_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 	}
 
 	public static boolean isConsole(World world, BlockPos pos) {

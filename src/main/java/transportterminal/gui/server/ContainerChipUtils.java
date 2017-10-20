@@ -5,7 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.gui.slot.SlotChip;
 import transportterminal.tileentites.TileEntityChipUtilities;
 
@@ -40,10 +40,10 @@ public class ContainerChipUtils extends Container {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 1) {
-				if (stack1.getItem() == TransportTerminal.CHIP || stack1.getItem() == TransportTerminal.PLAYER_CHIP) {
+				if (stack1.getItem() == ModItems.CHIP || stack1.getItem() == ModItems.PLAYER_CHIP) {
 					if (!mergeItemStack(stack1, 0, inventorySlots.size(), false))
 						return ItemStack.EMPTY;
-				} else if (stack1.getItem() != TransportTerminal.CHIP || stack1.getItem() != TransportTerminal.PLAYER_CHIP)
+				} else if (stack1.getItem() != ModItems.CHIP || stack1.getItem() != ModItems.PLAYER_CHIP)
 					if (!mergeItemStack(stack1, 0, 1, true))
 						return ItemStack.EMPTY;
 			} else if (!mergeItemStack(stack1, 2, inventorySlots.size(), false))

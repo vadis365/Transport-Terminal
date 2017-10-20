@@ -12,7 +12,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 
 public class TileEntityChipUtilities extends TileEntity implements IInventory {
 
@@ -163,21 +163,21 @@ public class TileEntityChipUtilities extends TileEntity implements IInventory {
 	}
 
 	public void eraseChip() {
-		ItemStack nbtChip = new ItemStack(TransportTerminal.CHIP);
+		ItemStack nbtChip = new ItemStack(ModItems.CHIP);
 		nbtChip.setTagCompound(new NBTTagCompound());
 		setInventorySlotContents(1, nbtChip);
 		setInventorySlotContents(0, ItemStack.EMPTY);
 	}
 
 	public void erasePlayerChip() {
-		setInventorySlotContents(1, new ItemStack(TransportTerminal.PLAYER_CHIP));
+		setInventorySlotContents(1, new ItemStack(ModItems.PLAYER_CHIP));
 		setInventorySlotContents(0, ItemStack.EMPTY);
 	}
 
 	public void setName(String text) {
 		playerChipName = text;
 		ItemStack stack = getStackInSlot(1);
-		if (!stack.isEmpty() && stack.getItem() == TransportTerminal.PLAYER_CHIP)
+		if (!stack.isEmpty() && stack.getItem() == ModItems.PLAYER_CHIP)
 			stack.setStackDisplayName(playerChipName);
 	}
 

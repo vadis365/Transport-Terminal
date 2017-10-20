@@ -1,9 +1,8 @@
 package transportterminal.gui.button;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiConsoleButton extends GuiButton {
@@ -19,14 +18,14 @@ public class GuiConsoleButton extends GuiButton {
 	}
 
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		if (visible) {
 			mc.getTextureManager().bindTexture(TEXTURES);
-			GL11.glColor4f(0.75F, 0.75F, 0.75F, 0.5F);
-			boolean hover = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
+			GlStateManager.color(0.75F, 0.75F, 0.75F, 0.5F);
+			boolean hover = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(hover)
-				GL11.glColor4f(0.75F, 1, 0.75F, 1);	
-			drawTexturedModalRect(xPosition, yPosition, u, v, width, height);
+				GlStateManager.color(0.75F, 1, 0.75F, 1);	
+			drawTexturedModalRect(x, y, u, v, width, height);
 		}
 	}
 }

@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.core.confighandler.ConfigHandler;
 
 public class TileEntityItemTransporter extends TileEntityInventoryEnergy implements ITickable {
@@ -54,7 +54,7 @@ public class TileEntityItemTransporter extends TileEntityInventoryEnergy impleme
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if (slot == 0 && is.getItem() == TransportTerminal.CHIP)
+		if (slot == 0 && is.getItem() == ModItems.CHIP)
 			return true;
 		return false;
 	}

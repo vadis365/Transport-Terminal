@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import transportterminal.ModItems;
 import transportterminal.TransportTerminal;
 import transportterminal.gui.slot.SlotChip;
 import transportterminal.tileentites.TileEntitySummoner;
@@ -34,7 +35,7 @@ public class ContainerSummoner extends ContainerEnergy {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 0) {
-				if (stack1.getItem() == TransportTerminal.PLAYER_CHIP)
+				if (stack1.getItem() == ModItems.PLAYER_CHIP)
 					if (!mergeItemStack(stack1, 0, 1, false))
 						return ItemStack.EMPTY;
 			} else if (!mergeItemStack(stack1, 1, inventorySlots.size(), false))

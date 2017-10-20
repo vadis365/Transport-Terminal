@@ -2,6 +2,9 @@ package transportterminal.items;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,10 +23,9 @@ public class ItemChip extends Item {
 		setCreativeTab(TransportTerminal.tab);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> list, ITooltipFlag flag) {
 		if (hasTag(stack))
 			if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("chipDim")) {
 				list.add(TextFormatting.GREEN + stack.getTagCompound().getString("description"));

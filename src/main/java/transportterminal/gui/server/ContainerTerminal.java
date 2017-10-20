@@ -5,7 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.gui.slot.SlotChip;
 import transportterminal.gui.slot.SlotRemote;
 import transportterminal.tileentites.TileEntityTransportTerminal;
@@ -45,10 +45,10 @@ public class ContainerTerminal extends ContainerEnergy {
 			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (slotIndex > 15) {
-				if (stack1.getItem() == TransportTerminal.CHIP || stack1.getItem() == TransportTerminal.PLAYER_CHIP) {
+				if (stack1.getItem() == ModItems.CHIP || stack1.getItem() == ModItems.PLAYER_CHIP) {
 					if (!mergeItemStack(stack1, 2, 16, false))
 						return ItemStack.EMPTY;
-				} else if (stack1.getItem() == TransportTerminal.REMOTE)
+				} else if (stack1.getItem() == ModItems.REMOTE)
 					if (!mergeItemStack(stack1, 0, 1, true))
 						return ItemStack.EMPTY;
 			} else if (!mergeItemStack(stack1, 16, inventorySlots.size(), false))
@@ -67,7 +67,7 @@ public class ContainerTerminal extends ContainerEnergy {
 
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-		if(!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == TransportTerminal.REMOTE_TERMINAL)
+		if(!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == ModItems.REMOTE_TERMINAL)
 			if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItemMainhand())
 				return ItemStack.EMPTY;
 		return super.slotClick(slot, dragType, clickTypeIn, player);

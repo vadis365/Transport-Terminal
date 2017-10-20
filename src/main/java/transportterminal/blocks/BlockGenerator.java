@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -20,11 +21,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import transportterminal.ModBlocks.IHasCustomItem;
+import transportterminal.ModItemBlocks;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityGenerator;
 import transportterminal.tileentites.TileEntityInventoryEnergy;
 
-public class BlockGenerator extends BlockDirectional {
+public class BlockGenerator extends BlockDirectional implements IHasCustomItem {
 
 	public BlockGenerator() {
 		super(Material.IRON);
@@ -99,5 +102,10 @@ public class BlockGenerator extends BlockDirectional {
 			}
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
+	}
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return ModItemBlocks.GENERATOR_ITEM;
 	}
 }

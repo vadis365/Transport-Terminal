@@ -5,7 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.gui.slot.SlotRemoteCrate;
 import transportterminal.tileentites.TileEntityQuantumCrate;
 
@@ -72,7 +72,7 @@ public class ContainerQuantumCrate extends ContainerEnergy {
 	
 	@Override
 	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == TransportTerminal.REMOTE_QUANTUM_CRATE)
+		if(!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == ModItems.REMOTE_QUANTUM_CRATE)
 			if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItemMainhand())
 				return null;
 		return super.slotClick(slot, dragType, clickTypeIn, player);

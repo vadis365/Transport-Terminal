@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.items.ItemPlayerChip;
 
@@ -16,13 +16,13 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if (slot == 0 && is.getItem() == TransportTerminal.PLAYER_CHIP)
+		if (slot == 0 && is.getItem() == ModItems.PLAYER_CHIP)
 			return true;
 		return false;
 	}
 
 	public String getInventoryName() {
-		if (getStackInSlot(0) != null && getStackInSlot(0).hasDisplayName() && getStackInSlot(0).getItem() instanceof ItemPlayerChip)
+		if (!getStackInSlot(0).isEmpty() && getStackInSlot(0).hasDisplayName() && getStackInSlot(0).getItem() instanceof ItemPlayerChip)
 			return getStackInSlot(0).getDisplayName();
 		return "Empty";
 	}
@@ -51,6 +51,6 @@ public class TileEntitySummoner extends TileEntityInventoryEnergy {
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 }

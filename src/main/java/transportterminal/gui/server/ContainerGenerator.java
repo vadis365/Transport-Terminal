@@ -8,7 +8,7 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.gui.slot.SlotUpgradeChip;
 import transportterminal.tileentites.TileEntityGenerator;
 
@@ -42,7 +42,7 @@ public class ContainerGenerator extends ContainerEnergy {
 				if (stack1.getItem() == Items.REDSTONE || stack1.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_BLOCK))
 					if (!mergeItemStack(stack1, 0, 1, false))
 						return ItemStack.EMPTY;
-				if (stack1.getItem() == TransportTerminal.UPGRADE_CHIP)
+				if (stack1.getItem() == ModItems.UPGRADE_CHIP)
 					if (!mergeItemStack(stack1, 1, 2, false))
 						return ItemStack.EMPTY;
 			} else if (!mergeItemStack(stack1, 2, inventorySlots.size(), false))

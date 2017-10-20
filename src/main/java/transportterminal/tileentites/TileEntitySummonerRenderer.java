@@ -1,8 +1,8 @@
 package transportterminal.tileentites;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -15,13 +15,13 @@ public class TileEntitySummonerRenderer extends TileEntitySpecialRenderer<TileEn
 	private static final ResourceLocation beamTexture = new ResourceLocation("textures/entity/beacon_beam.png");
 
 	@Override
-	public void renderTileEntityAt(TileEntitySummoner tile, double x, double y, double z, float partialTick, int destroyStage) {
+	public void render(TileEntitySummoner tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		if(!(tile.getEnergyStored(null) > 0))
 			return;
 
 		GlStateManager.alphaFunc(516, 0.1F);
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer vertexbuffer = tessellator.getBuffer();
+		BufferBuilder vertexbuffer = tessellator.getBuffer();
 		bindTexture(beamTexture);
         GlStateManager.glTexParameteri(3553, 10242, 10497);
         GlStateManager.glTexParameteri(3553, 10243, 10497);
@@ -30,7 +30,7 @@ public class TileEntitySummonerRenderer extends TileEntitySpecialRenderer<TileEn
         GlStateManager.disableBlend();
         GlStateManager.depthMask(true);
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		float f2 = tile.getWorld().getTotalWorldTime() + partialTick;
+		float f2 = tile.getWorld().getTotalWorldTime() + partialTicks;
 		float f3 = -f2 * 0.2F - MathHelper.floor(-f2 * 0.1F);
 		byte b0 = 1;
 		double d3 = f2 * 0.025D * (1.0D - (b0 & 1) * 2.5D);

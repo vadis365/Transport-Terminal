@@ -1,7 +1,7 @@
 package transportterminal.tileentites;
 
-import cofh.api.energy.IEnergyHandler;
-import cofh.api.energy.IEnergyReceiver;
+import cofh.redstoneflux.api.IEnergyHandler;
+import cofh.redstoneflux.api.IEnergyReceiver;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IContainerListener;
@@ -14,7 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ITickable;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.core.confighandler.ConfigHandler;
 import transportterminal.gui.server.ContainerGenerator;
 import transportterminal.utils.TeleportUtils;
@@ -155,7 +155,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 	}
 
 	private boolean hasSpeedUpgrade() {
-		return !getItems().get(1).isEmpty() && getItems().get(1).getItem() == TransportTerminal.UPGRADE_CHIP;
+		return !getItems().get(1).isEmpty() && getItems().get(1).getItem() == ModItems.UPGRADE_CHIP;
 	}
 
 	private int getFuelTypeModifier() {
@@ -175,7 +175,7 @@ public class TileEntityGenerator extends TileEntityInventoryEnergy implements IT
 	}
 
 	public void sendGUIData(ContainerGenerator generator, IContainerListener craft) {
-		craft.sendProgressBarUpdate(generator, 0, time);
+		craft.sendWindowProperty(generator, 0, time);
 	}
 
 	@Override

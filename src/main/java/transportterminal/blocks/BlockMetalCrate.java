@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -24,10 +25,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import transportterminal.ModBlocks.IHasCustomItem;
+import transportterminal.ModItemBlocks;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityMetalCrate;
 
-public class BlockMetalCrate extends BlockContainer {
+public class BlockMetalCrate extends BlockContainer implements IHasCustomItem {
 
 	public BlockMetalCrate() {
 		super(Material.IRON);
@@ -105,6 +108,11 @@ public class BlockMetalCrate extends BlockContainer {
 			}
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
+	}
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return ModItemBlocks.METAL_CRATE_ITEM;
 	}
 
 }

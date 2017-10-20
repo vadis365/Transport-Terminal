@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -25,11 +26,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import transportterminal.ModBlocks.IHasCustomItem;
+import transportterminal.ModItemBlocks;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityEnergyCube;
 import transportterminal.tileentites.TileEntityInventoryEnergy;
 
-public class BlockEnergyCube extends BlockContainer {
+public class BlockEnergyCube extends BlockContainer implements IHasCustomItem {
 
 	 public static final PropertyEnum<TileEntityEnergyCube.EnumStatus> NORTH = PropertyEnum.create("north", TileEntityEnergyCube.EnumStatus.class);
 	 public static final PropertyEnum<TileEntityEnergyCube.EnumStatus> SOUTH = PropertyEnum.create("south", TileEntityEnergyCube.EnumStatus.class);
@@ -164,4 +167,9 @@ public class BlockEnergyCube extends BlockContainer {
     public int getMetaFromState(IBlockState state) {
         return 0;
     }
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return ModItemBlocks.ENERGY_CUBE_ITEM;
+	}
 }

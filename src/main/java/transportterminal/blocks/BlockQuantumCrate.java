@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -22,11 +23,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import transportterminal.ModBlocks.IHasCustomItem;
+import transportterminal.ModItemBlocks;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityInventoryEnergy;
 import transportterminal.tileentites.TileEntityQuantumCrate;
 
-public class BlockQuantumCrate extends BlockDirectional {
+public class BlockQuantumCrate extends BlockDirectional implements IHasCustomItem {
 
 	public BlockQuantumCrate() {
 		super(Material.IRON);
@@ -113,6 +116,11 @@ public class BlockQuantumCrate extends BlockDirectional {
 			}
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
+	}
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return ModItemBlocks.QUANTUM_CRATE_ITEM;
 	}
 
 }

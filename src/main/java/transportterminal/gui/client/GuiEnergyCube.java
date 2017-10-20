@@ -1,9 +1,8 @@
 package transportterminal.gui.client;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
@@ -48,12 +47,12 @@ public class GuiEnergyCube extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		String rfEnergy = "RF: " + tile.getEnergyStored(null) +"/" + ConfigHandler.ENERGY_CUBE_MAX_ENERGY;
-		fontRendererObj.drawString(I18n.format(rfEnergy), xSize / 2 - fontRendererObj.getStringWidth(I18n.format(rfEnergy)) / 2, ySize - 160, 4210752);
+		fontRenderer.drawString(I18n.format(rfEnergy), xSize / 2 - fontRenderer.getStringWidth(I18n.format(rfEnergy)) / 2, ySize - 160, 4210752);
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTickTime, int x, int y) {
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.getTextureManager().bindTexture(GUI_ENERGY_CUBE);
 		int k = (width - xSize) / 2;
 		int l = (height - ySize) / 2;
@@ -69,12 +68,12 @@ public class GuiEnergyCube extends GuiContainer {
 		EnumStatus WEST = tile.getSideStatus(EnumFacing.WEST);
 		EnumStatus EAST = tile.getSideStatus(EnumFacing.EAST);
 
-		fontRendererObj.drawString(I18n.format(DOWN.getName()), xOffSet + 124 - fontRendererObj.getStringWidth(I18n.format(DOWN.getName())) / 2, yOffSet + 34, getModeColour(DOWN.ordinal()));
-		fontRendererObj.drawString(I18n.format(UP.getName()), xOffSet + 124 - fontRendererObj.getStringWidth(I18n.format(UP.getName())) / 2, yOffSet + 54, getModeColour(UP.ordinal()));
-		fontRendererObj.drawString(I18n.format(NORTH.getName()), xOffSet + 124 - fontRendererObj.getStringWidth(I18n.format(NORTH.getName())) / 2, yOffSet + 74, getModeColour(NORTH.ordinal()));
-		fontRendererObj.drawString(I18n.format(SOUTH.getName()), xOffSet + 124 - fontRendererObj.getStringWidth(I18n.format(SOUTH.getName())) / 2, yOffSet + 94, getModeColour(SOUTH.ordinal()));
-		fontRendererObj.drawString(I18n.format(WEST.getName()), xOffSet + 124 - fontRendererObj.getStringWidth(I18n.format(WEST.getName())) / 2, yOffSet + 114, getModeColour(WEST.ordinal()));
-		fontRendererObj.drawString(I18n.format(EAST.getName()), xOffSet + 124 - fontRendererObj.getStringWidth(I18n.format(EAST.getName())) / 2, yOffSet + 134, getModeColour(EAST.ordinal()));
+		fontRenderer.drawString(I18n.format(DOWN.getName()), xOffSet + 124 - fontRenderer.getStringWidth(I18n.format(DOWN.getName())) / 2, yOffSet + 34, getModeColour(DOWN.ordinal()));
+		fontRenderer.drawString(I18n.format(UP.getName()), xOffSet + 124 - fontRenderer.getStringWidth(I18n.format(UP.getName())) / 2, yOffSet + 54, getModeColour(UP.ordinal()));
+		fontRenderer.drawString(I18n.format(NORTH.getName()), xOffSet + 124 - fontRenderer.getStringWidth(I18n.format(NORTH.getName())) / 2, yOffSet + 74, getModeColour(NORTH.ordinal()));
+		fontRenderer.drawString(I18n.format(SOUTH.getName()), xOffSet + 124 - fontRenderer.getStringWidth(I18n.format(SOUTH.getName())) / 2, yOffSet + 94, getModeColour(SOUTH.ordinal()));
+		fontRenderer.drawString(I18n.format(WEST.getName()), xOffSet + 124 - fontRenderer.getStringWidth(I18n.format(WEST.getName())) / 2, yOffSet + 114, getModeColour(WEST.ordinal()));
+		fontRenderer.drawString(I18n.format(EAST.getName()), xOffSet + 124 - fontRenderer.getStringWidth(I18n.format(EAST.getName())) / 2, yOffSet + 134, getModeColour(EAST.ordinal()));
 	}
 
 	public int getModeColour(int index) {

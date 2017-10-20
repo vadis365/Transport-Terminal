@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -12,10 +13,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import transportterminal.ModBlocks.IHasCustomItem;
+import transportterminal.ModItemBlocks;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityChipUtilities;
 
-public class BlockChipUtilities extends BlockDirectional {
+public class BlockChipUtilities extends BlockDirectional implements IHasCustomItem {
 
 	public BlockChipUtilities() {
 		super(Material.IRON);
@@ -53,5 +56,10 @@ public class BlockChipUtilities extends BlockDirectional {
 		if (tile instanceof TileEntityChipUtilities)
 			InventoryHelper.dropInventoryItems(world, pos, (TileEntityChipUtilities) tile);
 		super.breakBlock(world, pos, state);
+	}
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return ModItemBlocks.UTILS_ITEM;
 	}
 }

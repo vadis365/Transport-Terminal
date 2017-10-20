@@ -10,7 +10,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import transportterminal.TransportTerminal;
+import transportterminal.ModSounds;
 import transportterminal.network.message.ItemTransporterMessage;
 import transportterminal.tileentites.TileEntityItemTransporter;
 import transportterminal.utils.DimensionUtils;
@@ -27,8 +27,8 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 			return null;
 
 		else if (!world.isRemote)
-			if (ctx.getServerHandler().playerEntity.getEntityId() == message.entityID) {
-				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+			if (ctx.getServerHandler().player.getEntityId() == message.entityID) {
+				final EntityPlayerMP player = ctx.getServerHandler().player;
 				player.getServer().addScheduledTask(new Runnable() {
 					public void run() {
 						TileEntityItemTransporter tile = (TileEntityItemTransporter) world.getTileEntity(message.tilePos);
@@ -43,7 +43,7 @@ public class ItemTransporterPacketHandler implements IMessageHandler<ItemTranspo
 									int y = chip.getTagCompound().getInteger("chipY");
 									int z = chip.getTagCompound().getInteger("chipZ");
 									if(newDim == 1) {
-										world.playSound(null, player.posX, player.posY, player.posZ, TransportTerminal.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+										world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 										return;
 									}
 									//DimensionUtils.forceChunkloading((EntityPlayerMP) player, newDim, x, y, z);

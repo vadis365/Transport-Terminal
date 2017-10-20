@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -17,11 +18,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import transportterminal.ModBlocks.IHasCustomItem;
+import transportterminal.ModItemBlocks;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityInventoryEnergy;
 import transportterminal.tileentites.TileEntityTransportTerminal;
 
-public class BlockTransportTerminal extends BlockDirectional {
+public class BlockTransportTerminal extends BlockDirectional implements IHasCustomItem {
 
 	public BlockTransportTerminal() {
 		super(Material.IRON);
@@ -95,5 +98,10 @@ public class BlockTransportTerminal extends BlockDirectional {
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
+	}
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return ModItemBlocks.TERMINAL_ITEM;
 	}
 }

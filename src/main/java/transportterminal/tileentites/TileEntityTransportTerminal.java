@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import transportterminal.TransportTerminal;
+import transportterminal.ModItems;
 import transportterminal.core.confighandler.ConfigHandler;
 
 public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
@@ -21,7 +21,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 		getItems().set(slot, is);
 		 if (is.getCount() > getInventoryStackLimit())
 			 is.setCount(this.getInventoryStackLimit());
-		if (!is.isEmpty() && slot == 0 && is.getItem() == TransportTerminal.REMOTE || !is.isEmpty() && slot == 0 && is.getItem() == TransportTerminal.REMOTE_TERMINAL) {
+		if (!is.isEmpty() && slot == 0 && is.getItem() == ModItems.REMOTE || !is.isEmpty() && slot == 0 && is.getItem() == ModItems.REMOTE_TERMINAL) {
 			ItemStack stack = is.copy();
 			if (!stack.hasTagCompound())
 				stack.setTagCompound(new NBTTagCompound());
@@ -49,7 +49,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack is) {
-		if (slot == 0 && is.getItem() == TransportTerminal.REMOTE || slot == 0 && is.getItem() == TransportTerminal.REMOTE_TERMINAL)
+		if (slot == 0 && is.getItem() == ModItems.REMOTE || slot == 0 && is.getItem() == ModItems.REMOTE_TERMINAL)
 			return true;
 		return false;
 	}
@@ -62,7 +62,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 	public void setName(String text) {
 		chipName = text;
 		ItemStack is = getStackInSlot(getTempSlot());
-		if (!is.isEmpty() && is.getItem() == TransportTerminal.CHIP)
+		if (!is.isEmpty() && is.getItem() == ModItems.CHIP)
 			is.getTagCompound().setString("description", chipName);
 	}
 

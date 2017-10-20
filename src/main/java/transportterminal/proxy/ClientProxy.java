@@ -16,6 +16,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerRenderInformation() {
+/*		
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.CHIP, 0, new ModelResourceLocation("transportterminal:chip", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.PLAYER_CHIP, 0, new ModelResourceLocation("transportterminal:player_chip", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.REMOTE, 0, new ModelResourceLocation("transportterminal:remote", "inventory"));
@@ -34,7 +35,7 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.METAL_CRATE_ITEM, 0, new ModelResourceLocation("transportterminal:metal_crate", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.QUANTUM_CRATE_ITEM, 0, new ModelResourceLocation("transportterminal:quantum_crate", "inventory"));
 		ModelLoader.setCustomModelResourceLocation(TransportTerminal.ITEM_TRANSPORTER_ITEM, 0, new ModelResourceLocation("transportterminal:item_transporter", "inventory"));
-
+*/
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySummoner.class, new TileEntitySummonerRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityItemTransporter.class, new TileEntityItemTransporterRenderer());
 	}

@@ -2,13 +2,16 @@ package transportterminal.items;
 
 import java.util.List;
 
-import cofh.api.energy.IEnergyContainerItem;
+import javax.annotation.Nullable;
+
+import cofh.redstoneflux.api.IEnergyContainerItem;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,18 +41,16 @@ public abstract class ItemEnergy extends Item implements IEnergyContainerItem {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	 public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
-		super.getSubItems(item, tab, list);
-			ItemStack charged = new ItemStack(item);
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+		super.getSubItems(tab, list);
+			ItemStack charged = new ItemStack(this);
 			receiveEnergy(charged, capacity, false);
 			list.add(charged);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> list, ITooltipFlag flag) {
 		list.add("Charge: " + getEnergyStored(stack) + "RF / " + getMaxEnergyStored(stack) + "RF");
 	}
 

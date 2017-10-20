@@ -4,10 +4,10 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,10 +17,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityItemTransporterRenderer extends TileEntitySpecialRenderer<TileEntityItemTransporter> {
 
 	@Override
-	public void renderTileEntityAt(TileEntityItemTransporter tile, double x, double y, double z, float partialTick, int destroyStage) {
+	public void render(TileEntityItemTransporter tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		if (!(tile.getEnergyStored(null) > 0))
 			return;
-		float renderRotation = tile.rotation + (tile.rotation - tile.prevRotation) * partialTick;
+		float renderRotation = tile.rotation + (tile.rotation - tile.prevRotation) * partialTicks;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5D, y + 0.5D, z + 0.5D);
 		GlStateManager.rotate(renderRotation * 2.0f, 0, 1, 0);
@@ -46,7 +46,7 @@ public class TileEntityItemTransporterRenderer extends TileEntitySpecialRenderer
 			f2 = (f1 - 0.8F) / 0.2F;
 		}
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer buffer = tessellator.getBuffer();
+		BufferBuilder buffer = tessellator.getBuffer();
 		for (int i = 0; (float) i < iterations; ++i) {
 			GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);

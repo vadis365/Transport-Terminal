@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,11 +20,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import transportterminal.ModBlocks.IHasCustomItem;
+import transportterminal.ModItemBlocks;
 import transportterminal.TransportTerminal;
 import transportterminal.tileentites.TileEntityInventoryEnergy;
 import transportterminal.tileentites.TileEntitySummoner;
 
-public class BlockSummoner extends BlockDirectional {
+public class BlockSummoner extends BlockDirectional implements IHasCustomItem {
 	protected static final AxisAlignedBB SUMMONER_AABB = new AxisAlignedBB(0D, 0D, 0D, 1D, 0.25D, 1D);
 	public BlockSummoner() {
 		super(Material.IRON);
@@ -107,5 +110,10 @@ public class BlockSummoner extends BlockDirectional {
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
+	}
+
+	@Override
+	public ItemBlock getItemBlock() {
+		return ModItemBlocks.SUMMONER_ITEM;
 	}
 }

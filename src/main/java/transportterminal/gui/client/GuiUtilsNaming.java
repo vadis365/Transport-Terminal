@@ -3,11 +3,11 @@ package transportterminal.gui.client;
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -37,8 +37,14 @@ public class GuiUtilsNaming extends GuiContainer {
 	}
 
 	@Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
+    }
+
+	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-		GL11.glColor4f(1, 1, 1, 1);
+		GlStateManager.color(1, 1, 1, 1);
 		super.mc.renderEngine.bindTexture(GUI_REMOTE);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
@@ -47,7 +53,7 @@ public class GuiUtilsNaming extends GuiContainer {
 	@SuppressWarnings("unchecked")
 	public void initGui() {
 		super.initGui();
-		textFieldName = new GuiTextField(16, fontRendererObj, 20, 15, 136, 20);
+		textFieldName = new GuiTextField(16, fontRenderer, 20, 15, 136, 20);
 		textFieldName.setMaxStringLength(20);
 		textFieldName.setFocused(false);
 		textFieldName.setTextColor(5635925);
