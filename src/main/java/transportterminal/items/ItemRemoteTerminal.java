@@ -63,9 +63,13 @@ public class ItemRemoteTerminal extends ItemEnergy {
 					int homeX = stack.getTagCompound().getInteger("homeX");
 					int homeY = stack.getTagCompound().getInteger("homeY");
 					int homeZ = stack.getTagCompound().getInteger("homeZ");
+
 					DimensionUtils.forceChunkloading((EntityPlayerMP) player, dimensionID, homeX, homeY, homeZ);
+					//player.getServer().addScheduledTask(new Runnable() {
+					//	public void run() {
 					WorldServer world2 = DimensionUtils.getWorldFromDimID(dimensionID);
 					TileEntity tile = world2.getTileEntity(new BlockPos(homeX, homeY, homeZ));
+					System.out.println("Tile is: " + tile);
 					if (tile instanceof TileEntityInventoryEnergy) {
 						if(((TileEntityInventoryEnergy) tile).getEnergyStored(null) >= ConfigHandler.ENERGY_PER_TELEPORT) {
 							TeleportUtils.consumeConsoleEnergy((TileEntityTransportTerminal) tile);
@@ -78,6 +82,9 @@ public class ItemRemoteTerminal extends ItemEnergy {
 						world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 						return new ActionResult(EnumActionResult.FAIL, stack);
 					}
+					//	}
+				//	});
+					
 				}
 				else {
 					world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);

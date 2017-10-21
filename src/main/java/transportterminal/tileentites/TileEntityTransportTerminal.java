@@ -30,6 +30,7 @@ public class TileEntityTransportTerminal extends TileEntityInventoryEnergy {
 			stack.getTagCompound().setInteger("homeZ", pos.getZ());
 			setInventorySlotContents(1, stack);
 		}
+		markDirty();
 	}
 
 	@Override

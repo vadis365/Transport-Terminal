@@ -64,6 +64,8 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 					return new ActionResult(EnumActionResult.FAIL, stack);
 				}
 				if (canTeleport(stack)) {
+					
+					
 					WorldServer world2 = DimensionUtils.getWorldFromDimID(dimensionID);
 					TileEntity tile = world2.getTileEntity(new BlockPos(homeX, homeY, homeZ));
 					if (tile instanceof TileEntityInventoryEnergy) {
@@ -78,6 +80,8 @@ public class ItemRemoteQuantumCrate extends ItemEnergy {
 							return new ActionResult(EnumActionResult.FAIL, stack);
 						}
 					}
+					
+					
 				}
 			}
 			if (world.isRemote)

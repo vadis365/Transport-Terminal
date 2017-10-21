@@ -70,19 +70,19 @@ public class TeleportUtils {
 	}
 
 	public static boolean isValidInterfacePlayerChip(TileEntityTransportTerminal tile, int buttonID) {
-		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemPlayerChip;
+		return !tile.getStackInSlot(buttonID).isEmpty() && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemPlayerChip;
 	}
 
 	public static boolean isValidSummonerPlayerChip(TileEntitySummoner tile, int buttonID) {
-		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemPlayerChip;
+		return !tile.getStackInSlot(buttonID).isEmpty() && tile.getStackInSlot(buttonID).hasDisplayName() && tile.getStackInSlot(buttonID).getItem() instanceof ItemPlayerChip;
 	}
 
 	public static boolean isValidInterfaceStandardChip(TileEntityTransportTerminal tile, int buttonID) {
-		return tile.getStackInSlot(buttonID) != null && tile.getStackInSlot(buttonID).getTagCompound().hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemChip;
+		return !tile.getStackInSlot(buttonID).isEmpty() && tile.getStackInSlot(buttonID).getTagCompound().hasKey("chipX") && tile.getStackInSlot(buttonID).getItem() instanceof ItemChip;
 	}
 
 	public static boolean isValidInterfaceStandardChip(TileEntityItemTransporter tile) {
-		return tile.getStackInSlot(0) != null && tile.getStackInSlot(0).getTagCompound().hasKey("chipX") && tile.getStackInSlot(0).getItem() instanceof ItemChip;
+		return !tile.getStackInSlot(0).isEmpty() && tile.getStackInSlot(0).getTagCompound().hasKey("chipX") && tile.getStackInSlot(0).getItem() instanceof ItemChip;
 	}
 
 	public static void consumeConsoleEnergy(TileEntityTransportTerminal tile) {
