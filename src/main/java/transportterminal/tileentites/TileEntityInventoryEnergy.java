@@ -119,12 +119,14 @@ public abstract class TileEntityInventoryEnergy extends TileEntity implements II
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
+		energy = compound.getInteger("energy");
 		this.loadFromNbt(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
+		compound.setInteger("energy", energy);
 		return this.saveToNbt(compound);
 	}
 

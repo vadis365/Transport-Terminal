@@ -73,12 +73,16 @@ public class ItemRemoteTerminal extends ItemEnergy {
 							world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.OK_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 							player.openGui(TransportTerminal.INSTANCE, TransportTerminal.PROXY.GUI_ID_REMOTE_TERMINAL, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 						}
-						else {
-							world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
-							return new ActionResult(EnumActionResult.FAIL, stack);
-						}
 					}
-				}	
+					else {
+						world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+						return new ActionResult(EnumActionResult.FAIL, stack);
+					}
+				}
+				else {
+					world.playSound(null, player.posX, player.posY, player.posZ, ModSounds.ERROR_SOUND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+					return new ActionResult(EnumActionResult.FAIL, stack);
+				}
 			}
 			if (world.isRemote)
 				if(stack.getTagCompound().getInteger("dim") == 1 && player.dimension != 1)

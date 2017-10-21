@@ -7,6 +7,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import transportterminal.ModSounds;
 import transportterminal.blocks.BlockDirectional;
@@ -26,6 +27,7 @@ import transportterminal.tileentites.TileEntityTransportTerminal;
 public class TeleportUtils {
 
 	public static void dimensionTransfer(WorldServer worldserver, EntityPlayerMP player, int newDim) {
+		//int oldDimensionID = player.dimension;
 		if (player.dimension != newDim && player.dimension != 1)
 			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 		if (player.dimension != newDim && player.dimension == 1) {
@@ -33,9 +35,11 @@ public class TeleportUtils {
 			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 			player.mcServer.getPlayerList().transferPlayerToDimension(player, newDim, new TransportTerminalTeleporter(worldserver));
 		}
+		//DimensionManager.unloadWorld(oldDimensionID);
 	}
 
 	public static void dimensionTransfer(WorldServer worldserver, EntityPlayerMP player, EntityPlayerMP playerOnChip) {
+		//int oldDimensionID = player.dimension;
 		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension != 1)
 			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 		if (player.dimension != playerOnChip.dimension && playerOnChip.dimension == 1) {
@@ -43,6 +47,7 @@ public class TeleportUtils {
 			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 			playerOnChip.mcServer.getPlayerList().transferPlayerToDimension(playerOnChip, player.dimension, new TransportTerminalTeleporter(worldserver));
 		}
+		//DimensionManager.unloadWorld(oldDimensionID);
 	}
 
 	public static void teleportToConsole(World world, EntityPlayerMP player, BlockPos pos) {

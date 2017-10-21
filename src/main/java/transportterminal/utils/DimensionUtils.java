@@ -27,6 +27,7 @@ public class DimensionUtils implements LoadingCallback {
 	}
 
 	public static void forceChunkloading(EntityPlayerMP player, final int dimensionID, final int posX, final int posY, final int posZ) {
+		releaseChunks();
 		player.getServer().addScheduledTask(new Runnable() {
 			public void run() {
 				if (CHUNK_TICKET == null)
@@ -34,7 +35,6 @@ public class DimensionUtils implements LoadingCallback {
 
 				if (CHUNK_TICKET != null)
 					ForgeChunkManager.forceChunk(CHUNK_TICKET, new ChunkPos(posX >> 4, posZ >> 4));
-				System.out.println("Forcing Chunk");
 			}
 		});
 	}
@@ -49,7 +49,6 @@ public class DimensionUtils implements LoadingCallback {
 
 	public static void releaseChunks() {
 		if(CHUNK_TICKET != null) {
-			System.out.println("RELEASING CHUNK!: " + CHUNK_TICKET);
 			ForgeChunkManager.releaseTicket(CHUNK_TICKET);
 			CHUNK_TICKET = null;
 		}
